@@ -1,0 +1,600 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Semi de Cannes — 21,1 km · 10 km · 5 km sur la Côte d'Azur</title>
+<meta name="description" content="Le Semi de Cannes : courez 21,1 km, 10 km ou 5 km le long de la Croisette et de la baie de Cannes. Inscriptions, parcours et infos pratiques.">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:ital,wdth,wght@0,75..125,400..900;1,75..125,400..900&family=Hanken+Grotesk:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
+
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<!-- ===== TOP BAR ===== -->
+<div class="topbar">
+  <div class="wrap">
+    <div class="lang-toggle" aria-label="Choix de la langue">
+      <button data-lang="fr" class="active">FR</button><span>/</span><button data-lang="en">EN</button>
+    </div>
+    <div class="socials">
+      <a href="https://www.facebook.com/SemiDeCannes/" target="_blank" rel="noopener">Facebook</a>
+      <a href="https://www.instagram.com/semidecannes/" target="_blank" rel="noopener">Instagram</a>
+      <a href="mailto:contact@semi-cannes.com" data-fr="Contact" data-en="Contact">Contact</a>
+    </div>
+  </div>
+</div>
+
+<!-- ===== HEADER ===== -->
+<header class="header" id="header">
+  <div class="wrap nav">
+    <a href="#" class="brand">Semi <b>de</b> Cannes</a>
+    <nav class="nav-links" id="navLinks">
+      <a href="la-course.html" data-fr="La course" data-en="The race">La course</a>
+      <a href="inscriptions.html" data-fr="Inscriptions" data-en="Registration">Inscriptions</a>
+      <a href="carte.html" data-fr="Carte" data-en="Map">Carte</a>
+      <a href="infos-pratiques.html" data-fr="Infos utiles" data-en="Practical info">Infos utiles</a>
+      <a href="partenaires.html" data-fr="Partenaires" data-en="Sponsors">Partenaires</a>
+      <a href="contact.html" data-fr="Contact" data-en="Contact">Contact</a>
+    </nav>
+    <div class="nav-cta">
+      <a href="inscriptions.html" class="btn btn-primary" data-fr="S'inscrire" data-en="Register">S'inscrire</a>
+      <button class="burger" id="burger" aria-label="Menu"><span></span><span></span><span></span></button>
+    </div>
+  </div>
+</header>
+
+<!-- ===== HERO ===== -->
+<section class="hero">
+  <div class="wrap hero-inner">
+    <span class="eyebrow with-thread" data-fr="33ᵉ édition · Cannes, Côte d'Azur" data-en="33rd edition · Cannes, French Riviera">33ᵉ édition · Cannes, Côte d'Azur</span>
+    <h1><span class="l1">Semi de</span><br><span class="l2">Cannes</span></h1>
+    <p class="lede" data-fr="21,1 km, 10 km ou 5 km face à la Méditerranée. Un parcours plat et rapide le long de la Croisette, au cœur de la Côte d'Azur." data-en="21.1 km, 10 km or 5 km facing the Mediterranean. A flat, fast course along the Croisette, in the heart of the French Riviera.">
+      21,1 km, 10 km ou 5 km face à la Méditerranée. Un parcours plat et rapide le long de la Croisette, au cœur de la Côte d'Azur.</p>
+
+    <div class="hero-actions">
+      <a href="inscriptions.html" class="btn btn-primary" data-fr="Je m'inscris" data-en="Register now">Je m'inscris <span class="arrow">→</span></a>
+      <a href="#parcours" class="btn btn-ghost" data-fr="Voir le parcours" data-en="See the route">Voir le parcours</a>
+    </div>
+
+    <div class="meta-row">
+      <div class="meta">
+        <span class="k" data-fr="Prochaine édition" data-en="Next edition">Prochaine édition</span>
+        <span class="v" id="dateLabel">Automne 2027</span>
+      </div>
+      <div class="meta">
+        <span class="k" data-fr="Compte à rebours" data-en="Countdown">Compte à rebours</span>
+        <div class="countdown" id="countdown">
+          <div class="cd-cell"><b id="cdD">--</b><span data-fr="jours" data-en="days">jours</span></div>
+          <div class="cd-cell"><b id="cdH">--</b><span>h</span></div>
+          <div class="cd-cell"><b id="cdM">--</b><span>min</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- Trait animé + photos par-dessus la grande photo -->
+  <div class="hero-trail">
+    <div class="hero-shots">
+      <figure class="ht-shot s1"><img src="assets/parcours/p1.jpg" alt="Le Palais"></figure>
+      <figure class="ht-shot s2"><img src="assets/parcours/p2.jpg" alt="Le Carlton"></figure>
+      <figure class="ht-shot s3"><img src="assets/parcours/p3.jpg" alt="Le port"></figure>
+      <figure class="ht-shot s4"><img src="assets/parcours/p4.jpg" alt="Cap sur la mer"></figure>
+      <figure class="ht-shot s5"><img src="assets/parcours/p5.jpg" alt="La baie"></figure>
+    </div>
+    <div class="route" aria-hidden="true">
+      <svg viewBox="0 0 1320 150" preserveAspectRatio="none" role="img">
+        <path class="path-bg" d="M0,70 C140,20 260,118 430,70 C600,22 700,120 880,66 C1040,18 1140,108 1320,60"/>
+        <path class="path-fg" d="M0,70 C140,20 260,118 430,70 C600,22 700,120 880,66 C1040,18 1140,108 1320,60"/>
+        <circle class="wp" cx="0" cy="70" r="6"/>
+        <circle class="wp" cx="1320" cy="60" r="6"/>
+        <text class="wp-label" x="6" y="100">Départ</text>
+        <text class="wp-label" x="1230" y="92">Arrivée</text>
+        <circle class="runner" r="7"/>
+      </svg>
+    </div>
+  </div>
+</section>
+
+
+<!-- ===== BAND : édition passée ===== -->
+<div class="band">
+  <div class="wrap">
+    <div class="b-txt">
+      <span class="pill" data-fr="32ᵉ édition" data-en="32nd edition">32ᵉ édition</span>
+      <strong data-fr="Merci à tous pour votre participation !" data-en="Thank you all for taking part!">Merci à tous pour votre participation&nbsp;!</strong>
+    </div>
+    <div class="b-actions">
+      <a class="linkbtn" href="https://www.wildnessvisual.com/blog/2026-11/le-semi-de-cannes-52" target="_blank" rel="noopener" data-fr="📸 Les photos" data-en="📸 Photos">📸 Les photos</a>
+      <a class="linkbtn" href="https://www.athle.fr/bases/liste.aspx?frmbase=resultats&frmmode=1&frmespace=0&frmcompetition=304174" target="_blank" rel="noopener" data-fr="🏁 Les résultats" data-en="🏁 Results">🏁 Les résultats</a>
+    </div>
+  </div>
+</div>
+
+<!-- ===== LA COURSE ===== -->
+<section class="races" id="course">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <h2 data-fr="Trois courses,<br>une même baie" data-en="Three races,<br>one bay">Trois courses,<br>une même baie</h2>
+      <p data-fr="Du premier dossard au record personnel, choisissez votre distance le long du bord de mer cannois." data-en="From your first bib to a personal best, pick your distance along the Cannes seafront.">Du premier dossard au record personnel, choisissez votre distance le long du bord de mer cannois.</p>
+    </div>
+    <div class="race-grid">
+      <a href="inscriptions.html" class="race-card c1 reveal">
+        <span class="num">5</span>
+        <span class="dist">5<small>Kilomètres</small></span>
+        <p data-fr="Accessible à tous, parfait pour une première course ou pour courir en famille au bord de l'eau." data-en="Open to everyone — ideal for a first race or running with family by the sea.">Accessible à tous, parfait pour une première course ou pour courir en famille au bord de l'eau.</p>
+        <span class="more" data-fr="Détails →" data-en="Details →">Détails →</span>
+      </a>
+      <a href="inscriptions.html" class="race-card c2 reveal">
+        <span class="num">10</span>
+        <span class="dist">10<small>Kilomètres</small></span>
+        <p data-fr="La distance idéale pour se dépasser sur un parcours roulant face à la Méditerranée." data-en="The perfect distance to push yourself on a fast course facing the Mediterranean.">La distance idéale pour se dépasser sur un parcours roulant face à la Méditerranée.</p>
+        <span class="more" data-fr="Détails →" data-en="Details →">Détails →</span>
+      </a>
+      <a href="inscriptions.html" class="race-card c3 reveal">
+        <span class="num">21</span>
+        <span class="dist">21,1<small>Le semi-marathon</small></span>
+        <p data-fr="L'épreuve reine. 21,1 km entre la Croisette, le port et la baie, au cœur de la Côte d'Azur." data-en="The flagship race. 21.1 km between the Croisette, the harbour and the bay, in the heart of the Riviera.">L'épreuve reine. 21,1 km entre la Croisette, le port et la baie, au cœur de la Côte d'Azur.</p>
+        <span class="more" data-fr="Détails →" data-en="Details →">Détails →</span>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ===== EN CHIFFRES ===== -->
+<section class="stats" id="chiffres">
+  <div class="wave wave-top fill-navy" aria-hidden="true"><svg viewBox="0 0 1440 60" preserveAspectRatio="none"><path fill="currentColor" d="M0,60 L0,30 C180,54 360,8 600,26 C840,44 1080,6 1320,26 C1380,31 1410,32 1440,30 L1440,60 Z"/></svg></div>
+  <div class="wave wave-bot fill-skypale" aria-hidden="true"><svg viewBox="0 0 1440 60" preserveAspectRatio="none"><path fill="currentColor" d="M0,60 L0,30 C180,54 360,8 600,26 C840,44 1080,6 1320,26 C1380,31 1410,32 1440,30 L1440,60 Z"/></svg></div>
+  <div class="wrap">
+    <div class="stats-head">
+      <span class="kicker" data-fr="Cours la Méditerranée" data-en="Run the Mediterranean">Cours la Méditerranée</span>
+      <h2 data-fr="Le Semi de Cannes, <em>en chiffres</em>" data-en="The Cannes Half, <em>by the numbers</em>">Le Semi de Cannes, <em>en chiffres</em></h2>
+    </div>
+    <div class="stat-grid">
+      <div class="stat reveal"><span class="n"><span class="cnt" data-target="3">0</span></span><span class="l" data-fr="Distances : 5 · 10 · 21,1" data-en="Distances: 5 · 10 · 21.1">Distances : 5 · 10 · 21,1</span></div>
+      <div class="stat reveal"><span class="n"><span class="cnt" data-target="21.1" data-dec="1">0</span><span class="u">km</span></span><span class="l" data-fr="Le semi-marathon" data-en="The half-marathon">Le semi-marathon</span></div>
+      <div class="stat reveal"><span class="n"><span class="cnt" data-target="33">0</span><span class="u">ᵉ</span></span><span class="l" data-fr="Éditions" data-en="Editions">Éditions</span></div>
+      <div class="stat reveal"><span class="n"><span class="cnt" data-target="5000">0</span><span class="u">+</span></span><span class="l" data-fr="Coureurs attendus" data-en="Expected runners">Coureurs attendus</span></div>
+    </div>
+    <div class="badges">
+      <span class="badge"><i>✓</i> <span data-fr="Parcours certifié" data-en="Certified course">Parcours certifié</span></span>
+      <span class="badge"><i>⏱</i> <span data-fr="Chrono électronique" data-en="Electronic timing">Chrono électronique</span></span>
+      <span class="badge"><i>🌊</i> <span data-fr="100 % bord de mer" data-en="100% seafront">100 % bord de mer</span></span>
+      <span class="badge"><i>🏅</i> <span data-fr="3 distances au choix" data-en="3 distances to pick">3 distances au choix</span></span>
+    </div>
+    <p class="stats-note" data-fr="Chiffres indicatifs, à confirmer avec l'organisation." data-en="Indicative figures, to be confirmed with the organisers.">Chiffres indicatifs, à confirmer avec l'organisation.</p>
+  </div>
+</section>
+
+<!-- ===== PARCOURS ===== -->
+<section class="parcours" id="parcours">
+  <div class="wrap grid">
+    <div>
+      <div class="sec-head" style="margin-bottom:34px">
+        <div>
+          <span class="eyebrow with-thread" data-fr="Le parcours" data-en="The course">Le parcours</span>
+          <h2 data-fr="Plat, rapide,<br>face à la mer" data-en="Flat, fast,<br>facing the sea">Plat, rapide,<br>face à la mer</h2>
+        </div>
+      </div>
+      <p class="sec-head" style="margin-bottom:34px;color:var(--muted);font-size:1.02rem;max-width:48ch" data-fr="Un tracé pensé pour la performance comme pour le plaisir : le long de la Croisette, du port et de la baie, avec la mer toujours à portée de regard." data-en="A course built for performance and pleasure alike: along the Croisette, the harbour and the bay, with the sea always in view.">Un tracé pensé pour la performance comme pour le plaisir : le long de la Croisette, du port et de la baie, avec la mer toujours à portée de regard.</p>
+      <div class="facts">
+        <div class="fact reveal"><span class="ic">🌊</span><h4 data-fr="Bord de mer" data-en="Seafront">Bord de mer</h4><p data-fr="100 % le long de la Méditerranée." data-en="100% along the Mediterranean.">100 % le long de la Méditerranée.</p></div>
+        <div class="fact reveal"><span class="ic">⚡</span><h4 data-fr="Plat & rapide" data-en="Flat & fast">Plat & rapide</h4><p data-fr="Idéal pour viser un record perso." data-en="Ideal for a personal best.">Idéal pour viser un record perso.</p></div>
+        <div class="fact reveal"><span class="ic">⏱️</span><h4 data-fr="Chrono officiel" data-en="Official timing">Chrono officiel</h4><p data-fr="Puce électronique sur tous les dossards." data-en="Electronic chip on every bib.">Puce électronique sur tous les dossards.</p></div>
+        <div class="fact reveal"><span class="ic">🎉</span><h4 data-fr="Ambiance Azur" data-en="Riviera vibes">Ambiance Azur</h4><p data-fr="Public, animations et soleil." data-en="Crowds, music and sunshine.">Public, animations et soleil.</p></div>
+      </div>
+    </div>
+    <div class="map-card">
+      <div class="map-toggle" id="mapToggle">
+        <button data-route="r21" class="active">21,1 km</button>
+        <button data-route="r10">10 km</button>
+        <button data-route="r5">5 km</button>
+      </div>
+      <div id="map"></div>
+      <label class="map-import" title="Importer un tracé GPX">
+        <input type="file" accept=".gpx" id="gpxInput" hidden>
+        <span>⤓ GPX</span>
+      </label>
+      <div class="map-note" id="mapNote">
+        <b>Parcours officiel</b> · 21,1 km
+      </div>
+    </div>
+  </div>
+
+  <div class="wrap elev-wrap">
+    <div class="elev-card">
+      <div class="elev-head">
+        <div>
+          <span class="eyebrow" data-fr="Profil altimétrique" data-en="Elevation profile">Profil altimétrique</span>
+          <h3 id="elevTitle">Semi-marathon · 21,1 km</h3>
+        </div>
+        <div class="elev-stats">
+          <div><b id="elevGain">+97 m</b><span data-fr="Dénivelé +" data-en="Elevation gain">Dénivelé +</span></div>
+          <div><b id="elevMax">11 m</b><span data-fr="Alt. max" data-en="Max alt.">Alt. max</span></div>
+          <div><b id="elevMin">1 m</b><span data-fr="Alt. min" data-en="Min alt.">Alt. min</span></div>
+          <div><b id="elevSlope">4,6 %</b><span data-fr="Pente max" data-en="Max gradient">Pente max</span></div>
+        </div>
+      </div>
+      <div class="elev-chart" id="elevChart">
+        <div class="elev-cursor" id="elevCursor"></div>
+        <div class="elev-tip" id="elevTip"></div>
+      </div>
+      <div class="elev-legend" aria-hidden="true">
+        <span><i style="background:#F37252"></i> <span data-fr="Montée" data-en="Uphill">Montée</span></span>
+        <span><i style="background:#F2A892"></i> <span data-fr="Plat" data-en="Flat">Plat</span></span>
+        <span><i style="background:#6FB8D4"></i> <span data-fr="Descente" data-en="Downhill">Descente</span></span>
+        <span><i class="rav"></i> <span data-fr="Ravitaillement" data-en="Aid station">Ravitaillement</span></span>
+      </div>
+      <p class="elev-foot" data-fr="Survolez le profil pour voir l'altitude et la pente. Emplacements des ravitaillements indicatifs, à ajuster selon le dispositif officiel." data-en="Hover the profile to see elevation and gradient. Aid-station positions are indicative, to be adjusted to the official setup.">Survolez le profil pour voir l'altitude et la pente. Emplacements des ravitaillements indicatifs, à ajuster selon le dispositif officiel.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ===== INFOS UTILES ===== -->
+
+<section class="infos" id="infos">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <h2 data-fr="Tout pour bien<br>préparer le jour J" data-en="Everything to get<br>race-day ready">Tout pour bien<br>préparer le jour J</h2>
+      <p data-fr="Accès, hébergement, retrait des dossards : on a rassemblé l'essentiel pour que vous n'ayez qu'à courir." data-en="Access, lodging, bib pick-up: we've gathered the essentials so all you have to do is run.">Accès, hébergement, retrait des dossards : on a rassemblé l'essentiel pour que vous n'ayez qu'à courir.</p>
+    </div>
+    <div class="info-grid">
+      <a href="infos-pratiques.html#acces" class="info-tile reveal"><span class="ic">🚆</span><h4 data-fr="Venir à Cannes" data-en="Getting to Cannes">Venir à Cannes</h4><p data-fr="Train, avion, voiture." data-en="Train, plane, car.">Train, avion, voiture.</p><span class="more" data-fr="En savoir +" data-en="Learn more">En savoir +</span></a>
+      <a href="infos-pratiques.html#hotels" class="info-tile reveal"><span class="ic">🏨</span><h4 data-fr="Logement" data-en="Lodging">Logement</h4><p data-fr="Hôtels partenaires." data-en="Partner hotels.">Hôtels partenaires.</p><span class="more" data-fr="En savoir +" data-en="Learn more">En savoir +</span></a>
+      <a href="infos-pratiques.html#parking" class="info-tile reveal"><span class="ic">🅿️</span><h4 data-fr="Parking" data-en="Parking">Parking</h4><p data-fr="Où se garer le jour J." data-en="Where to park.">Où se garer le jour J.</p><span class="more" data-fr="En savoir +" data-en="Learn more">En savoir +</span></a>
+      <a href="infos-pratiques.html#dossards" class="info-tile reveal"><span class="ic">🎽</span><h4 data-fr="Dossards" data-en="Bibs">Dossards</h4><p data-fr="Retrait & consignes." data-en="Pick-up & lockers.">Retrait & consignes.</p><span class="more" data-fr="En savoir +" data-en="Learn more">En savoir +</span></a>
+      <a href="infos-pratiques.html#dossards" class="info-tile reveal"><span class="ic">🎒</span><h4 data-fr="Pack coureur" data-en="Runner pack">Pack coureur</h4><p data-fr="Ce que vous recevez." data-en="What's included.">Ce que vous recevez.</p><span class="more" data-fr="En savoir +" data-en="Learn more">En savoir +</span></a>
+      <a href="infos-pratiques.html#jourj" class="info-tile reveal"><span class="ic">📖</span><h4 data-fr="Guide athlète" data-en="Event guide">Guide athlète</h4><p data-fr="Le guide 2027." data-en="The 2027 guide.">Le guide 2027.</p><span class="more" data-fr="En savoir +" data-en="Learn more">En savoir +</span></a>
+      <a href="infos-pratiques.html#faq" class="info-tile reveal"><span class="ic">🩺</span><h4 data-fr="Prévention santé" data-en="Health & safety">Prévention santé</h4><p data-fr="Courir en sécurité." data-en="Run safely.">Courir en sécurité.</p><span class="more" data-fr="En savoir +" data-en="Learn more">En savoir +</span></a>
+      <a href="infos-pratiques.html#faq" class="info-tile reveal"><span class="ic">🏃</span><h4 data-fr="S'entraîner" data-en="Train with us">S'entraîner</h4><p data-fr="Plans avec Runna." data-en="Plans with Runna.">Plans avec Runna.</p><span class="more" data-fr="En savoir +" data-en="Learn more">En savoir +</span></a>
+    </div>
+  </div>
+</section>
+
+<!-- ===== PARTENAIRES ===== -->
+<section class="partners" id="partenaires">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <h2 data-fr="Ils font courir Cannes" data-en="They make Cannes run">Ils font courir Cannes</h2>
+    </div>
+    <div class="logo-row reveal">
+      <div class="logo-chip">Ville de Cannes</div>
+      <div class="logo-chip">Kiss FM</div>
+      <div class="logo-chip">Intersport</div>
+      <div class="logo-chip">Runna</div>
+      <div class="logo-chip">Hôtel Belle Plage</div>
+      <div class="logo-chip">Rent A Car</div>
+      <div class="logo-chip">Orpi</div>
+      <div class="logo-chip">Acacia Fleurs</div>
+    </div>
+    <p class="note" data-fr="Emplacements à remplacer par les logos officiels. Vous souhaitez devenir partenaire ? Écrivez-nous." data-en="Placeholders to replace with official logos. Want to become a sponsor? Get in touch.">Emplacements à remplacer par les logos officiels. Vous souhaitez devenir partenaire ? Écrivez-nous.</p>
+  </div>
+</section>
+
+<!-- ===== NEWSLETTER ===== -->
+<section class="news" id="inscription">
+  <div class="wrap">
+    <div class="reveal">
+      <span class="eyebrow" style="color:rgba(255,255,255,.85)" data-fr="Inscriptions & infos" data-en="Registration & news">Inscriptions & infos</span>
+      <h2 data-fr="Ne manquez aucune<br>info sur l'édition 2027" data-en="Don't miss a thing<br>about the 2027 edition">Ne manquez aucune<br>info sur l'édition 2027</h2>
+      <p data-fr="Ouverture des inscriptions, parcours, tarifs : recevez tout en avant-première." data-en="Registration opening, route, prices: get it all first.">Ouverture des inscriptions, parcours, tarifs : recevez tout en avant-première.</p>
+      <form id="newsForm">
+        <input type="email" required placeholder="Votre adresse e-mail" aria-label="E-mail" id="newsEmail">
+        <button type="submit" class="btn btn-dark" data-fr="Je m'inscris" data-en="Sign up">Je m'inscris</button>
+      </form>
+    </div>
+  </div>
+</section>
+
+<!-- ===== FOOTER ===== -->
+<footer class="footer" id="contact">
+  <div class="wave wave-top fill-navy" aria-hidden="true"><svg viewBox="0 0 1440 60" preserveAspectRatio="none"><path fill="currentColor" d="M0,60 L0,30 C180,54 360,8 600,26 C840,44 1080,6 1320,26 C1380,31 1410,32 1440,30 L1440,60 Z"/></svg></div>
+  <div class="wrap foot-grid">
+    <div class="foot-brand">
+      <span class="brand">Semi <b style="color:var(--coral)">de</b> Cannes</span>
+      <p data-fr="La course mythique de la Côte d'Azur. 21,1 km · 10 km · 5 km au bord de la Méditerranée." data-en="The Riviera's iconic race. 21.1 km · 10 km · 5 km by the Mediterranean.">La course mythique de la Côte d'Azur. 21,1 km · 10 km · 5 km au bord de la Méditerranée.</p>
+      <div class="foot-socials">
+        <a href="https://www.facebook.com/SemiDeCannes/" target="_blank" rel="noopener" aria-label="Facebook">f</a>
+        <a href="https://www.instagram.com/semidecannes/" target="_blank" rel="noopener" aria-label="Instagram">◎</a>
+        <a href="mailto:contact@semi-cannes.com" aria-label="Email">✉</a>
+      </div>
+    </div>
+    <div class="foot-col">
+      <h5 data-fr="La course" data-en="The race">La course</h5>
+      <a href="la-course.html#epreuves" data-fr="Les épreuves" data-en="The races">Les épreuves</a>
+      <a href="la-course.html#reglement" data-fr="Règlement" data-en="Rules">Règlement</a>
+      <a href="la-course.html#palmares" data-fr="Palmarès" data-en="Hall of fame">Palmarès</a>
+      <a href="la-course.html#resultats" data-fr="Résultats" data-en="Results">Résultats</a>
+    </div>
+    <div class="foot-col">
+      <h5 data-fr="Infos utiles" data-en="Practical info">Infos utiles</h5>
+      <a href="infos-pratiques.html#acces" data-fr="Venir à Cannes" data-en="Getting here">Venir à Cannes</a>
+      <a href="infos-pratiques.html#parking" data-fr="Parking" data-en="Parking">Parking</a>
+      <a href="infos-pratiques.html#hotels" data-fr="Hôtels" data-en="Hotels">Hôtels</a>
+      <a href="inscriptions.html" data-fr="Inscriptions" data-en="Registration">Inscriptions</a>
+    </div>
+    <div class="foot-col">
+      <h5 data-fr="L'événement" data-en="The event">L'événement</h5>
+      <a href="benevoles.html" data-fr="Devenir bénévole" data-en="Volunteer">Devenir bénévole</a>
+      <a href="partenaires.html" data-fr="Partenaires" data-en="Sponsors">Partenaires</a>
+      <a href="contact.html" data-fr="Contact" data-en="Contact">Contact</a>
+    </div>
+  </div>
+  <div class="wrap foot-bottom">
+    <span>© <span id="year"></span> Semi de Cannes</span>
+    <span>
+      <a href="#" data-fr="Mentions légales" data-en="Legal">Mentions légales</a> ·
+      <a href="#" data-fr="Confidentialité" data-en="Privacy">Confidentialité</a>
+    </span>
+  </div>
+</footer>
+
+<script>
+/* ---- Date de la prochaine édition (À MODIFIER ici) ---- */
+const EDITION_DATE = new Date("2027-11-21T09:00:00+01:00");
+
+/* ---- Année footer ---- */
+document.getElementById('year').textContent = new Date().getFullYear();
+
+/* ---- Compte à rebours ---- */
+function tick(){
+  const now = new Date();
+  let diff = Math.max(0, EDITION_DATE - now);
+  const d = Math.floor(diff/86400000);
+  const h = Math.floor(diff%86400000/3600000);
+  const m = Math.floor(diff%3600000/60000);
+  document.getElementById('cdD').textContent = d;
+  document.getElementById('cdH').textContent = String(h).padStart(2,'0');
+  document.getElementById('cdM').textContent = String(m).padStart(2,'0');
+}
+tick(); setInterval(tick, 30000);
+
+/* ---- Menu mobile ---- */
+const burger = document.getElementById('burger');
+const navLinks = document.getElementById('navLinks');
+burger.addEventListener('click', ()=> navLinks.classList.toggle('open'));
+navLinks.querySelectorAll('a').forEach(a=> a.addEventListener('click', ()=> navLinks.classList.remove('open')));
+
+/* ---- Header au scroll ---- */
+const header = document.getElementById('header');
+addEventListener('scroll', ()=> header.classList.toggle('scrolled', scrollY > 10));
+
+/* ---- Toggle langue FR/EN ---- */
+const langBtns = document.querySelectorAll('.lang-toggle button');
+function setLang(lang){
+  document.documentElement.lang = lang;
+  document.querySelectorAll('[data-fr]').forEach(el=>{
+    const t = el.getAttribute('data-'+lang);
+    if(t!=null) el.innerHTML = t;
+  });
+  langBtns.forEach(b=> b.classList.toggle('active', b.dataset.lang===lang));
+}
+langBtns.forEach(b=> b.addEventListener('click', ()=> setLang(b.dataset.lang)));
+
+/* ---- Reveal au scroll ---- */
+const io = new IntersectionObserver(entries=>{
+  entries.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target);} });
+},{threshold:.12});
+document.querySelectorAll('.reveal').forEach(el=> io.observe(el));
+
+/* ---- Parcours en images : déclenche l'animation du point + photos ---- */
+
+/* ---- Compteurs animés (bande chiffres) ---- */
+(function(){
+  function fmt(v,dec){return dec? v.toFixed(1).replace('.',',') : Math.round(v).toLocaleString('fr-FR');}
+  function run(el){var tgt=parseFloat(el.dataset.target),dec=el.dataset.dec==='1',t0=performance.now(),dur=1500;
+    function step(t){var p=Math.min(1,(t-t0)/dur),e=1-Math.pow(1-p,3);el.textContent=fmt(tgt*e,dec);if(p<1)requestAnimationFrame(step);}
+    requestAnimationFrame(step);}
+  var s=document.querySelector('.stats');
+  if(s){var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){s.querySelectorAll('.cnt[data-target]').forEach(run);io.unobserve(e.target);}});},{threshold:.35});io.observe(s);}
+})();
+
+/* ---- Newsletter (placeholder) ---- */
+document.getElementById('newsForm').addEventListener('submit', e=>{
+  e.preventDefault();
+  const email = document.getElementById('newsEmail').value;
+  alert("Merci ! Inscription à brancher sur votre outil d'emailing (ex. Brevo).\n\n" + email);
+});
+
+/* =====================================================================
+   CARTE INTERACTIVE (Leaflet)
+   --------------------------------------------------------------------
+   👉 Pour mettre le VRAI parcours : remplacez les coordonnées ci-dessous
+      [latitude, longitude] par celles de votre tracé officiel (GPX).
+   ===================================================================== */
+const ROUTES = {
+  // Tracés OFFICIELS — extraits des GPX Openrunner (édition 2026)
+  r21: [[43.55141,7.01465],[43.5515,7.01647],[43.55146,7.01695],[43.55116,7.01838],[43.55081,7.01944],[43.55071,7.01998],[43.55067,7.02077],[43.55052,7.02169],[43.54998,7.02435],[43.54945,7.02617],[43.54838,7.02897],[43.54711,7.03147],[43.54596,7.03365],[43.54592,7.03385],[43.54596,7.03389],[43.54619,7.03349],[43.54768,7.03068],[43.54861,7.02881],[43.54933,7.02692],[43.54988,7.02518],[43.55027,7.02345],[43.5507,7.02127],[43.5508,7.02028],[43.55088,7.01951],[43.55108,7.01893],[43.55147,7.01752],[43.55159,7.01681],[43.55163,7.01648],[43.5515,7.01484],[43.55132,7.01373],[43.55094,7.01256],[43.55072,7.01211],[43.54969,7.01227],[43.54841,7.01254],[43.54833,7.01234],[43.54819,7.01059],[43.54842,7.00948],[43.54871,7.00812],[43.54889,7.00633],[43.54893,7.0059],[43.54907,7.00385],[43.54904,7.0029],[43.54903,7.00212],[43.54906,7.00123],[43.5492,6.99832],[43.54925,6.9967],[43.5492,6.99314],[43.54907,6.99078],[43.54889,6.98852],[43.54888,6.98873],[43.54901,6.9904],[43.54916,6.99315],[43.54922,6.99669],[43.54916,6.99831],[43.54905,7.001],[43.54902,7.00285],[43.54904,7.00378],[43.5489,7.00584],[43.5488,7.00711],[43.5487,7.00799],[43.5483,7.00986],[43.54814,7.01062],[43.54825,7.01192],[43.54829,7.01246],[43.54843,7.01258],[43.54951,7.01236],[43.55047,7.01216],[43.55067,7.01223],[43.55076,7.01227],[43.55087,7.01263],[43.55124,7.01375],[43.55139,7.01455],[43.55149,7.01559],[43.55151,7.01646],[43.55147,7.01693],[43.55116,7.01835],[43.5508,7.01949],[43.55071,7.01995],[43.55067,7.02075],[43.55051,7.02172],[43.54996,7.02441],[43.54944,7.02621],[43.54837,7.02901],[43.54706,7.03157],[43.54598,7.03361],[43.54593,7.03376],[43.54597,7.03387],[43.54715,7.03167],[43.54825,7.02956],[43.54903,7.02769],[43.54965,7.02593],[43.55003,7.02454],[43.55059,7.02178],[43.55079,7.02059],[43.55083,7.0198],[43.55102,7.01908],[43.5513,7.0182],[43.55151,7.01723],[43.5516,7.0167],[43.55161,7.01653],[43.55161,7.01612],[43.55156,7.01535],[43.5514,7.01415],[43.55117,7.01324],[43.55079,7.01217],[43.55059,7.0121],[43.54979,7.01225],[43.54909,7.0124],[43.54839,7.01254],[43.54832,7.01231],[43.54819,7.01056],[43.54843,7.00944],[43.54878,7.00771],[43.54889,7.00629],[43.54892,7.00588],[43.54907,7.00381],[43.54904,7.00286],[43.54903,7.00207],[43.54906,7.00118],[43.5492,6.99826],[43.54927,6.99532],[43.54919,6.99305],[43.54905,6.99045],[43.54894,6.98908],[43.54886,6.9883],[43.54871,6.98726],[43.54843,6.98584],[43.54809,6.98399],[43.54785,6.98241],[43.54776,6.98162],[43.5476,6.98042],[43.54753,6.97964],[43.54737,6.97844],[43.54707,6.97705],[43.54678,6.97569],[43.5461,6.9731],[43.54554,6.97109],[43.5449,6.96911],[43.5441,6.96709],[43.544,6.96663],[43.54368,6.96568],[43.54329,6.96467],[43.54264,6.96323],[43.54209,6.96204],[43.54235,6.96274],[43.54287,6.96383],[43.54354,6.96541],[43.54364,6.96569],[43.54401,6.96679],[43.54418,6.96736],[43.54531,6.97037],[43.54579,6.97208],[43.54637,6.97424],[43.5468,6.97595],[43.54724,6.97797],[43.54746,6.9791],[43.54751,6.9799],[43.54754,6.98031],[43.54771,6.98147],[43.54779,6.98215],[43.548,6.98364],[43.54828,6.98514],[43.54874,6.98759],[43.54902,6.99046],[43.54916,6.99301],[43.54924,6.99532],[43.5492,6.99741],[43.54913,6.99926],[43.54906,7.00061],[43.54902,7.00179],[43.54902,7.00287],[43.54904,7.0038],[43.5489,7.00588],[43.54887,7.00624],[43.54876,7.00768],[43.54848,7.00907],[43.54819,7.01035],[43.54814,7.01066],[43.54817,7.01123],[43.54827,7.0122],[43.54832,7.01253],[43.54855,7.01257],[43.54989,7.01228],[43.55058,7.01215],[43.55065,7.01224],[43.55077,7.01259],[43.55099,7.01317],[43.55095,7.0133],[43.5509,7.01352],[43.55086,7.01389],[43.55085,7.014]],
+  r10: [[43.55141,7.01465],[43.55152,7.01601],[43.55151,7.01646],[43.55146,7.01692],[43.55133,7.0178],[43.55092,7.01909],[43.5508,7.01949],[43.55075,7.01969],[43.5507,7.02022],[43.55066,7.02073],[43.5506,7.02123],[43.55051,7.02172],[43.55027,7.02302],[43.54996,7.02441],[43.5498,7.02505],[43.54944,7.02621],[43.54893,7.02767],[43.54837,7.02901],[43.5478,7.03014],[43.54706,7.03157],[43.54622,7.03322],[43.546,7.03363],[43.54597,7.03371],[43.54595,7.03378],[43.54596,7.03381],[43.54599,7.03382],[43.54601,7.03381],[43.54628,7.03332],[43.54715,7.03167],[43.54774,7.03056],[43.54825,7.02956],[43.54866,7.02869],[43.54903,7.02769],[43.54936,7.02678],[43.54965,7.02593],[43.5499,7.02504],[43.55003,7.02454],[43.55028,7.02343],[43.55059,7.02178],[43.5507,7.02123],[43.55079,7.02059],[43.55081,7.02025],[43.55083,7.0198],[43.5509,7.01948],[43.55102,7.01908],[43.55109,7.01889],[43.5513,7.0182],[43.55148,7.01747],[43.55151,7.01723],[43.55157,7.01684],[43.5516,7.01669],[43.55163,7.01648],[43.55162,7.01611],[43.55158,7.01563],[43.55152,7.01495],[43.55148,7.01459],[43.5514,7.01413],[43.55128,7.01361],[43.55117,7.01322],[43.55084,7.0123],[43.55077,7.01216],[43.55069,7.01211],[43.55059,7.0121],[43.55013,7.01218],[43.54979,7.01225],[43.54934,7.01235],[43.54909,7.0124],[43.54879,7.01246],[43.54849,7.01253],[43.54838,7.01252],[43.54835,7.01246],[43.54832,7.01231],[43.54824,7.01143],[43.54819,7.01056],[43.54829,7.01008],[43.54843,7.00944],[43.54873,7.00802],[43.54878,7.00771],[43.54879,7.00753],[43.54889,7.00629],[43.54891,7.00605],[43.54892,7.00588],[43.549,7.00472],[43.54907,7.00381],[43.54906,7.00332],[43.54904,7.00286],[43.54904,7.00254],[43.54904,7.00207],[43.54905,7.00172],[43.54907,7.00118],[43.54909,7.00063],[43.54918,6.99841],[43.54924,6.99659],[43.54927,6.99532],[43.54926,6.99466],[43.54923,6.99388],[43.5492,6.99307],[43.54914,6.99203],[43.54912,6.99149],[43.54907,6.99078],[43.549,6.98976],[43.54896,6.98909],[43.54892,6.98865],[43.54887,6.9883],[43.54878,6.9876],[43.54871,6.98722],[43.54859,6.98661],[43.54844,6.98584],[43.54823,6.98473],[43.54809,6.98399],[43.548,6.98343],[43.54789,6.98265],[43.54782,6.98213],[43.54776,6.98162],[43.54769,6.98108],[43.54762,6.98066],[43.54758,6.98035],[43.54755,6.98012],[43.54753,6.97988],[43.54753,6.97961],[43.54748,6.97914],[43.5474,6.97854],[43.54731,6.97811],[43.54725,6.97795],[43.54718,6.97778],[43.54713,6.97774],[43.54715,6.97781],[43.54723,6.97798],[43.54728,6.97815],[43.54737,6.97854],[43.54745,6.97908],[43.5475,6.9796],[43.5475,6.97989],[43.54752,6.98016],[43.54754,6.98031],[43.54757,6.98052],[43.54762,6.9808],[43.54771,6.98149],[43.54775,6.98178],[43.54785,6.98261],[43.54794,6.98326],[43.548,6.98364],[43.54808,6.98409],[43.54828,6.98515],[43.54844,6.98602],[43.54875,6.9876],[43.54884,6.98829],[43.54889,6.98871],[43.54893,6.98923],[43.54902,6.99046],[43.54908,6.99149],[43.54916,6.99301],[43.54919,6.99383],[43.54922,6.99475],[43.54923,6.99535],[43.5492,6.99653],[43.54917,6.99741],[43.54914,6.99824],[43.5491,6.99926],[43.54908,6.99973],[43.54905,7.00061],[43.54902,7.0013],[43.549,7.00179],[43.549,7.00229],[43.549,7.00287],[43.54902,7.00333],[43.54903,7.0038],[43.54896,7.00472],[43.54889,7.00569],[43.54886,7.00603],[43.54885,7.00624],[43.54878,7.00712],[43.54875,7.00767],[43.54868,7.00801],[43.54846,7.00906],[43.54829,7.00988],[43.54818,7.01034],[43.54815,7.01047],[43.54814,7.01058],[43.54817,7.01116],[43.54818,7.01124],[43.54818,7.01143],[43.54827,7.01232],[43.54828,7.01244],[43.54832,7.01252],[43.54837,7.01258],[43.54855,7.01257],[43.54894,7.01248],[43.54989,7.01228],[43.55046,7.01215],[43.55059,7.01213],[43.55064,7.01216],[43.55067,7.01225],[43.55069,7.0123],[43.55069,7.01237],[43.55085,7.01278],[43.55099,7.01317],[43.55099,7.01323],[43.55096,7.0133],[43.55091,7.01339],[43.55088,7.01349],[43.55085,7.01367],[43.55085,7.01392],[43.55085,7.014]],
+  r5: [[43.55141,7.01465],[43.55147,7.01532],[43.55152,7.01602],[43.55152,7.01646],[43.55147,7.01692],[43.55132,7.0178],[43.55092,7.01909],[43.5508,7.01949],[43.55074,7.01982],[43.55069,7.02034],[43.55068,7.0207],[43.5506,7.02123],[43.55051,7.02172],[43.55027,7.02302],[43.54996,7.02441],[43.5498,7.02505],[43.54944,7.02621],[43.54893,7.02767],[43.54837,7.02901],[43.5478,7.03014],[43.54706,7.03157],[43.54621,7.0332],[43.54598,7.03362],[43.54596,7.0337],[43.54593,7.03379],[43.54593,7.03387],[43.54598,7.03384],[43.54604,7.03374],[43.54628,7.03332],[43.54715,7.03167],[43.54774,7.03056],[43.54825,7.02956],[43.54866,7.02869],[43.54903,7.02769],[43.54936,7.02678],[43.54965,7.02593],[43.5499,7.02504],[43.55003,7.02454],[43.55028,7.02343],[43.55059,7.02178],[43.5507,7.02123],[43.55079,7.02059],[43.55081,7.02025],[43.55083,7.0198],[43.5509,7.01948],[43.55102,7.01908],[43.55109,7.01889],[43.5513,7.0182],[43.55148,7.01747],[43.55151,7.01723],[43.55157,7.01689],[43.5516,7.01672],[43.55162,7.01661],[43.55163,7.01646],[43.55162,7.01607],[43.55156,7.01536],[43.55152,7.01495],[43.55145,7.01435],[43.55134,7.01376],[43.55119,7.01319],[43.55097,7.01259],[43.5508,7.01217],[43.55076,7.01211],[43.55071,7.0121],[43.55067,7.01213],[43.55059,7.0121],[43.55013,7.01219],[43.54979,7.01226],[43.54934,7.01235],[43.54908,7.01241],[43.5488,7.01247],[43.54851,7.01254],[43.54837,7.01253],[43.54834,7.01246],[43.54832,7.01231],[43.54824,7.01143],[43.54822,7.01125],[43.5482,7.01102],[43.54818,7.01077],[43.54817,7.01052],[43.54823,7.01026],[43.54827,7.01012],[43.54847,7.00923],[43.54854,7.00889],[43.5486,7.0086],[43.54861,7.00852],[43.54858,7.00859],[43.54852,7.00888],[43.54832,7.00978],[43.54819,7.01029],[43.54815,7.01046],[43.54814,7.01059],[43.54815,7.01078],[43.54817,7.0111],[43.54817,7.01116],[43.54819,7.01147],[43.54828,7.01232],[43.54829,7.01246],[43.54832,7.01252],[43.54838,7.01258],[43.54854,7.01256],[43.54894,7.01248],[43.54989,7.01228],[43.55051,7.01214],[43.55059,7.01214],[43.55065,7.01216],[43.55067,7.01223],[43.5507,7.01229],[43.55069,7.01235],[43.55073,7.01247],[43.55084,7.01279],[43.55098,7.01317],[43.55099,7.01323],[43.55096,7.0133],[43.55091,7.01339],[43.55088,7.01349],[43.55085,7.01367],[43.55085,7.01392],[43.55085,7.014]]
+};
+const ROUTE_KM = {"r5": 4.99, "r10": 10.0, "r21": 21.1};
+const ELEV = {
+  r21: [[0.0,5.0,0.2],[0.147,5.8,1.7],[0.186,9.0,2.8],[0.306,9.6,0.2],[0.4,8.4,-0.5],[0.446,8.0,0.0],[0.509,9.4,0.3],[0.585,8.4,-1.2],[0.808,6.2,-1.1],[0.966,5.2,-0.2],[1.221,4.6,-0.1],[1.468,5.0,0.3],[1.685,6.2,0.4],[1.702,7.2,0.4],[1.712,7.2,0.1],[1.753,6.2,-0.6],[2.034,5.6,-0.2],[2.216,6.2,0.7],[2.388,7.0,0.4],[2.541,7.0,0.5],[2.687,8.4,0.7],[2.87,9.6,0.8],[2.95,9.6,-0.7],[3.013,8.6,0.3],[3.065,10.0,1.4],[3.187,10.0,-1.8],[3.246,8.0,-2.9],[3.273,5.6,-2.9],[3.406,4.4,-0.9],[3.497,4.2,0.6],[3.601,5.6,1.6],[3.646,6.8,0.6],[3.761,6.2,-0.5],[3.905,5.2,1.1],[3.924,7.4,2.3],[4.066,10.0,1.5],[4.159,11.2,-0.2],[4.274,10.0,-0.7],[4.419,9.4,-1.5],[4.454,7.2,-1.5],[4.62,5.0,-2.1],[4.697,3.0,-1.3],[4.76,3.2,0.9],[4.832,4.2,0.7],[5.067,5.2,0.2],[5.197,5.0,-0.1],[5.485,4.6,-0.2],[5.675,4.2,-0.2],[5.859,3.6,-0.2],[5.878,3.6,0.0],[6.013,4.0,0.3],[6.235,4.6,0.2],[6.521,4.8,0.5],[6.652,5.8,-0.1],[6.869,5.0,-0.5],[7.018,3.4,0.1],[7.093,4.8,1.6],[7.26,6.6,1.5],[7.363,8.8,1.2],[7.435,9.6,0.9],[7.592,10.4,0.2],[7.656,9.8,-1.4],[7.761,8.0,-3.4],[7.805,5.8,-2.4],[7.825,4.6,-1.4],[7.946,5.4,0.6],[8.054,6.4,-0.6],[8.079,6.4,-1.3],[8.091,5.4,-1.3],[8.122,4.4,-2.4],[8.221,3.8,-0.2],[8.288,4.0,0.5],[8.372,4.6,1.3],[8.443,5.8,2.7],[8.481,9.0,3.3],[8.601,9.6,0.0],[8.701,8.4,-0.6],[8.739,7.8,-0.1],[8.804,9.2,0.3],[8.884,8.2,-1.1],[9.109,6.4,-0.9],[9.266,5.4,-0.3],[9.521,4.4,-0.3],[9.774,4.6,0.3],[9.977,6.0,0.6],[9.991,7.2,0.8],[10.01,6.6,0.8],[10.231,5.8,-0.3],[10.44,5.4,0.4],[10.615,6.8,0.3],[10.772,7.2,-0.1],[10.892,7.4,0.5],[11.123,9.2,0.8],[11.222,10.2,-0.5],[11.285,9.0,-0.5],[11.347,9.6,0.9],[11.425,10.2,-0.2],[11.506,9.2,-2.7],[11.55,7.2,-4.4],[11.564,6.2,-3.1],[11.597,5.2,-3.0],[11.66,4.4,-0.5],[11.758,4.0,0.2],[11.836,4.8,1.2],[11.932,6.4,1.4],[11.956,7.6,1.4],[12.045,6.6,-1.3],[12.124,5.2,-1.0],[12.203,5.0,2.1],[12.223,7.4,2.9],[12.365,10.0,1.4],[12.459,11.0,-0.2],[12.604,9.8,-0.7],[12.719,9.2,-1.4],[12.752,7.2,-1.4],[12.92,5.0,-2.1],[12.997,3.0,-1.1],[13.06,3.4,1.2],[13.132,4.6,0.7],[13.368,5.4,0.1],[13.605,5.0,-0.1],[13.788,5.0,-0.4],[13.998,4.2,-0.3],[14.109,3.6,0.2],[14.173,4.2,0.7],[14.259,5.2,1.4],[14.377,6.4,0.1],[14.531,7.0,0.0],[14.661,6.4,-0.1],[14.726,6.6,-0.2],[14.824,6.0,-0.7],[14.887,5.4,-1.0],[14.986,4.4,-1.5],[15.103,2.4,-0.9],[15.217,1.6,-0.4],[15.439,1.6,0.2],[15.613,2.0,0.3],[15.788,2.6,0.2],[15.973,3.0,0.7],[16.012,3.2,1.9],[16.096,5.6,2.1],[16.189,7.8,1.3],[16.326,8.6,-0.4],[16.439,8.4,-0.2],[16.508,8.0,-0.2],[16.613,8.0,-0.5],[16.76,6.2,-2.6],[16.786,4.2,-2.6],[16.884,3.2,-0.5],[16.934,2.8,-0.4],[17.207,2.2,-0.5],[17.355,1.6,-0.3],[17.541,1.0,0.0],[17.686,1.6,0.4],[17.856,3.2,1.4],[17.951,4.6,1.3],[18.016,5.2,0.6],[18.049,5.2,0.5],[18.144,5.8,0.0],[18.2,5.6,-0.1],[18.322,6.2,0.2],[18.447,6.2,0.0],[18.651,5.6,-0.5],[18.884,4.6,0.0],[19.091,4.6,0.1],[19.277,4.8,0.0],[19.445,5.2,1.0],[19.595,6.4,-0.2],[19.704,5.8,-0.9],[19.799,3.8,-1.5],[19.886,3.0,0.7],[19.961,5.0,2.1],[20.129,7.2,1.2],[20.159,8.6,1.2],[20.275,9.0,0.8],[20.392,10.4,0.6],[20.5,10.6,-0.5],[20.525,10.2,-1.5],[20.571,9.0,-2.0],[20.65,7.0,-3.3],[20.678,5.0,-2.1],[20.705,4.6,-0.6],[20.856,5.8,0.7],[20.933,6.8,-1.4],[20.945,6.0,-1.6],[20.977,4.4,-1.6],[21.029,3.0,-3.2],[21.041,2.2,-3.0],[21.06,1.4,-3.0],[21.091,0.8,-3.0],[21.1,0.7,-2.2]],
+  r10: [[0.0,5.0,0.5],[0.11,5.5,1.4],[0.147,6.8,1.2],[0.184,7.6,1.7],[0.256,8.0,0.3],[0.37,8.2,0.0],[0.405,8.4,0.3],[0.422,8.0,0.7],[0.465,8.6,0.1],[0.506,9.2,0.1],[0.547,8.6,-0.6],[0.588,8.2,-1.1],[0.696,7.2,-0.8],[0.813,6.4,-0.9],[0.868,5.6,-0.6],[0.969,5.4,-0.3],[1.1,5.0,-0.4],[1.225,4.4,-0.3],[1.336,4.4,0.1],[1.477,4.6,0.3],[1.64,5.4,1.1],[1.681,6.0,0.6],[1.688,7.0,0.6],[1.694,7.0,0.7],[1.697,7.0,0.7],[1.7,7.2,0.7],[1.703,6.4,0.1],[1.752,6.2,-0.6],[1.917,5.8,-0.2],[2.028,5.6,-0.2],[2.126,5.4,0.4],[2.21,6.4,0.8],[2.3,6.8,0.3],[2.382,7.0,0.3],[2.458,7.2,-0.1],[2.535,6.8,0.5],[2.578,7.4,0.5],[2.671,8.2,0.8],[2.809,9.2,0.8],[2.855,9.6,0.8],[2.907,10.2,-0.5],[2.935,9.6,-0.6],[2.971,9.0,-0.5],[2.998,8.8,0.3],[3.033,9.6,0.9],[3.05,10.0,1.2],[3.111,10.2,-0.2],[3.173,9.8,-2.1],[3.192,9.2,-2.9],[3.224,7.8,-4.0],[3.237,6.8,-3.3],[3.254,6.0,-3.4],[3.284,5.4,-2.2],[3.323,4.8,-1.3],[3.378,4.4,-0.7],[3.408,4.2,-0.2],[3.446,4.0,0.4],[3.49,4.4,0.8],[3.523,5.0,1.1],[3.606,5.8,1.3],[3.62,6.6,1.3],[3.63,7.4,1.3],[3.641,7.6,1.3],[3.692,7.2,-1.3],[3.73,6.6,-1.3],[3.781,5.8,-1.8],[3.809,5.0,-1.4],[3.843,4.6,0.2],[3.877,4.6,2.2],[3.889,4.8,2.2],[3.895,6.0,3.1],[3.907,7.4,3.1],[3.979,8.8,1.8],[4.049,10.0,1.3],[4.09,11.0,1.3],[4.143,11.0,-0.2],[4.263,10.6,-0.7],[4.288,9.8,-0.7],[4.303,9.4,-0.7],[4.403,9.2,-1.4],[4.423,8.4,-1.4],[4.437,7.2,-1.4],[4.53,6.2,-1.3],[4.604,5.0,-2.1],[4.644,3.6,-1.8],[4.681,3.0,-1.1],[4.707,3.0,0.5],[4.745,3.4,1.2],[4.773,4.2,1.3],[4.816,4.6,0.7],[4.861,5.0,0.4],[5.04,5.4,0.1],[5.187,5.4,-0.2],[5.289,5.0,-0.3],[5.342,5.0,0.2],[5.405,5.2,0.2],[5.471,5.2,-0.1],[5.555,5.0,-0.5],[5.598,4.6,-0.5],[5.656,4.2,-0.6],[5.738,3.8,-0.4],[5.793,3.6,0.3],[5.828,3.8,0.3],[5.857,4.2,0.7],[5.914,4.4,1.4],[5.946,5.2,1.4],[5.997,6.2,1.0],[6.061,6.4,0.1],[6.154,6.4,0.3],[6.215,6.8,-0.1],[6.261,6.6,-0.1],[6.325,6.2,-0.1],[6.368,6.2,-0.1],[6.41,6.4,-0.1],[6.454,6.4,-0.4],[6.489,6.0,-0.6],[6.514,5.6,-0.8],[6.533,5.6,-0.8],[6.552,5.6,-0.6],[6.574,5.4,-0.5],[6.612,5.2,-1.0],[6.662,4.8,-1.3],[6.698,4.2,-1.2],[6.712,3.6,-0.7],[6.728,3.2,-0.3],[6.734,3.0,-0.3],[6.74,3.2,-0.3],[6.757,3.4,0.4],[6.772,4.0,0.9],[6.805,4.4,1.2],[6.849,4.8,0.8],[6.891,5.0,0.6],[6.915,5.2,0.5],[6.936,5.0,0.7],[6.949,5.2,0.6],[6.966,5.4,0.6],[6.989,5.8,0.9],[7.046,6.0,-0.1],[7.07,5.8,-0.1],[7.137,5.6,-0.2],[7.191,5.6,0.7],[7.222,6.2,0.5],[7.259,6.4,0.6],[7.348,6.6,0.0],[7.42,6.4,-0.3],[7.552,6.0,-1.0],[7.608,4.6,-1.5],[7.643,4.0,-0.8],[7.685,4.0,-0.2],[7.785,4.2,0.2],[7.868,4.4,0.3],[7.991,4.8,0.2],[8.057,4.8,-0.1],[8.131,4.6,-0.1],[8.179,4.6,-0.1],[8.275,4.6,0.2],[8.346,5.0,1.0],[8.413,6.0,0.9],[8.495,6.4,-0.1],[8.533,6.2,-0.1],[8.604,5.8,-0.9],[8.659,5.0,-1.9],[8.699,3.8,-1.5],[8.739,3.2,-1.0],[8.786,3.0,0.5],[8.823,3.4,1.3],[8.861,4.6,1.9],[8.936,5.8,1.4],[9.014,6.8,1.4],[9.042,7.6,1.4],[9.059,8.4,1.4],[9.13,8.6,0.7],[9.175,8.8,0.8],[9.203,9.4,1.0],[9.291,10.2,0.6],[9.36,10.4,0.2],[9.399,10.4,-0.1],[9.41,10.4,-0.4],[9.419,10.2,-1.1],[9.466,10.0,-2.1],[9.472,9.2,-2.1],[9.488,8.2,-2.1],[9.56,7.2,-1.9],[9.57,6.0,-1.9],[9.578,4.8,-1.9],[9.585,4.4,-1.9],[9.605,4.6,-0.8],[9.649,5.2,0.9],[9.756,6.0,0.8],[9.82,6.6,-1.4],[9.835,7.0,-1.4],[9.841,7.0,-1.4],[9.849,6.4,-1.6],[9.853,5.4,-1.6],[9.859,4.6,-1.6],[9.896,4.0,-4.7],[9.931,3.2,-3.0],[9.936,2.6,-3.0],[9.943,2.2,-3.0],[9.952,1.8,-3.5],[9.961,1.2,-3.5],[9.976,0.8,-3.5],[9.996,0.5,-3.1],[10.002,0.3,-2.9]],
+  r5: [[0.0,4.3,0.8],[0.054,4.8,0.8],[0.111,5.2,2.2],[0.147,6.8,1.6],[0.184,7.6,1.9],[0.257,8.0,0.3],[0.37,8.2,0.1],[0.405,8.6,0.4],[0.432,8.2,0.9],[0.475,8.8,0.1],[0.504,9.4,0.0],[0.547,8.8,-0.7],[0.588,8.2,-1.1],[0.696,7.2,-0.8],[0.813,6.4,-0.9],[0.868,5.6,-0.6],[0.97,5.4,-0.3],[1.1,5.0,-0.4],[1.225,4.4,-0.3],[1.336,4.4,0.1],[1.477,4.6,0.3],[1.639,5.4,1.1],[1.682,6.0,0.6],[1.688,7.0,0.6],[1.696,7.0,0.6],[1.703,7.0,0.6],[1.709,7.2,0.6],[1.719,6.4,0.1],[1.763,6.2,-0.6],[1.927,5.8,-0.2],[2.038,5.6,-0.2],[2.136,5.4,0.4],[2.22,6.4,0.8],[2.311,6.8,0.3],[2.393,7.0,0.3],[2.468,7.2,-0.1],[2.545,6.8,0.5],[2.588,7.4,0.5],[2.682,8.2,0.8],[2.819,9.2,0.8],[2.865,9.6,0.8],[2.918,10.2,-0.5],[2.945,9.6,-0.6],[2.981,9.0,-0.5],[3.008,8.8,0.3],[3.043,9.6,0.9],[3.06,10.0,1.2],[3.121,10.2,-0.2],[3.183,9.8,-2.4],[3.202,9.2,-2.9],[3.231,8.0,-2.8],[3.245,7.2,-4.0],[3.254,6.4,-3.0],[3.266,5.8,-3.0],[3.298,5.2,-2.4],[3.355,4.6,-0.7],[3.388,4.2,-0.4],[3.437,4.2,0.2],[3.487,4.4,0.7],[3.535,5.0,0.9],[3.59,5.6,2.3],[3.628,6.4,1.2],[3.635,6.8,1.2],[3.641,7.4,1.2],[3.646,7.6,1.2],[3.655,7.6,1.2],[3.706,7.0,-1.4],[3.745,6.4,-1.4],[3.795,5.6,-1.8],[3.825,4.8,-1.4],[3.856,4.4,0.3],[3.889,4.4,2.2],[3.904,4.8,2.2],[3.911,6.0,3.0],[3.923,7.4,3.0],[3.995,8.6,2.9],[4.009,9.8,2.5],[4.028,10.8,2.2],[4.048,11.0,2.2],[4.069,11.0,0.7],[4.091,11.0,0.1],[4.103,11.0,0.0],[4.178,11.0,0.0],[4.206,11.0,0.0],[4.231,11.0,-0.1],[4.237,11.0,-0.1],[4.244,11.0,-0.1],[4.268,11.0,-0.1],[4.344,10.8,-0.3],[4.387,10.6,-0.3],[4.402,10.6,-0.4],[4.412,10.6,-1.7],[4.428,10.4,-1.7],[4.454,10.4,-2.3],[4.458,9.6,-2.3],[4.483,8.4,-2.6],[4.553,7.2,-2.0],[4.564,6.0,-2.0],[4.57,4.8,-2.0],[4.578,4.4,-2.0],[4.596,4.6,-1.0],[4.641,5.2,0.8],[4.748,5.8,0.7],[4.818,6.4,-1.6],[4.827,6.8,-1.6],[4.833,6.8,-1.6],[4.84,6.2,-1.6],[4.845,5.6,-1.6],[4.85,4.8,-1.6],[4.861,4.2,-1.6],[4.89,3.6,-4.2],[4.924,3.0,-2.9],[4.929,2.6,-2.9],[4.935,2.2,-2.9],[4.945,1.8,-3.1],[4.953,1.2,-3.1],[4.968,0.8,-3.1],[4.988,0.5,-3.1],[4.995,0.3,-2.9]]
+};
+const ELEV_META = {"r5": {"km": 4.99, "gain": 27, "min": 0, "max": 11, "maxslope": 4.2}, "r10": {"km": 10.0, "gain": 47, "min": 0, "max": 11, "maxslope": 4.7}, "r21": {"km": 21.1, "gain": 97, "min": 1, "max": 11, "maxslope": 4.6}};
+
+let map, casing, line, startMarker, currentRouteKey='r21', ELC=null, mapCursor=null, currentCum=[], currentRoutePts=[];
+
+function drawPoints(pts, fit){
+  [casing,line,startMarker].forEach(l=> l && map.removeLayer(l));
+  currentRoutePts=pts;
+  currentCum=[0];
+  for(let i=1;i<pts.length;i++){ currentCum[i]=currentCum[i-1]+haversineJS(pts[i-1],pts[i])/1000; }
+  casing = L.polyline(pts,{color:'#ffffff',weight:9,opacity:.9,lineJoin:'round',lineCap:'round'}).addTo(map);
+  line   = L.polyline(pts,{color:'#F37252',weight:5,opacity:1,lineJoin:'round',lineCap:'round'}).addTo(map);
+  startMarker = L.circleMarker(pts[0],{radius:9,color:'#F37252',weight:3,fillColor:'#ffffff',fillOpacity:1})
+    .addTo(map).bindTooltip('Départ / Arrivée',{direction:'top',offset:[0,-6]});
+  function onRouteHover(e){
+    if(!currentCum.length) return;
+    const ll=e.latlng; let idx=0,best=Infinity;
+    for(let i=0;i<currentRoutePts.length;i++){ const d=haversineJS([ll.lat,ll.lng],currentRoutePts[i]); if(d<best){best=d;idx=i;} }
+    showAtKm(currentCum[idx]);
+  }
+  line.on('mousemove',onRouteHover); casing.on('mousemove',onRouteHover);
+  line.on('mouseout',hideCursors); casing.on('mouseout',hideCursors);
+  if(fit!==false) map.fitBounds(line.getBounds(),{padding:[34,34]});
+}
+function drawRoute(key){
+  currentRouteKey=key;
+  drawPoints(ROUTES[key]);
+  const note=document.getElementById('mapNote');
+  if(note && ROUTE_KM[key]!=null){
+    const km=String(ROUTE_KM[key]).replace('.',',');
+    note.innerHTML='<b>Parcours officiel</b> · '+km+' km';
+  }
+  drawRavitos(key);
+  drawElevation(key);
+}
+
+/* Import d'un fichier GPX : dessine le tracé officiel sans toucher au code */
+function loadGPX(file){
+  const reader = new FileReader();
+  reader.onload = e =>{
+    try{
+      const xml = new DOMParser().parseFromString(e.target.result,'application/xml');
+      let nodes = xml.getElementsByTagName('trkpt');
+      if(!nodes.length) nodes = xml.getElementsByTagName('rtept');
+      if(!nodes.length) nodes = xml.getElementsByTagName('wpt');
+      const pts = Array.from(nodes).map(n=>[
+        parseFloat(n.getAttribute('lat')), parseFloat(n.getAttribute('lon'))
+      ]).filter(p=>!isNaN(p[0])&&!isNaN(p[1]));
+      if(pts.length<2){ alert("Aucun point de tracé trouvé dans ce fichier GPX."); return; }
+      drawPoints(pts);
+      document.querySelectorAll('#mapToggle button').forEach(b=> b.classList.remove('active'));
+      const note = document.getElementById('mapNote');
+      note.innerHTML = '<b>'+ file.name +'</b> — parcours importé ✔';
+    }catch(err){ alert("Impossible de lire ce fichier GPX."); }
+  };
+  reader.readAsText(file);
+}
+
+/* ---- Ravitaillements (positionnés par km le long du tracé) ---- */
+const RAVITOS = { r21:[5,10,15,20], r10:[5], r5:[2.5] }; // km de chaque ravitaillement â A AJUSTER
+let ravitoMarkers=[];
+function haversineJS(a,b){const R=6371000,r=Math.PI/180;const la1=a[0]*r,la2=b[0]*r,dla=(b[0]-a[0])*r,dlo=(b[1]-a[1])*r;const h=Math.sin(dla/2)**2+Math.cos(la1)*Math.cos(la2)*Math.sin(dlo/2)**2;return 2*R*Math.asin(Math.sqrt(h));}
+function pointAtKm(pts,km){let cum=0;for(let i=1;i<pts.length;i++){const s=haversineJS(pts[i-1],pts[i])/1000;if(cum+s>=km){const f=(km-cum)/s;return [pts[i-1][0]+(pts[i][0]-pts[i-1][0])*f,pts[i-1][1]+(pts[i][1]-pts[i-1][1])*f];}cum+=s;}return pts[pts.length-1];}
+function drawRavitos(key){
+  if(!map) return;
+  ravitoMarkers.forEach(m=>map.removeLayer(m)); ravitoMarkers=[];
+  (RAVITOS[key]||[]).forEach((km,i)=>{
+    const pos=pointAtKm(ROUTES[key],km);
+    const mk=L.circleMarker(pos,{radius:8,color:'#ffffff',weight:2,fillColor:'#8BC9E1',fillOpacity:1})
+      .addTo(map).bindTooltip('Ravitaillement '+(i+1)+' · km '+String(km).replace('.',','),{direction:'top',offset:[0,-6]});
+    ravitoMarkers.push(mk);
+  });
+}
+
+/* ---- Profil altimétrique ---- */
+const ELEV_NAME = {r21:'Semi-marathon · 21,1 km', r10:'10 km · bord de mer', r5:'5 km · découverte'};
+function slopeColor(s){ if(s>=3)return '#C7381B'; if(s>=1)return '#F37252'; if(s<=-3)return '#2C7C9E'; if(s<=-1)return '#6FB8D4'; return '#F2A892'; }
+function drawElevation(key){
+  const data=ELEV[key]; if(!data) return;
+  const chart=document.getElementById('elevChart'); if(!chart) return;
+  const W=Math.max(320, chart.clientWidth||1000), H=200, padL=40,padR=12,padT=18,padB=26;
+  const kmMax=data[data.length-1][0];
+  let eMin=Infinity,eMax=-Infinity; data.forEach(p=>{ if(p[1]<eMin)eMin=p[1]; if(p[1]>eMax)eMax=p[1]; });
+  const lo=0, hi=Math.max(Math.ceil(eMax)+6, 60); // échelle large => rendu plat honnête
+  const X=km=> padL+(km/kmMax)*(W-padL-padR);
+  const Y=e=> padT+(1-(e-lo)/(hi-lo))*(H-padT-padB);
+  let lp=''; data.forEach((p,i)=>{ lp+=(i?'L':'M')+X(p[0]).toFixed(1)+' '+Y(p[1]).toFixed(1)+' '; });
+  const area=lp+'L'+X(kmMax).toFixed(1)+' '+Y(lo).toFixed(1)+' L'+X(0).toFixed(1)+' '+Y(lo).toFixed(1)+' Z';
+  let seg=''; for(let i=1;i<data.length;i++){ const a=data[i-1],b=data[i]; seg+='<line x1="'+X(a[0]).toFixed(1)+'" y1="'+Y(a[1]).toFixed(1)+'" x2="'+X(b[0]).toFixed(1)+'" y2="'+Y(b[1]).toFixed(1)+'" stroke="'+slopeColor(b[2])+'" stroke-width="3" stroke-linecap="round"/>'; }
+  const kmStep=kmMax>15?5:(kmMax>7?2:1);
+  let xt=''; for(let k=0;k<=kmMax+0.01;k+=kmStep){ xt+='<text class="elev-axis" x="'+X(k).toFixed(1)+'" y="'+(H-6)+'" text-anchor="middle">'+k+' km</text>'; }
+  let yg=''; [lo,Math.round((lo+hi)/2),hi].forEach(v=>{ const y=Y(v); yg+='<line class="elev-grid" x1="'+padL+'" y1="'+y.toFixed(1)+'" x2="'+(W-padR)+'" y2="'+y.toFixed(1)+'"/><text class="elev-axis" x="'+(padL-6)+'" y="'+(y+3).toFixed(1)+'" text-anchor="end">'+v+' m</text>'; });
+  let rav=''; (RAVITOS[key]||[]).forEach((km,i)=>{ if(km>kmMax+0.01)return; const x=X(km); rav+='<line x1="'+x.toFixed(1)+'" y1="'+padT+'" x2="'+x.toFixed(1)+'" y2="'+(H-padB)+'" stroke="#4E9CBC" stroke-width="1.2" stroke-dasharray="3 3"/><circle cx="'+x.toFixed(1)+'" cy="'+padT+'" r="8" fill="#8BC9E1" stroke="#fff" stroke-width="1.5"/><text x="'+x.toFixed(1)+'" y="'+(padT+3.5)+'" text-anchor="middle" font-size="9" font-weight="700" fill="#0E3A5C">'+(i+1)+'</text>'; });
+  const svg='<svg viewBox="0 0 '+W+' '+H+'" preserveAspectRatio="none" role="img" aria-label="Profil altimétrique">'
+    +'<defs><linearGradient id="elevFill" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#F37252" stop-opacity="0.22"/><stop offset="100%" stop-color="#F37252" stop-opacity="0.02"/></linearGradient></defs>'
+    +yg+xt+'<path d="'+area+'" fill="url(#elevFill)"/>'+seg+rav+'<circle class="elev-dot" id="elevDot" r="4.5"/></svg>';
+  const cursor=document.getElementById('elevCursor'), tip=document.getElementById('elevTip');
+  chart.innerHTML=svg; if(cursor)chart.appendChild(cursor); if(tip)chart.appendChild(tip);
+  const m=ELEV_META[key];
+  const set=(id,v)=>{const el=document.getElementById(id); if(el)el.textContent=v;};
+  set('elevTitle',ELEV_NAME[key]); set('elevGain','+'+m.gain+' m'); set('elevMax',m.max+' m'); set('elevMin',m.min+' m');
+  set('elevSlope',String(m.maxslope).replace('.',',')+' %');
+  ELC={data:data,X:X,Y:Y,W:W,H:H,padL:padL,padR:padR,kmMax:kmMax,chart:chart};
+  setupElevHover(chart,kmMax,W,padL,padR);
+}
+function showAtKm(km){
+  if(!ELC) return;
+  const data=ELC.data, X=ELC.X, Y=ELC.Y, W=ELC.W, H=ELC.H, chart=ELC.chart;
+  let idx=0,best=1e9; for(let i=0;i<data.length;i++){const d=Math.abs(data[i][0]-km); if(d<best){best=d;idx=i;}}
+  const p=data[idx];
+  const cursor=document.getElementById('elevCursor'), tip=document.getElementById('elevTip'), dot=document.getElementById('elevDot');
+  const r=chart.getBoundingClientRect();
+  const xpx=X(p[0])*r.width/W, ypx=Y(p[1])*r.height/H;
+  if(cursor){cursor.style.left=xpx+'px'; cursor.style.opacity=1;}
+  if(tip){tip.style.left=xpx+'px'; tip.style.top=ypx+'px'; tip.style.opacity=1; tip.innerHTML='<b>'+p[0].toFixed(1).replace('.',',')+' km</b> · '+Math.round(p[1])+' m · '+(p[2]>0?'+':'')+String(p[2]).replace('.',',')+' %';}
+  if(dot){dot.setAttribute('cx',X(p[0])); dot.setAttribute('cy',Y(p[1])); dot.style.opacity=1;}
+  if(map && mapCursor){ const pos=pointAtKm(currentRoutePts.length?currentRoutePts:ROUTES[currentRouteKey], p[0]); mapCursor.setLatLng(pos); if(!map.hasLayer(mapCursor)) mapCursor.addTo(map); }
+}
+function hideCursors(){
+  const cursor=document.getElementById('elevCursor'), tip=document.getElementById('elevTip'), dot=document.getElementById('elevDot');
+  if(cursor)cursor.style.opacity=0; if(tip)tip.style.opacity=0; if(dot)dot.style.opacity=0;
+  if(map && mapCursor && map.hasLayer(mapCursor)) map.removeLayer(mapCursor);
+}
+function setupElevHover(chart,kmMax,W,padL,padR){
+  function move(ev){
+    const r=chart.getBoundingClientRect();
+    const cx=(ev.touches?ev.touches[0].clientX:ev.clientX)-r.left;
+    const plotL=padL*r.width/W, plotW=(W-padL-padR)*r.width/W;
+    const frac=Math.min(1,Math.max(0,(cx-plotL)/plotW));
+    showAtKm(frac*kmMax);
+  }
+  chart.onmousemove=move; chart.onmouseleave=hideCursors; chart.ontouchstart=move; chart.ontouchmove=move; chart.ontouchend=hideCursors;
+}
+
+function initMap(){
+  if(typeof L === 'undefined') return; // Leaflet non chargé
+  map = L.map('map',{zoomControl:false, scrollWheelZoom:false, attributionControl:true})
+        .setView([43.549,7.024],14);
+  L.control.zoom({position:'topright'}).addTo(map);
+  L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png',{
+    attribution:'&copy; OpenStreetMap, &copy; CARTO',
+    subdomains:'abcd', maxZoom:19
+  }).addTo(map);
+  mapCursor = L.circleMarker([43.549,7.024],{radius:7,color:'#ffffff',weight:3,fillColor:'#F37252',fillOpacity:1,interactive:false});
+  drawRoute('r21');
+
+  document.querySelectorAll('#mapToggle button').forEach(btn=>{
+    btn.addEventListener('click', ()=>{
+      document.querySelectorAll('#mapToggle button').forEach(b=> b.classList.remove('active'));
+      btn.classList.add('active');
+      drawRoute(btn.dataset.route);
+    });
+  });
+
+  const gpxInput = document.getElementById('gpxInput');
+  if(gpxInput) gpxInput.addEventListener('change', e=>{ if(e.target.files[0]) loadGPX(e.target.files[0]); });
+
+  setTimeout(()=> map.invalidateSize(), 200);
+  addEventListener('load', ()=> map.invalidateSize());
+  addEventListener('load', ()=> drawElevation(currentRouteKey));
+  let _rT; addEventListener('resize', ()=>{ clearTimeout(_rT); _rT=setTimeout(()=>{ map.invalidateSize(); drawElevation(currentRouteKey); },200); });
+}
+initMap();
+</script>
+<script>
+/* Mémorise la langue choisie et la réapplique sur chaque page */
+(function(){
+  function apply(lang){
+    document.documentElement.lang=lang;
+    document.querySelectorAll('[data-fr]').forEach(function(el){var t=el.getAttribute('data-'+lang); if(t!=null) el.innerHTML=t;});
+    document.querySelectorAll('.lang-toggle button').forEach(function(b){b.classList.toggle('active',b.dataset.lang===lang);});
+  }
+  document.querySelectorAll('.lang-toggle button').forEach(function(b){
+    b.addEventListener('click',function(){try{localStorage.setItem('sdc_lang',b.dataset.lang);}catch(e){}});
+  });
+  try{var l=localStorage.getItem('sdc_lang'); if(l&&l!=='fr') apply(l);}catch(e){}
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Carte — Semi de Cannes</title>
+<meta name="description" content="Carte du Semi de Cannes : village, parcours, ravitaillements, parkings et hôtels partenaires.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:ital,wdth,wght@0,75..125,400..900;1,75..125,400..900&family=Hanken+Grotesk:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
+</head>
+<body>
+<div class="topbar">
+  <div class="wrap">
+    <div class="lang-toggle" aria-label="Choix de la langue">
+      <button data-lang="fr" class="active">FR</button><span>/</span><button data-lang="en">EN</button>
+    </div>
+    <div class="socials">
+      <a href="https://www.facebook.com/SemiDeCannes/" target="_blank" rel="noopener">Facebook</a>
+      <a href="https://www.instagram.com/semidecannes/" target="_blank" rel="noopener">Instagram</a>
+      <a href="mailto:contact@semi-cannes.com">Contact</a>
+    </div>
+  </div>
+</div>
+<header class="header" id="header">
+  <div class="wrap nav">
+    <a href="index.html" class="brand">Semi <b>de</b> Cannes</a>
+    <nav class="nav-links" id="navLinks">
+      <a href="la-course.html" data-fr="La course" data-en="The race">La course</a>
+      <a href="inscriptions.html" data-fr="Inscriptions" data-en="Registration">Inscriptions</a>
+      <a href="carte.html" class="active" data-fr="Carte" data-en="Map">Carte</a>
+      <a href="infos-pratiques.html" data-fr="Infos utiles" data-en="Practical info">Infos utiles</a>
+      <a href="partenaires.html" data-fr="Partenaires" data-en="Sponsors">Partenaires</a>
+      <a href="contact.html" data-fr="Contact" data-en="Contact">Contact</a>
+    </nav>
+    <div class="nav-cta">
+      <a href="inscriptions.html" class="btn btn-primary" data-fr="S'inscrire" data-en="Register">S'inscrire</a>
+      <button class="burger" id="burger" aria-label="Menu"><span></span><span></span><span></span></button>
+    </div>
+  </div>
+</header>
+<section class="page-hero">
+  <div class="wrap">
+    <div class="crumbs"><a href="index.html">Accueil</a> · <span>Carte</span></div>
+    <h1 data-fr="Carte" data-en="Map">Carte</h1>
+    <p data-fr="Le village, le parcours, les ravitaillements, les parkings et les hôtels partenaires, sur une seule carte." data-en="The village, the route, the aid stations, car parks and partner hotels, all on one map.">Le village, le parcours, les ravitaillements, les parkings et les hôtels partenaires, sur une seule carte.</p>
+  </div>
+</section>
+
+<section class="info-block" id="carte">
+  <div class="wrap">
+    <div class="carte-filters">
+      <button class="cfilter" data-cat="parcours"><i style="background:#F37252"></i> <span data-fr="Parcours" data-en="Route">Parcours</span></button>
+      <button class="cfilter" data-cat="village"><i class="badge" style="background:#F37252">V</i> <span data-fr="Village / Départ" data-en="Village / Start">Village / Départ</span></button>
+      <button class="cfilter" data-cat="hotels"><i class="badge" style="background:#1A4256">H</i> <span data-fr="Hôtels partenaires" data-en="Partner hotels">Hôtels partenaires</span></button>
+      <button class="cfilter" data-cat="parkings"><i class="badge" style="background:#2E6FA8">P</i> <span data-fr="Parkings" data-en="Car parks">Parkings</span></button>
+      <button class="cfilter" data-cat="ravitos"><i class="badge" style="background:#8BC9E1;color:#0E3A5C">R</i> <span data-fr="Ravitaillements" data-en="Aid stations">Ravitaillements</span></button>
+      <button class="cfilter vzoom" id="vzoom" type="button">⛺ <span data-fr="Voir le village" data-en="See the village">Voir le village</span></button>
+    </div>
+    <div id="carteMap"></div>
+    <p class="elev-foot" style="margin-top:14px" data-fr="Cliquez un marqueur pour le détail (adresse, réservation, itinéraire). Ravitaillements indicatifs." data-en="Click a marker for details (address, booking, directions). Aid stations are indicative.">Cliquez un marqueur pour le détail (adresse, réservation, itinéraire). Ravitaillements indicatifs.</p>
+  </div>
+</section>
+
+<section class="info-block" id="plan-village">
+  <div class="wrap">
+    <div class="head"><span class="ic">⛺</span><h2 data-fr="Plan du village départ" data-en="Start village map">Plan du village départ</h2></div>
+    <p class="intro" data-fr="Esplanade Pantiero : retrait des dossards, consigne, stands partenaires, animations, poste de secours, point d'eau et arrivée (ligne rouge)." data-en="Esplanade Pantiero: bib pick-up, bag drop, partner stands, entertainment, first aid, water point and finish (red line).">Esplanade Pantiero : retrait des dossards, consigne, stands partenaires, animations, poste de secours, point d'eau et arrivée (ligne rouge).</p>
+    <a class="village-plan" href="assets/plan-village.jpg" target="_blank" rel="noopener">
+      <img src="assets/plan-village.jpg" alt="Plan du village du Semi de Cannes — Esplanade Pantiero">
+    </a>
+    <p class="elev-foot" style="margin-top:12px" data-fr="Plan officiel — édition 2026. Cliquez pour agrandir." data-en="Official map — 2026 edition. Click to enlarge.">Plan officiel — édition 2026. Cliquez pour agrandir.</p>
+  </div>
+</section>
+<footer class="footer">
+  <div class="wrap foot-grid">
+    <div class="foot-brand">
+      <span class="brand">Semi <b style="color:var(--coral)">de</b> Cannes</span>
+      <p data-fr="La course mythique de la Côte d'Azur. 21,1 km · 10 km · 5 km au bord de la Méditerranée." data-en="The Riviera's iconic race. 21.1 km · 10 km · 5 km by the Mediterranean.">La course mythique de la Côte d'Azur. 21,1 km · 10 km · 5 km au bord de la Méditerranée.</p>
+      <div class="foot-socials">
+        <a href="https://www.facebook.com/SemiDeCannes/" target="_blank" rel="noopener" aria-label="Facebook">f</a>
+        <a href="https://www.instagram.com/semidecannes/" target="_blank" rel="noopener" aria-label="Instagram">◎</a>
+        <a href="mailto:contact@semi-cannes.com" aria-label="Email">✉</a>
+      </div>
+    </div>
+    <div class="foot-col">
+      <h5 data-fr="La course" data-en="The race">La course</h5>
+      <a href="la-course.html#epreuves" data-fr="Les épreuves" data-en="The races">Les épreuves</a>
+      <a href="la-course.html#reglement" data-fr="Règlement" data-en="Rules">Règlement</a>
+      <a href="la-course.html#palmares" data-fr="Palmarès" data-en="Hall of fame">Palmarès</a>
+      <a href="la-course.html#resultats" data-fr="Résultats" data-en="Results">Résultats</a>
+    </div>
+    <div class="foot-col">
+      <h5 data-fr="Infos utiles" data-en="Practical info">Infos utiles</h5>
+      <a href="infos-pratiques.html#acces" data-fr="Venir à Cannes" data-en="Getting here">Venir à Cannes</a>
+      <a href="infos-pratiques.html#parking" data-fr="Parking" data-en="Parking">Parking</a>
+      <a href="infos-pratiques.html#hotels" data-fr="Hôtels" data-en="Hotels">Hôtels</a>
+      <a href="inscriptions.html" data-fr="Inscriptions" data-en="Registration">Inscriptions</a>
+    </div>
+    <div class="foot-col">
+      <h5 data-fr="L'événement" data-en="The event">L'événement</h5>
+      <a href="benevoles.html" data-fr="Devenir bénévole" data-en="Volunteer">Devenir bénévole</a>
+      <a href="partenaires.html" data-fr="Partenaires" data-en="Sponsors">Partenaires</a>
+      <a href="contact.html" data-fr="Contact" data-en="Contact">Contact</a>
+    </div>
+  </div>
+  <div class="wrap foot-bottom">
+    <span>© <span id="year"></span> Semi de Cannes</span>
+    <span><a href="#" data-fr="Mentions légales" data-en="Legal">Mentions légales</a> · <a href="#" data-fr="Confidentialité" data-en="Privacy">Confidentialité</a></span>
+  </div>
+</footer>
+<script>
+document.getElementById('year').textContent=new Date().getFullYear();
+const burger=document.getElementById('burger'),navLinks=document.getElementById('navLinks');
+burger.addEventListener('click',()=>navLinks.classList.toggle('open'));
+navLinks.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>navLinks.classList.remove('open')));
+const header=document.getElementById('header');
+addEventListener('scroll',()=>header.classList.toggle('scrolled',scrollY>10));
+const langBtns=document.querySelectorAll('.lang-toggle button');
+function setLang(lang){document.documentElement.lang=lang;document.querySelectorAll('[data-fr]').forEach(el=>{const t=el.getAttribute('data-'+lang);if(t!=null)el.innerHTML=t;});langBtns.forEach(b=>b.classList.toggle('active',b.dataset.lang===lang));}
+langBtns.forEach(b=>b.addEventListener('click',()=>setLang(b.dataset.lang)));
+</script>
+<script>
+const ROUTES = {
+  // Tracés OFFICIELS — extraits des GPX Openrunner (édition 2026)
+  r21: [[43.55141,7.01465],[43.5515,7.01647],[43.55146,7.01695],[43.55116,7.01838],[43.55081,7.01944],[43.55071,7.01998],[43.55067,7.02077],[43.55052,7.02169],[43.54998,7.02435],[43.54945,7.02617],[43.54838,7.02897],[43.54711,7.03147],[43.54596,7.03365],[43.54592,7.03385],[43.54596,7.03389],[43.54619,7.03349],[43.54768,7.03068],[43.54861,7.02881],[43.54933,7.02692],[43.54988,7.02518],[43.55027,7.02345],[43.5507,7.02127],[43.5508,7.02028],[43.55088,7.01951],[43.55108,7.01893],[43.55147,7.01752],[43.55159,7.01681],[43.55163,7.01648],[43.5515,7.01484],[43.55132,7.01373],[43.55094,7.01256],[43.55072,7.01211],[43.54969,7.01227],[43.54841,7.01254],[43.54833,7.01234],[43.54819,7.01059],[43.54842,7.00948],[43.54871,7.00812],[43.54889,7.00633],[43.54893,7.0059],[43.54907,7.00385],[43.54904,7.0029],[43.54903,7.00212],[43.54906,7.00123],[43.5492,6.99832],[43.54925,6.9967],[43.5492,6.99314],[43.54907,6.99078],[43.54889,6.98852],[43.54888,6.98873],[43.54901,6.9904],[43.54916,6.99315],[43.54922,6.99669],[43.54916,6.99831],[43.54905,7.001],[43.54902,7.00285],[43.54904,7.00378],[43.5489,7.00584],[43.5488,7.00711],[43.5487,7.00799],[43.5483,7.00986],[43.54814,7.01062],[43.54825,7.01192],[43.54829,7.01246],[43.54843,7.01258],[43.54951,7.01236],[43.55047,7.01216],[43.55067,7.01223],[43.55076,7.01227],[43.55087,7.01263],[43.55124,7.01375],[43.55139,7.01455],[43.55149,7.01559],[43.55151,7.01646],[43.55147,7.01693],[43.55116,7.01835],[43.5508,7.01949],[43.55071,7.01995],[43.55067,7.02075],[43.55051,7.02172],[43.54996,7.02441],[43.54944,7.02621],[43.54837,7.02901],[43.54706,7.03157],[43.54598,7.03361],[43.54593,7.03376],[43.54597,7.03387],[43.54715,7.03167],[43.54825,7.02956],[43.54903,7.02769],[43.54965,7.02593],[43.55003,7.02454],[43.55059,7.02178],[43.55079,7.02059],[43.55083,7.0198],[43.55102,7.01908],[43.5513,7.0182],[43.55151,7.01723],[43.5516,7.0167],[43.55161,7.01653],[43.55161,7.01612],[43.55156,7.01535],[43.5514,7.01415],[43.55117,7.01324],[43.55079,7.01217],[43.55059,7.0121],[43.54979,7.01225],[43.54909,7.0124],[43.54839,7.01254],[43.54832,7.01231],[43.54819,7.01056],[43.54843,7.00944],[43.54878,7.00771],[43.54889,7.00629],[43.54892,7.00588],[43.54907,7.00381],[43.54904,7.00286],[43.54903,7.00207],[43.54906,7.00118],[43.5492,6.99826],[43.54927,6.99532],[43.54919,6.99305],[43.54905,6.99045],[43.54894,6.98908],[43.54886,6.9883],[43.54871,6.98726],[43.54843,6.98584],[43.54809,6.98399],[43.54785,6.98241],[43.54776,6.98162],[43.5476,6.98042],[43.54753,6.97964],[43.54737,6.97844],[43.54707,6.97705],[43.54678,6.97569],[43.5461,6.9731],[43.54554,6.97109],[43.5449,6.96911],[43.5441,6.96709],[43.544,6.96663],[43.54368,6.96568],[43.54329,6.96467],[43.54264,6.96323],[43.54209,6.96204],[43.54235,6.96274],[43.54287,6.96383],[43.54354,6.96541],[43.54364,6.96569],[43.54401,6.96679],[43.54418,6.96736],[43.54531,6.97037],[43.54579,6.97208],[43.54637,6.97424],[43.5468,6.97595],[43.54724,6.97797],[43.54746,6.9791],[43.54751,6.9799],[43.54754,6.98031],[43.54771,6.98147],[43.54779,6.98215],[43.548,6.98364],[43.54828,6.98514],[43.54874,6.98759],[43.54902,6.99046],[43.54916,6.99301],[43.54924,6.99532],[43.5492,6.99741],[43.54913,6.99926],[43.54906,7.00061],[43.54902,7.00179],[43.54902,7.00287],[43.54904,7.0038],[43.5489,7.00588],[43.54887,7.00624],[43.54876,7.00768],[43.54848,7.00907],[43.54819,7.01035],[43.54814,7.01066],[43.54817,7.01123],[43.54827,7.0122],[43.54832,7.01253],[43.54855,7.01257],[43.54989,7.01228],[43.55058,7.01215],[43.55065,7.01224],[43.55077,7.01259],[43.55099,7.01317],[43.55095,7.0133],[43.5509,7.01352],[43.55086,7.01389],[43.55085,7.014]],
+  r10: [[43.55141,7.01465],[43.55152,7.01601],[43.55151,7.01646],[43.55146,7.01692],[43.55133,7.0178],[43.55092,7.01909],[43.5508,7.01949],[43.55075,7.01969],[43.5507,7.02022],[43.55066,7.02073],[43.5506,7.02123],[43.55051,7.02172],[43.55027,7.02302],[43.54996,7.02441],[43.5498,7.02505],[43.54944,7.02621],[43.54893,7.02767],[43.54837,7.02901],[43.5478,7.03014],[43.54706,7.03157],[43.54622,7.03322],[43.546,7.03363],[43.54597,7.03371],[43.54595,7.03378],[43.54596,7.03381],[43.54599,7.03382],[43.54601,7.03381],[43.54628,7.03332],[43.54715,7.03167],[43.54774,7.03056],[43.54825,7.02956],[43.54866,7.02869],[43.54903,7.02769],[43.54936,7.02678],[43.54965,7.02593],[43.5499,7.02504],[43.55003,7.02454],[43.55028,7.02343],[43.55059,7.02178],[43.5507,7.02123],[43.55079,7.02059],[43.55081,7.02025],[43.55083,7.0198],[43.5509,7.01948],[43.55102,7.01908],[43.55109,7.01889],[43.5513,7.0182],[43.55148,7.01747],[43.55151,7.01723],[43.55157,7.01684],[43.5516,7.01669],[43.55163,7.01648],[43.55162,7.01611],[43.55158,7.01563],[43.55152,7.01495],[43.55148,7.01459],[43.5514,7.01413],[43.55128,7.01361],[43.55117,7.01322],[43.55084,7.0123],[43.55077,7.01216],[43.55069,7.01211],[43.55059,7.0121],[43.55013,7.01218],[43.54979,7.01225],[43.54934,7.01235],[43.54909,7.0124],[43.54879,7.01246],[43.54849,7.01253],[43.54838,7.01252],[43.54835,7.01246],[43.54832,7.01231],[43.54824,7.01143],[43.54819,7.01056],[43.54829,7.01008],[43.54843,7.00944],[43.54873,7.00802],[43.54878,7.00771],[43.54879,7.00753],[43.54889,7.00629],[43.54891,7.00605],[43.54892,7.00588],[43.549,7.00472],[43.54907,7.00381],[43.54906,7.00332],[43.54904,7.00286],[43.54904,7.00254],[43.54904,7.00207],[43.54905,7.00172],[43.54907,7.00118],[43.54909,7.00063],[43.54918,6.99841],[43.54924,6.99659],[43.54927,6.99532],[43.54926,6.99466],[43.54923,6.99388],[43.5492,6.99307],[43.54914,6.99203],[43.54912,6.99149],[43.54907,6.99078],[43.549,6.98976],[43.54896,6.98909],[43.54892,6.98865],[43.54887,6.9883],[43.54878,6.9876],[43.54871,6.98722],[43.54859,6.98661],[43.54844,6.98584],[43.54823,6.98473],[43.54809,6.98399],[43.548,6.98343],[43.54789,6.98265],[43.54782,6.98213],[43.54776,6.98162],[43.54769,6.98108],[43.54762,6.98066],[43.54758,6.98035],[43.54755,6.98012],[43.54753,6.97988],[43.54753,6.97961],[43.54748,6.97914],[43.5474,6.97854],[43.54731,6.97811],[43.54725,6.97795],[43.54718,6.97778],[43.54713,6.97774],[43.54715,6.97781],[43.54723,6.97798],[43.54728,6.97815],[43.54737,6.97854],[43.54745,6.97908],[43.5475,6.9796],[43.5475,6.97989],[43.54752,6.98016],[43.54754,6.98031],[43.54757,6.98052],[43.54762,6.9808],[43.54771,6.98149],[43.54775,6.98178],[43.54785,6.98261],[43.54794,6.98326],[43.548,6.98364],[43.54808,6.98409],[43.54828,6.98515],[43.54844,6.98602],[43.54875,6.9876],[43.54884,6.98829],[43.54889,6.98871],[43.54893,6.98923],[43.54902,6.99046],[43.54908,6.99149],[43.54916,6.99301],[43.54919,6.99383],[43.54922,6.99475],[43.54923,6.99535],[43.5492,6.99653],[43.54917,6.99741],[43.54914,6.99824],[43.5491,6.99926],[43.54908,6.99973],[43.54905,7.00061],[43.54902,7.0013],[43.549,7.00179],[43.549,7.00229],[43.549,7.00287],[43.54902,7.00333],[43.54903,7.0038],[43.54896,7.00472],[43.54889,7.00569],[43.54886,7.00603],[43.54885,7.00624],[43.54878,7.00712],[43.54875,7.00767],[43.54868,7.00801],[43.54846,7.00906],[43.54829,7.00988],[43.54818,7.01034],[43.54815,7.01047],[43.54814,7.01058],[43.54817,7.01116],[43.54818,7.01124],[43.54818,7.01143],[43.54827,7.01232],[43.54828,7.01244],[43.54832,7.01252],[43.54837,7.01258],[43.54855,7.01257],[43.54894,7.01248],[43.54989,7.01228],[43.55046,7.01215],[43.55059,7.01213],[43.55064,7.01216],[43.55067,7.01225],[43.55069,7.0123],[43.55069,7.01237],[43.55085,7.01278],[43.55099,7.01317],[43.55099,7.01323],[43.55096,7.0133],[43.55091,7.01339],[43.55088,7.01349],[43.55085,7.01367],[43.55085,7.01392],[43.55085,7.014]],
+  r5: [[43.55141,7.01465],[43.55147,7.01532],[43.55152,7.01602],[43.55152,7.01646],[43.55147,7.01692],[43.55132,7.0178],[43.55092,7.01909],[43.5508,7.01949],[43.55074,7.01982],[43.55069,7.02034],[43.55068,7.0207],[43.5506,7.02123],[43.55051,7.02172],[43.55027,7.02302],[43.54996,7.02441],[43.5498,7.02505],[43.54944,7.02621],[43.54893,7.02767],[43.54837,7.02901],[43.5478,7.03014],[43.54706,7.03157],[43.54621,7.0332],[43.54598,7.03362],[43.54596,7.0337],[43.54593,7.03379],[43.54593,7.03387],[43.54598,7.03384],[43.54604,7.03374],[43.54628,7.03332],[43.54715,7.03167],[43.54774,7.03056],[43.54825,7.02956],[43.54866,7.02869],[43.54903,7.02769],[43.54936,7.02678],[43.54965,7.02593],[43.5499,7.02504],[43.55003,7.02454],[43.55028,7.02343],[43.55059,7.02178],[43.5507,7.02123],[43.55079,7.02059],[43.55081,7.02025],[43.55083,7.0198],[43.5509,7.01948],[43.55102,7.01908],[43.55109,7.01889],[43.5513,7.0182],[43.55148,7.01747],[43.55151,7.01723],[43.55157,7.01689],[43.5516,7.01672],[43.55162,7.01661],[43.55163,7.01646],[43.55162,7.01607],[43.55156,7.01536],[43.55152,7.01495],[43.55145,7.01435],[43.55134,7.01376],[43.55119,7.01319],[43.55097,7.01259],[43.5508,7.01217],[43.55076,7.01211],[43.55071,7.0121],[43.55067,7.01213],[43.55059,7.0121],[43.55013,7.01219],[43.54979,7.01226],[43.54934,7.01235],[43.54908,7.01241],[43.5488,7.01247],[43.54851,7.01254],[43.54837,7.01253],[43.54834,7.01246],[43.54832,7.01231],[43.54824,7.01143],[43.54822,7.01125],[43.5482,7.01102],[43.54818,7.01077],[43.54817,7.01052],[43.54823,7.01026],[43.54827,7.01012],[43.54847,7.00923],[43.54854,7.00889],[43.5486,7.0086],[43.54861,7.00852],[43.54858,7.00859],[43.54852,7.00888],[43.54832,7.00978],[43.54819,7.01029],[43.54815,7.01046],[43.54814,7.01059],[43.54815,7.01078],[43.54817,7.0111],[43.54817,7.01116],[43.54819,7.01147],[43.54828,7.01232],[43.54829,7.01246],[43.54832,7.01252],[43.54838,7.01258],[43.54854,7.01256],[43.54894,7.01248],[43.54989,7.01228],[43.55051,7.01214],[43.55059,7.01214],[43.55065,7.01216],[43.55067,7.01223],[43.5507,7.01229],[43.55069,7.01235],[43.55073,7.01247],[43.55084,7.01279],[43.55098,7.01317],[43.55099,7.01323],[43.55096,7.0133],[43.55091,7.01339],[43.55088,7.01349],[43.55085,7.01367],[43.55085,7.01392],[43.55085,7.014]]
+};
+const RAVITOS = { r21:[5,10,15,20], r10:[5], r5:[2.5] };
+const VILLAGE_PT={lat:43.55141,lng:7.01465};
+const HOTELS=[
+ {name:"Hôtel Splendid", stars:"★★★★", lat:43.552062, lng:7.0159559, addr:"4-6 Rue Félix Faure, 06400 Cannes", tel:"+33 4 97 06 22 22", web:"http://www.splendid-hotel-cannes.com/", logo:"assets/partenaires/hotel-splendid.png", note:"Sur le port des yachts, à ~150 m du départ."},
+ {name:"Hôtel L'Estérel", stars:"★★", lat:43.5534513, lng:7.0192404, addr:"15 Rue du Vingt-Quatre Août, 06400 Cannes", tel:"+33 4 93 38 82 82", web:"https://www.hotellesterel.com/", logo:"assets/partenaires/hotel-esterel.png", note:"Centre-ville, face à la gare."},
+ {name:"Belle Plage", stars:"Hôtel · Spa · Restaurant", lat:43.5495883, lng:7.0075474, addr:"2 Rue Brougham, 06400 Cannes", tel:"+33 4 93 06 25 50", web:"https://www.hotelbelleplage.fr/", logo:"assets/partenaires/hotel-belle-plage.png", note:"Bord de mer, côté Plage du Midi."}
+];
+const PARKINGS=[
+ {name:"Parking Pantiero", lat:43.5510067, lng:7.0133434, note:"Au pied du village, le plus proche du départ."},
+ {name:"Parking du Palais des Festivals", lat:43.5511534, lng:7.0166652, note:"Sous le Palais, à côté du village."},
+ {name:"Parking Laubeuf", lat:43.5476822, lng:7.0120136, note:"Quai Max Laubeuf, le long du Vieux Port."},
+ {name:"Parking Suquet Forville", lat:43.5529303, lng:7.0105661, note:"Centre-ville, quartier du Suquet."},
+ {name:"Parking Gare de Cannes", lat:43.553688, lng:7.020999, note:"À la gare SNCF, pratique en train."}
+];
+function haversineJS(a,b){const R=6371000,r=Math.PI/180;const la1=a[0]*r,la2=b[0]*r,dla=(b[0]-a[0])*r,dlo=(b[1]-a[1])*r;const h=Math.sin(dla/2)**2+Math.cos(la1)*Math.cos(la2)*Math.sin(dlo/2)**2;return 2*R*Math.asin(Math.sqrt(h));}
+function pointAtKm(pts,km){let cum=0;for(let i=1;i<pts.length;i++){const s=haversineJS(pts[i-1],pts[i])/1000;if(cum+s>=km){const f=(km-cum)/s;return [pts[i-1][0]+(pts[i][0]-pts[i-1][0])*f,pts[i-1][1]+(pts[i][1]-pts[i-1][1])*f];}cum+=s;}return pts[pts.length-1];}
+function letterIcon(letter,cls){return L.divIcon({className:'',html:'<div class="mk '+cls+'">'+letter+'</div>',iconSize:[30,30],iconAnchor:[15,15],popupAnchor:[0,-15]});}
+function dir(lat,lng){return 'https://www.google.com/maps/dir/?api=1&destination='+lat+','+lng;}
+
+(function(){
+  if(typeof L==='undefined') return;
+  var map=L.map('carteMap',{scrollWheelZoom:false});
+  L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png',{attribution:'&copy; OpenStreetMap, &copy; CARTO',subdomains:'abcd',maxZoom:19}).addTo(map);
+  var groups={parcours:L.layerGroup(),village:L.layerGroup(),hotels:L.layerGroup(),parkings:L.layerGroup(),ravitos:L.layerGroup()};
+
+  var pts=ROUTES.r21;
+  L.polyline(pts,{color:'#ffffff',weight:9,opacity:.9,lineJoin:'round'}).addTo(groups.parcours);
+  L.polyline(pts,{color:'#F37252',weight:5,lineJoin:'round'}).addTo(groups.parcours);
+
+  /* ---- Village modélisé sur l'Esplanade Pantiero ---- */
+  var V0={lat:43.55141,lng:7.01465}, TH=98*Math.PI/180, kLat=111320, kLng=111320*Math.cos(V0.lat*Math.PI/180);
+  function loc(a,c){ var em=a*Math.sin(TH)+c*(-Math.cos(TH)), nm=a*Math.cos(TH)+c*Math.sin(TH); return [V0.lat+nm/kLat, V0.lng+em/kLng]; }
+  var foot=[loc(-15,27),loc(182,23),loc(182,-27),loc(-15,-27)];
+  var villageBounds=L.latLngBounds(foot);
+  var villageDetail=L.layerGroup();
+  L.polygon(foot,{color:'#F37252',weight:1.5,dashArray:'6 6',fillColor:'#F37252',fillOpacity:.05,interactive:false}).addTo(villageDetail);
+  L.polyline([loc(4,6),loc(50,-7)],{color:'#E2342A',weight:7,opacity:.95,lineCap:'round'}).bindTooltip('🏁 Arrivée',{permanent:true,direction:'top',className:'vtip vtip-fin'}).addTo(villageDetail);
+  function vdot(){return L.divIcon({className:'',html:'<span class="vdot"></span>',iconSize:[12,12],iconAnchor:[6,6]});}
+  var Z=[["🚩","Départ",0,3],["🎽","Retrait dossards",68,13],["🧳","Consigne",50,13],["🛍️","Stands & exposants",96,7],["🎉","Animations",116,1],["⛑️","Poste de secours",88,-7],["🚰","Point d'eau",79,-11],["🚻","Sanitaires",132,-2],["🍽️","Restauration",120,10],["🚪","Entrée / Sortie",158,9]];
+  Z.forEach(function(z){ L.marker(loc(z[2],z[3]),{icon:vdot()}).bindTooltip('<b>'+z[0]+'</b> '+z[1],{permanent:true,direction:'right',className:'vtip',offset:[6,0]}).addTo(villageDetail); });
+  L.marker([V0.lat,V0.lng],{icon:letterIcon('V','mk-v')})
+    .bindPopup('<div class="lpop"><h4>Village · Esplanade Pantiero</h4><p>Départ &amp; arrivée, dossards, consigne, stands, animations, secours, point d\'eau, sanitaires.</p><div class="pop-actions"><a class="pbtn book" href="#plan-village">Plan officiel</a><a class="pbtn dir" href="'+dir(V0.lat,V0.lng)+'" target="_blank" rel="noopener">Itinéraire</a></div></div>')
+    .addTo(groups.village);
+  function updateVillageDetail(){ var show=map.getZoom()>=16 && map.hasLayer(groups.village); if(show){ if(!map.hasLayer(villageDetail)) villageDetail.addTo(map);} else { if(map.hasLayer(villageDetail)) map.removeLayer(villageDetail);} }
+
+  HOTELS.forEach(function(h){
+    var html='<div class="lpop">'+(h.logo?'<img src="'+h.logo+'" alt="'+h.name+'">':'')
+      +'<h4>'+h.name+'</h4><div class="stars">'+h.stars+'</div>'
+      +'<p>'+h.addr+'</p><p>'+h.tel+'</p><p>'+h.note+'</p>'
+      +'<div class="pop-actions"><a class="pbtn book" href="'+h.web+'" target="_blank" rel="noopener">Réserver</a>'
+      +'<a class="pbtn dir" href="'+dir(h.lat,h.lng)+'" target="_blank" rel="noopener">Itinéraire</a></div></div>';
+    L.marker([h.lat,h.lng],{icon:letterIcon('H','mk-h')}).bindPopup(html).addTo(groups.hotels);
+  });
+
+  PARKINGS.forEach(function(p){
+    var html='<div class="lpop"><h4>'+p.name+'</h4><p>'+p.note+'</p>'
+      +'<div class="pop-actions"><a class="pbtn dir" href="'+dir(p.lat,p.lng)+'" target="_blank" rel="noopener">Itinéraire</a></div></div>';
+    L.marker([p.lat,p.lng],{icon:letterIcon('P','mk-p')}).bindPopup(html).addTo(groups.parkings);
+  });
+
+  (RAVITOS.r21||[]).forEach(function(km,i){
+    var pos=pointAtKm(ROUTES.r21,km);
+    L.marker(pos,{icon:letterIcon('R','mk-r')})
+      .bindPopup('<div class="lpop"><h4>Ravitaillement '+(i+1)+'</h4><p>km '+String(km).replace('.',',')+'</p><p style="color:#8a98a4">Emplacement indicatif.</p></div>')
+      .addTo(groups.ravitos);
+  });
+
+  Object.keys(groups).forEach(function(k){ groups[k].addTo(map); });
+
+  var all=pts.slice();
+  all.push([VILLAGE_PT.lat,VILLAGE_PT.lng]);
+  HOTELS.forEach(function(h){all.push([h.lat,h.lng]);});
+  PARKINGS.forEach(function(p){all.push([p.lat,p.lng]);});
+  map.fitBounds(L.latLngBounds(all).pad(0.06));
+
+  document.querySelectorAll('.cfilter').forEach(function(btn){
+    btn.addEventListener('click',function(){
+      var k=btn.dataset.cat; if(!k||!groups[k])return; btn.classList.toggle('off');
+      if(map.hasLayer(groups[k])) map.removeLayer(groups[k]); else groups[k].addTo(map);
+      updateVillageDetail();
+    });
+  });
+  var vz=document.getElementById('vzoom');
+  if(vz) vz.addEventListener('click',function(){ map.flyToBounds(villageBounds.pad(0.5),{maxZoom:18}); });
+  map.on('zoomend moveend',updateVillageDetail);
+  updateVillageDetail();
+  setTimeout(function(){map.invalidateSize();},200);
+  addEventListener('load',function(){map.invalidateSize();});
+})();
+</script>
+<script>
+/* Mémorise la langue choisie et la réapplique sur chaque page */
+(function(){
+  function apply(lang){
+    document.documentElement.lang=lang;
+    document.querySelectorAll('[data-fr]').forEach(function(el){var t=el.getAttribute('data-'+lang); if(t!=null) el.innerHTML=t;});
+    document.querySelectorAll('.lang-toggle button').forEach(function(b){b.classList.toggle('active',b.dataset.lang===lang);});
+  }
+  document.querySelectorAll('.lang-toggle button').forEach(function(b){
+    b.addEventListener('click',function(){try{localStorage.setItem('sdc_lang',b.dataset.lang);}catch(e){}});
+  });
+  try{var l=localStorage.getItem('sdc_lang'); if(l&&l!=='fr') apply(l);}catch(e){}
+})();
+</script>
+</body>
+</html>
