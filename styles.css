@@ -644,3 +644,13 @@ section{padding:96px 0}
 .leaflet-tooltip.vtip-fin{background:#E2342A;color:#fff;font-size:.76rem}
 .cfilter.vzoom{border-color:var(--coral);color:var(--coral);font-weight:800}
 .cfilter.vzoom:hover{background:var(--coral);color:#fff}
+
+/* ---- Flèches de sens du parcours + dots village colorés ---- */
+.rarrow{color:#fff;font-size:13px;line-height:1;text-align:center;text-shadow:0 0 2px rgba(16,46,63,.95),0 0 3px rgba(16,46,63,.7)}
+.vdot.red{background:#E2342A}
+.vdot.blue{background:#2E6FA8}
+.leaflet-tooltip.vtip{font-size:.74rem}
+
+.leaflet-tooltip.vlabel{background:rgba(255,255,255,.9);border:none;border-radius:5px;box-shadow:0 1px 4px rgba(16,46,63,.25);
+  font-family:var(--d-display);font-weight:700;font-stretch:104%;font-size:.64rem;color:var(--navy);padding:1px 6px;white-space:nowrap;line-height:1.25}
+.leaflet-tooltip.vlabel::before{display:none!important;border:none!important}

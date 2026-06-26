@@ -162,40 +162,40 @@ function dir(lat,lng){return 'https://www.google.com/maps/dir/?api=1&destination
   function arrowIcon(br){return L.divIcon({className:'',html:'<div class="rarrow" style="transform:rotate('+(br-90)+'deg)">\u25B6</div>',iconSize:[16,16],iconAnchor:[8,8]});}
   (function(){var acc=0,STEP=1200;for(var i=1;i<pts.length;i++){acc+=haversineJS(pts[i-1],pts[i]);if(acc>=STEP){acc=0;L.marker(pts[i],{icon:arrowIcon(bearingDeg(pts[i-1],pts[i])),interactive:false,keyboard:false}).addTo(groups.parcours);}}})();
 
-  /* ---- Village modélisé, ancré sur l'ARRIVÉE du tracé ---- */
-  var A=pts[pts.length-1];                         // fin du parcours = arrivée
-  var back=pts[0],acc2=0;                           // point ~45 m avant l'arrivée
-  for(var bi=pts.length-1;bi>0;bi--){acc2+=haversineJS(pts[bi],pts[bi-1]);if(acc2>=45){back=pts[bi-1];break;}}
+  /* ---- Village en petites zones, ancré sur l'ARRIVÉE du tracé ---- */
+  var A=pts[pts.length-1];                          // fin du parcours = arrivée
+  var back=A,acc2=0;                                 // cap final (~18 m avant la fin)
+  for(var bi=pts.length-1;bi>0;bi--){acc2+=haversineJS(pts[bi],pts[bi-1]);if(acc2>=18){back=pts[bi-1];break;}}
   var RUN=bearingDeg(back,A), RUNr=RUN*Math.PI/180, ACRr=(RUN-90)*Math.PI/180, mLng=111320*Math.cos(A[0]*Math.PI/180);
   function loc(a,c){ var e=a*Math.sin(RUNr)+c*Math.sin(ACRr), n=a*Math.cos(RUNr)+c*Math.cos(ACRr); return [A[0]+n/111320, A[1]+e/mLng]; }
-  var foot=[loc(-32,36),loc(162,32),loc(162,-32),loc(-32,-36)];
-  var villageBounds=L.latLngBounds(foot);
+  var footC=[loc(-34,38),loc(164,34),loc(164,-34),loc(-34,-38)];
+  var villageBounds=L.latLngBounds(footC);
   var villageDetail=L.layerGroup();
-  L.polygon(foot,{color:'#F37252',weight:1.5,dashArray:'5 6',fillColor:'#F37252',fillOpacity:.04,interactive:false}).addTo(villageDetail);
-  /* Ligne d'arrivée : pile sur la fin du tracé, perpendiculaire au sens de course */
-  L.polyline([loc(0,-15),loc(0,15)],{color:'#E2342A',weight:6,opacity:.95,lineCap:'butt'}).bindTooltip('\uD83C\uDFC1 Arrivée',{permanent:true,direction:'top',className:'vtip vtip-fin'}).addTo(villageDetail);
-  function vdot(cls){return L.divIcon({className:'',html:'<span class="vdot '+(cls||'')+'"></span>',iconSize:[12,12],iconAnchor:[6,6]});}
-  /* a = mètres dans le sens de course depuis l'arrivée ; c = travers (+ = gauche) */
-  var Z=[
-    ["\uD83C\uDFBD","Retrait des dossards",34,23,""],
-    ["\uD83E\uDDF3","Consigne",15,25,""],
-    ["\uD83D\uDECD\uFE0F","Stands & exposants",58,13,""],
-    ["\uD83E\uDD1D","Partenaires",80,22,""],
-    ["\uD83C\uDF89","Animations",100,12,""],
-    ["\uD83C\uDF7D\uFE0F","Restauration · buvette",70,-10,""],
-    ["\u26D1\uFE0F","Poste de secours",24,-14,"red"],
-    ["\uD83D\uDEB0","Point d'eau",12,-22,"blue"],
-    ["\uD83D\uDEBB","Sanitaires (WC)",106,-7,""],
-    ["\uD83D\uDCE3","Sono / speaker",46,-3,""],
-    ["\uD83C\uDD7F\uFE0F","Parking village",92,-23,""],
-    ["\uD83D\uDEAA","Entrée / sortie village",140,16,""],
-    ["\uD83D\uDEA7","Accès secours",54,-23,"red"]
-  ];
-  Z.forEach(function(z){ L.marker(loc(z[2],z[3]),{icon:vdot(z[4])}).bindTooltip('<b>'+z[0]+'</b> '+z[1],{permanent:true,direction:'right',className:'vtip',offset:[7,0]}).addTo(villageDetail); });
-  /* Départ au vrai point de départ du tracé */
-  L.marker([VILLAGE_PT.lat,VILLAGE_PT.lng],{icon:vdot()}).bindTooltip('<b>\uD83D\uDEA9</b> Départ',{permanent:true,direction:'left',className:'vtip',offset:[-7,0]}).addTo(villageDetail);
+  L.polygon(footC,{color:'#F37252',weight:1.4,dashArray:'4 6',fillColor:'#F37252',fillOpacity:.03,interactive:false}).addTo(villageDetail);
+  var SKY='#8BC9E1',ST='#F4A88E',AN='#FFD68A',FO='#F2B36A',SE='#EE6F64',EA='#9AD0E6',WC='#C8D2D9',PK='#9FB6C9',GA='#A6D9B0';
+  function zone(a,c,w,d,fill,emoji,label){
+    L.polygon([loc(a-w/2,c-d/2),loc(a+w/2,c-d/2),loc(a+w/2,c+d/2),loc(a-w/2,c+d/2)],
+      {color:'#0E3A5C',weight:1,opacity:.5,fillColor:fill,fillOpacity:.62})
+     .bindTooltip('<b>'+emoji+'</b> '+label,{permanent:true,direction:'center',className:'vlabel'}).addTo(villageDetail);
+  }
+  zone(32,22,36,12,SKY,'\uD83C\uDFBD','Dossards');
+  zone(8,24,18,10,SKY,'\uD83E\uDDF3','Consigne');
+  zone(52,9,46,12,ST,'\uD83D\uDECD\uFE0F','Stands & exposants');
+  zone(90,21,40,11,ST,'\uD83E\uDD1D','Partenaires');
+  zone(104,8,34,11,AN,'\uD83C\uDF89','Animations');
+  zone(20,6,14,8,AN,'\uD83D\uDCE3','Sono');
+  zone(76,-12,32,12,FO,'\uD83C\uDF7D\uFE0F','Restauration');
+  zone(22,-14,18,12,SE,'\u26D1\uFE0F','Secours');
+  zone(8,-22,12,8,EA,'\uD83D\uDEB0','Point d\'eau');
+  zone(116,-9,24,10,WC,'\uD83D\uDEBB','WC');
+  zone(52,-22,36,14,PK,'\uD83C\uDD7F\uFE0F','Parking village');
+  zone(132,-16,26,10,SE,'\uD83D\uDEA7','Acc\u00e8s secours');
+  zone(140,18,28,12,GA,'\uD83D\uDEAA','Entr\u00e9e / sortie');
+  /* Ligne d'arriv\u00e9e : pile sur la fin du trac\u00e9, perpendiculaire au dernier segment */
+  L.polyline([loc(0,-12),loc(0,12)],{color:'#E2342A',weight:7,opacity:.97,lineCap:'butt'}).bindTooltip('\uD83C\uDFC1 Arriv\u00e9e',{permanent:true,direction:'top',className:'vtip vtip-fin'}).addTo(villageDetail);
+  L.marker([VILLAGE_PT.lat,VILLAGE_PT.lng],{icon:L.divIcon({className:'',html:'<span class="vdot"></span>',iconSize:[12,12],iconAnchor:[6,6]})}).bindTooltip('<b>\uD83D\uDEA9</b> D\u00e9part',{permanent:true,direction:'left',className:'vtip',offset:[-7,0]}).addTo(villageDetail);
   L.marker([VILLAGE_PT.lat,VILLAGE_PT.lng],{icon:letterIcon('V','mk-v')})
-    .bindPopup('<div class="lpop"><h4>Village · Esplanade Pantiero</h4><p>Départ &amp; arrivée, retrait des dossards, consigne, stands partenaires, animations, restauration, poste de secours, point d\'eau et sanitaires.</p><div class="pop-actions"><a class="pbtn book" href="#plan-village">Plan officiel</a><a class="pbtn dir" href="'+dir(VILLAGE_PT.lat,VILLAGE_PT.lng)+'" target="_blank" rel="noopener">Itinéraire</a></div></div>')
+    .bindPopup('<div class="lpop"><h4>Village \u00b7 Esplanade Pantiero</h4><p>D\u00e9part &amp; arriv\u00e9e, dossards, consigne, stands partenaires, animations, restauration, secours, point d\'eau et WC.</p><div class="pop-actions"><a class="pbtn book" href="#plan-village">Plan officiel</a><a class="pbtn dir" href="'+dir(VILLAGE_PT.lat,VILLAGE_PT.lng)+'" target="_blank" rel="noopener">Itin\u00e9raire</a></div></div>')
     .addTo(groups.village);
   function updateVillageDetail(){ var show=map.getZoom()>=16 && map.hasLayer(groups.village); if(show){ if(!map.hasLayer(villageDetail)) villageDetail.addTo(map);} else { if(map.hasLayer(villageDetail)) map.removeLayer(villageDetail);} }
 
