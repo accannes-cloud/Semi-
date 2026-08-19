@@ -282,11 +282,11 @@ section{padding:96px 0}
 .partners .sec-head{justify-content:center;text-align:center}
 .partners .sec-head h2{text-align:center}
 .logo-row{display:flex;flex-wrap:wrap;gap:18px;justify-content:center;margin-bottom:28px}
-.logo-chip{background:#fff;border:1px solid var(--line);border-radius:12px;height:78px;min-width:150px;
-  display:flex;align-items:center;justify-content:center;padding:0 26px;
-  font-family:var(--d-display);font-weight:800;font-stretch:104%;color:var(--muted);
-  letter-spacing:.02em;font-size:.95rem;transition:.2s}
-.logo-chip:hover{color:var(--navy);border-color:var(--coral);transform:translateY(-3px)}
+.logo-chip{background:#fff;border:1px solid var(--line);border-radius:12px;min-width:150px;
+  padding:10px 14px 12px;display:flex;flex-direction:column;align-items:center;gap:6px;margin:0;transition:.2s}
+.logo-chip img{max-width:120px;max-height:44px;object-fit:contain;display:block}
+.logo-chip figcaption{font-size:.76rem;color:var(--muted);text-align:center}
+.logo-chip:hover{border-color:var(--coral);transform:translateY(-3px)}
 .partners .note{color:var(--muted);font-size:.85rem}
 
 /* ============ NEWSLETTER ============ */
