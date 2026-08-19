@@ -36,8 +36,15 @@
   .ed-chip button.danger:hover{background:#FBD9D6;color:#E2342A}
   .ed-chip button:disabled{opacity:.25;cursor:not-allowed}
 
-  .ed-add{border:2px dashed var(--ed-line);border-radius:14px;padding:16px;text-align:center;margin-bottom:22px}
-  .ed-add-choices{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-top:10px}
+  .ed-add-btn{width:26px;height:26px;border-radius:50%;border:1.5px dashed var(--ed-line);background:#fff;
+    color:var(--muted);cursor:pointer;font-size:.85rem;display:flex;align-items:center;justify-content:center;
+    flex-shrink:0;transition:.15s}
+  .ed-add-btn:hover{border-color:var(--coral);border-style:solid;background:var(--coral);color:#fff}
+  .ed-popover{position:fixed;z-index:200;background:#fff;border:1.5px solid var(--ed-line);border-radius:12px;
+    box-shadow:0 20px 44px -18px rgba(16,46,63,.5);padding:8px;display:flex;flex-direction:column;gap:4px;min-width:190px}
+  .ed-popover button{text-align:left;border:none;background:none;padding:8px 10px;border-radius:8px;cursor:pointer;
+    font-size:.84rem;color:var(--navy);font-family:inherit}
+  .ed-popover button:hover{background:var(--cream)}
 
   .ed-frame-box{border-top:1.5px solid var(--ed-line);background:#fff}
   .ed-frame-bar{display:flex;align-items:center;gap:10px;padding:10px 20px;background:var(--navy);color:#fff;
@@ -60,27 +67,38 @@
     </div>
     <div class="ed-actions">
       <button class="ed-btn" id="btnReset">↺ Recommencer</button>
-      <button class="ed-btn primary" id="btnDownload">⬇ Télécharger index.html</button>
+      <button class="ed-btn" id="btnGhToggle">⚙️ Connexion</button>
+      <button class="ed-btn primary" id="btnSave">💾 Enregistrer</button>
     </div>
+  </div>
+
+  <div class="ed-note" id="ghPanel" style="display:none">
+    <b>Publication directe (une seule fois à configurer) :</b> connecte l'éditeur à ton dépôt GitHub avec une clé
+    d'accès personnelle, limitée à ce seul dépôt.
+    <ol style="margin:10px 0 12px;padding-left:20px;line-height:1.7">
+      <li>Sur GitHub : <a href="https://github.com/settings/personal-access-tokens/new" target="_blank" rel="noopener">Settings → Developer settings → Fine-grained tokens → Generate new token</a></li>
+      <li><b>Repository access</b> → « Only select repositories » → choisis ton dépôt</li>
+      <li><b>Permissions</b> → <b>Contents</b> → coche <b>Read and write</b></li>
+      <li>Génère, copie la clé (elle commence par <code>github_pat_…</code>) — colle-la ci-dessous</li>
+    </ol>
+    <div style="display:flex;gap:10px;flex-wrap:wrap;align-items:center">
+      <input type="text" id="ghOwner" placeholder="ton-pseudo-github" style="flex:1;min-width:140px;border:1.5px solid var(--ed-line);border-radius:8px;padding:.6em .8em">
+      <input type="text" id="ghRepo" placeholder="nom-du-dépôt" style="flex:1;min-width:140px;border:1.5px solid var(--ed-line);border-radius:8px;padding:.6em .8em">
+      <input type="password" id="ghToken" placeholder="github_pat_…" style="flex:2;min-width:200px;border:1.5px solid var(--ed-line);border-radius:8px;padding:.6em .8em">
+      <button class="ed-btn small" id="btnSaveGh">Enregistrer la connexion</button>
+      <button class="ed-btn small" id="btnForgetGh">Oublier</button>
+    </div>
+    <p id="ghStatus" style="margin:10px 0 0;font-size:.82rem"></p>
   </div>
 
   <div class="ed-note">
-    <b>Comment ça marche :</b> dans l'aperçu ci-dessous, clique sur un <b>texte</b> pour le modifier au clavier (comme
-    dans un traitement de texte), ou passe la souris sur une <b>photo</b> pour faire apparaître « Changer la photo ».
-    Utilise les puces au-dessus pour réordonner (↑↓), masquer (👁) ou supprimer (🗑) une section entière. Quand tu as
-    fini, clique <b>« Télécharger index.html »</b> puis remplace ce fichier sur GitHub — Cloudflare republie tout seul.
+    <b>Comment ça marche :</b> clique sur un <b>texte</b> pour le modifier (une petite croix ✕ apparaît au-dessus
+    pour le supprimer), ou passe la souris sur une <b>photo</b> pour la changer ou la retirer. Utilise le <b>+</b>
+    entre les sections dans l'aperçu pour en ajouter une à l'endroit voulu, et les puces au-dessus pour réordonner,
+    masquer ou supprimer une section entière. Clique <b>« 💾 Enregistrer »</b> pour publier directement en ligne.
   </div>
 
   <div class="ed-sections" id="edChips"></div>
-
-  <div class="ed-add">
-    <div style="font-family:var(--d-display);font-weight:700;font-stretch:104%;color:var(--navy);font-size:.9rem">+ Ajouter une section</div>
-    <div class="ed-add-choices">
-      <button class="ed-btn small" data-add="text">Bloc texte</button>
-      <button class="ed-btn small" data-add="textphoto">Bloc texte + photo</button>
-      <button class="ed-btn small" data-add="photos">Bloc galerie de photos</button>
-    </div>
-  </div>
 </div>
 
 <div class="ed-frame-box">
@@ -124,6 +142,9 @@
     doc.querySelectorAll('[data-fr], img, .cnt[data-target]').forEach(function(el){
       if(!el.hasAttribute('data-ed-id')) el.setAttribute('data-ed-id','e'+(idCounter++));
     });
+    doc.querySelectorAll('body > section').forEach(function(sec){
+      if(!sec.hasAttribute('data-ed-sec')) sec.setAttribute('data-ed-sec','s'+(idCounter++));
+    });
   }
   assignIds();
 
@@ -150,6 +171,30 @@
       chip.appendChild(del);
       wrap.appendChild(chip);
     });
+  }
+  var popover=null;
+  function closePopover(){ if(popover){ popover.remove(); popover=null; } document.removeEventListener('click',onDocClick,true); }
+  function onDocClick(ev){ if(popover && !popover.contains(ev.target)) closePopover(); }
+  function openAddPopover(top,left,beforeSecId){
+    closePopover();
+    popover=document.createElement('div'); popover.className='ed-popover';
+    popover.style.top=top+'px'; popover.style.left=Math.min(left, window.innerWidth-210)+'px';
+    [['📄 Bloc texte','text'],['🖼️ Bloc texte + photo','textphoto'],['🎞️ Bloc galerie de photos','photos']].forEach(function(pair){
+      var b=document.createElement('button'); b.textContent=pair[0];
+      b.addEventListener('click',function(){ insertSection(pair[1],beforeSecId); closePopover(); });
+      popover.appendChild(b);
+    });
+    document.body.appendChild(popover);
+    setTimeout(function(){ document.addEventListener('click',onDocClick,true); },0);
+  }
+  function insertSection(kind,beforeSecId){
+    var sec=TEMPLATES[kind]();
+    var beforeSec = beforeSecId ? doc.querySelector('[data-ed-sec="'+beforeSecId+'"]') : null;
+    var footer=doc.querySelector('footer');
+    doc.body.insertBefore(sec, beforeSec || footer);
+    assignIds();
+    structChanged();
+    toast('Section ajoutée');
   }
   function iconBtn(txt,disabled,fn){
     var b=document.createElement('button'); b.textContent=txt; if(disabled) b.disabled=true; b.onclick=fn; return b;
@@ -179,6 +224,16 @@
       '.ed-editable:focus{outline-color:#F37252;background:rgba(243,114,82,.06)}'+
       '.ed-img-target{outline:2px dashed transparent;outline-offset:2px;transition:outline-color .12s}'+
       '.ed-img-target.ed-img-hover{outline-color:#F37252}'+
+      '#ed-delbtn{position:absolute;z-index:99999;display:none;width:22px;height:22px;border-radius:50%;'+
+      'background:#E2342A;color:#fff;border:2px solid #fff;font-size:11px;font-weight:700;cursor:pointer;'+
+      'align-items:center;justify-content:center;box-shadow:0 3px 8px -2px rgba(0,0,0,.5)}'+
+      '.ed-insertbar{height:22px;display:flex;align-items:center;justify-content:center;position:relative;cursor:pointer}'+
+      '.ed-insertbar::before{content:"";position:absolute;left:6%;right:6%;top:50%;height:1px;background:transparent;transition:background .15s}'+
+      '.ed-insertbar:hover::before{background:rgba(243,114,82,.4)}'+
+      '.ed-insertbar .ed-ib-plus{width:24px;height:24px;border-radius:50%;border:1.5px dashed rgba(16,46,63,.25);'+
+      'background:#fff;color:rgba(16,46,63,.45);font-size:14px;display:flex;align-items:center;justify-content:center;'+
+      'opacity:0;transition:.15s;position:relative;z-index:1}'+
+      '.ed-insertbar:hover .ed-ib-plus{opacity:1;border-color:#F37252;border-style:solid;background:#F37252;color:#fff;transform:scale(1.1)}'+
       '#ed-imgbtnbar{position:absolute;z-index:99999;display:none;gap:6px}'+
       '#ed-imgbtnbar button{background:rgba(16,46,63,.92);color:#fff;font-family:'+
       '-apple-system,sans-serif;font-size:12px;font-weight:700;border:none;border-radius:100px;padding:7px 14px;'+
@@ -246,6 +301,33 @@
       this.classList.toggle('active',!isBold);
     });
 
+    var delBtn=fdoc.createElement('button');
+    delBtn.id='ed-delbtn'; delBtn.type='button'; delBtn.textContent='✕';
+    fdoc.body.appendChild(delBtn);
+    var delTarget=null, delHideTimer=null;
+    function showDelBtn(el){
+      delTarget=el;
+      var r=pageRect(el);
+      delBtn.style.display='flex';
+      delBtn.style.top=(r.top-11)+'px';
+      delBtn.style.left=(r.left-11)+'px';
+    }
+    function scheduleHideDelBtn(){
+      clearTimeout(delHideTimer);
+      delHideTimer=setTimeout(function(){ delBtn.style.display='none'; },220);
+    }
+    delBtn.addEventListener('mouseenter',function(){ clearTimeout(delHideTimer); });
+    delBtn.addEventListener('mouseleave',scheduleHideDelBtn);
+    delBtn.addEventListener('click',function(ev){
+      ev.preventDefault(); if(!delTarget) return;
+      if(!confirm('Supprimer ce texte ?')) return;
+      var id=delTarget.getAttribute('data-ed-id');
+      var docEl=doc.querySelector('[data-ed-id="'+id+'"]');
+      if(docEl) docEl.style.display='none';
+      delBtn.style.display='none';
+      persist(); renderPreview(); toast('Texte supprimé');
+    });
+
     fdoc.querySelectorAll('[data-ed-id]').forEach(function(fel){
       if(fel.tagName==='IMG') return;
       if(fel.classList.contains('cnt')) return; // traité séparément ci-dessous (valeur chiffrée)
@@ -255,12 +337,16 @@
       fel.addEventListener('blur',function(){ syncText(fel); persist(); setTimeout(function(){ if(fdoc.activeElement!==fel && !toolbar.contains(fdoc.activeElement)) toolbar.style.display='none'; },120); });
       fel.addEventListener('focus',function(){ activeEl=fel; positionToolbar(fel); });
       fel.addEventListener('click',function(){ activeEl=fel; positionToolbar(fel); });
+      fel.addEventListener('mouseenter',function(){ showDelBtn(fel); });
+      fel.addEventListener('mouseleave',scheduleHideDelBtn);
     });
 
     /* ---------- Chiffres animés (bande "en chiffres") : clic pour changer la valeur ---------- */
     fdoc.querySelectorAll('.cnt[data-ed-id]').forEach(function(cnt){
       cnt.classList.add('ed-editable');
       cnt.title='Cliquer pour modifier ce chiffre';
+      cnt.addEventListener('mouseenter',function(){ showDelBtn(cnt); });
+      cnt.addEventListener('mouseleave',scheduleHideDelBtn);
       cnt.addEventListener('click',function(ev){
         ev.preventDefault();
         var cur=cnt.getAttribute('data-target');
@@ -334,6 +420,26 @@
       });
     });
 
+    /* ---------- Barres "+" entre les sections (insertion au bon endroit) ---------- */
+    var fsections = Array.from(fdoc.querySelectorAll('body > section'));
+    function makeInsertBar(beforeSecId){
+      var bar=fdoc.createElement('div'); bar.className='ed-insertbar';
+      var plus=fdoc.createElement('span'); plus.className='ed-ib-plus'; plus.textContent='+';
+      bar.appendChild(plus);
+      bar.addEventListener('click',function(){
+        var fr=frame.getBoundingClientRect(), br=bar.getBoundingClientRect();
+        openAddPopover(fr.top+br.top+18, fr.left+br.left, beforeSecId);
+      });
+      return bar;
+    }
+    fsections.forEach(function(fsec){
+      fsec.parentNode.insertBefore(makeInsertBar(fsec.getAttribute('data-ed-sec')), fsec);
+    });
+    if(fsections.length){
+      var lastSec=fsections[fsections.length-1];
+      lastSec.parentNode.insertBefore(makeInsertBar(null), lastSec.nextSibling);
+    }
+
     scheduleResize();
     if(!fdoc._edObserver){
       fdoc._edObserver = new MutationObserver(function(){ scheduleResize(); });
@@ -405,32 +511,84 @@
       return s;
     }
   };
-  document.querySelectorAll('[data-add]').forEach(function(b){
-    b.addEventListener('click',function(){
-      var sec=TEMPLATES[b.dataset.add]();
-      var footer=doc.querySelector('footer');
-      doc.body.insertBefore(sec, footer);
-      assignIds();
-      structChanged();
-      toast('Section ajoutée en bas de page — utilise ↑ pour la repositionner');
-    });
-  });
 
   document.getElementById('btnReset').addEventListener('click',function(){
-    if(confirm('Recommencer depuis la dernière version publiée ? Tes modifications non téléchargées seront perdues.')){
+    if(confirm('Recommencer depuis la dernière version publiée ? Tes modifications non enregistrées seront perdues.')){
       localStorage.removeItem(STORAGE_KEY); loadFresh(); assignIds(); renderChips(); renderPreview(); toast('Réinitialisé');
     }
   });
 
-  document.getElementById('btnDownload').addEventListener('click',function(){
+  function buildFinalHtml(){
     var clone=doc.cloneNode(true);
     clone.querySelectorAll('[data-ed-id]').forEach(function(el){ el.removeAttribute('data-ed-id'); });
-    var html='<!DOCTYPE html>\n'+clone.documentElement.outerHTML;
-    var blob=new Blob([html],{type:'text/html'});
-    var a=document.createElement('a'); a.href=URL.createObjectURL(blob); a.download='index.html';
-    document.body.appendChild(a); a.click(); a.remove();
-    toast('Téléchargé — remplace index.html sur GitHub');
+    clone.querySelectorAll('[data-ed-sec]').forEach(function(el){ el.removeAttribute('data-ed-sec'); });
+    return '<!DOCTYPE html>\n'+clone.documentElement.outerHTML;
+  }
+
+  /* ---------- Connexion GitHub & publication directe (bouton Enregistrer) ---------- */
+  var GH_KEY='sdc_editeur_gh_v1';
+  var ghPanel=document.getElementById('ghPanel'),
+      ghOwner=document.getElementById('ghOwner'), ghRepo=document.getElementById('ghRepo'),
+      ghToken=document.getElementById('ghToken'), ghStatus=document.getElementById('ghStatus'),
+      btnSave=document.getElementById('btnSave'), btnGhToggle=document.getElementById('btnGhToggle');
+
+  function getGh(){ try{ return JSON.parse(localStorage.getItem(GH_KEY)||'null'); }catch(e){ return null; } }
+  function setGh(v){ localStorage.setItem(GH_KEY, JSON.stringify(v)); }
+  function refreshGhStatus(){
+    var g=getGh();
+    if(g && g.owner && g.repo && g.token){
+      ghStatus.innerHTML='✅ Connecté à <b>'+g.owner+'/'+g.repo+'</b>.';
+      ghOwner.value=g.owner; ghRepo.value=g.repo; ghToken.value='••••••••••••••••';
+    } else {
+      ghStatus.textContent="Pas encore connecté — clique « Enregistrer » pour configurer.";
+    }
+  }
+  btnGhToggle.addEventListener('click',function(){ ghPanel.style.display = ghPanel.style.display==='none' ? 'block' : 'none'; });
+  document.getElementById('btnSaveGh').addEventListener('click',function(){
+    var owner=ghOwner.value.trim(), repo=ghRepo.value.trim(), token=ghToken.value.trim();
+    if(!owner||!repo||!token||token.indexOf('•')>-1){ alert('Renseigne ton pseudo GitHub, le nom du dépôt, et colle ta clé (github_pat_…).'); return; }
+    setGh({owner:owner,repo:repo,token:token});
+    refreshGhStatus();
+    toast('Connexion enregistrée');
   });
+  document.getElementById('btnForgetGh').addEventListener('click',function(){
+    localStorage.removeItem(GH_KEY); ghOwner.value=''; ghRepo.value=''; ghToken.value='';
+    refreshGhStatus(); toast('Connexion oubliée');
+  });
+
+  function publish(g){
+    btnSave.disabled=true; btnSave.textContent='Enregistrement…';
+    var api='https://api.github.com/repos/'+g.owner+'/'+g.repo+'/contents/index.html';
+    var headers={'Authorization':'Bearer '+g.token,'Accept':'application/vnd.github+json'};
+    fetch(api,{headers:headers}).then(function(r){
+      if(!r.ok) throw new Error('lecture ('+r.status+')');
+      return r.json();
+    }).then(function(info){
+      var content = btoa(unescape(encodeURIComponent(buildFinalHtml())));
+      return fetch(api,{
+        method:'PUT', headers:Object.assign({'Content-Type':'application/json'},headers),
+        body:JSON.stringify({message:'Mise à jour de la page d\u2019accueil via l\u2019éditeur', content:content, sha:info.sha})
+      });
+    }).then(function(r){
+      if(!r.ok) return r.json().then(function(e){ throw new Error(e.message||('publication ('+r.status+')')); });
+      toast('✅ Enregistré ! En ligne dans quelques secondes.');
+    }).catch(function(err){
+      alert('Échec de l\u2019enregistrement : '+err.message+'\n\nVérifie le pseudo, le nom du dépôt et que la clé a la permission Contents → Read and write.');
+    }).finally(function(){
+      btnSave.disabled=false; btnSave.textContent='💾 Enregistrer';
+    });
+  }
+  btnSave.addEventListener('click',function(){
+    var g=getGh();
+    if(!g || !g.owner || !g.repo || !g.token){
+      ghPanel.style.display='block';
+      ghPanel.scrollIntoView({behavior:'smooth'});
+      toast('Configure la connexion GitHub ci-dessus (une seule fois)');
+      return;
+    }
+    publish(g);
+  });
+  refreshGhStatus();
 
   renderChips();
   renderPreview();
