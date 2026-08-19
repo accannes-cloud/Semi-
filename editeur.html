@@ -41,7 +41,11 @@
     flex-shrink:0;transition:.15s}
   .ed-add-btn:hover{border-color:var(--coral);border-style:solid;background:var(--coral);color:#fff}
   .ed-popover{position:fixed;z-index:200;background:#fff;border:1.5px solid var(--ed-line);border-radius:12px;
-    box-shadow:0 20px 44px -18px rgba(16,46,63,.5);padding:8px;display:flex;flex-direction:column;gap:4px;min-width:190px}
+    box-shadow:0 20px 44px -18px rgba(16,46,63,.5);padding:8px;display:flex;flex-direction:column;gap:2px;min-width:190px;
+    max-height:78vh;overflow-y:auto}
+  .ed-popover-wide{min-width:250px}
+  .ed-popover-grouptitle{font-size:.68rem;text-transform:uppercase;letter-spacing:.05em;color:var(--muted);
+    font-weight:700;padding:8px 10px 2px}
   .ed-popover button{text-align:left;border:none;background:none;padding:8px 10px;border-radius:8px;cursor:pointer;
     font-size:.84rem;color:var(--navy);font-family:inherit}
   .ed-popover button:hover{background:var(--cream)}
@@ -177,12 +181,23 @@
   function onDocClick(ev){ if(popover && !popover.contains(ev.target)) closePopover(); }
   function openAddPopover(top,left,beforeSecId){
     closePopover();
-    popover=document.createElement('div'); popover.className='ed-popover';
-    popover.style.top=top+'px'; popover.style.left=Math.min(left, window.innerWidth-210)+'px';
-    [['📄 Bloc texte','text'],['🖼️ Bloc texte + photo','textphoto'],['🎞️ Bloc galerie de photos','photos']].forEach(function(pair){
-      var b=document.createElement('button'); b.textContent=pair[0];
-      b.addEventListener('click',function(){ insertSection(pair[1],beforeSecId); closePopover(); });
-      popover.appendChild(b);
+    popover=document.createElement('div'); popover.className='ed-popover ed-popover-wide';
+    popover.style.top=top+'px'; popover.style.left=Math.min(left, window.innerWidth-260)+'px';
+    var groups = [
+      ['Texte', [['📄 Texte seul','text'],['📄 Texte centré, largeur réduite','text-narrow-center']]],
+      ['Texte + photos', [['➡️ Texte à gauche, photo à droite','textphoto'],
+                           ['➡️ Texte à gauche, 4 photos à droite','split-right'],
+                           ['⬅️ 4 photos à gauche, texte à droite','split-left']]],
+      ['Galeries', [['🎞️ Galerie — 2 photos','photos2'],['🎞️ Galerie — 3 photos','photos3'],['🎞️ Galerie — 4 photos','photos4']]]
+    ];
+    groups.forEach(function(g){
+      var h=document.createElement('div'); h.className='ed-popover-grouptitle'; h.textContent=g[0];
+      popover.appendChild(h);
+      g[1].forEach(function(pair){
+        var b=document.createElement('button'); b.textContent=pair[0];
+        b.addEventListener('click',function(){ insertSection(pair[1],beforeSecId); closePopover(); });
+        popover.appendChild(b);
+      });
     });
     document.body.appendChild(popover);
     setTimeout(function(){ document.addEventListener('click',onDocClick,true); },0);
@@ -261,6 +276,7 @@
         '<option value=".8rem">Très petit</option><option value="1rem">Normal</option>'+
         '<option value="1.25rem">Grand</option><option value="1.75rem">Très grand</option>'+
         '<option value="2.5rem">Titre</option><option value="3.5rem">Très grand titre</option>'+
+        '<option value="custom">Personnalisée…</option>'+
       '</select>'+
       '<button type="button" data-align="left" title="Aligner à gauche">⇤</button>'+
       '<button type="button" data-align="center" title="Centrer">↔</button>'+
@@ -289,7 +305,18 @@
       persist();
     }
     toolbar.querySelector('#ed-tb-font').addEventListener('change',function(e){ if(activeEl && e.target.value) syncStyleProp(activeEl,'font-family',e.target.value); });
-    toolbar.querySelector('#ed-tb-size').addEventListener('change',function(e){ if(activeEl && e.target.value) syncStyleProp(activeEl,'font-size',e.target.value); });
+    toolbar.querySelector('#ed-tb-size').addEventListener('change',function(e){
+      if(!activeEl || !e.target.value) return;
+      if(e.target.value==='custom'){
+        var v=prompt('Taille du texte en pixels (ex. 22) :','20');
+        if(v===null){ e.target.value=''; return; }
+        var px=parseFloat(v); if(isNaN(px)||px<=0){ alert('Merci de saisir un nombre valide.'); e.target.value=''; return; }
+        syncStyleProp(activeEl,'font-size',(px/16)+'rem');
+        e.target.value='';
+      } else {
+        syncStyleProp(activeEl,'font-size',e.target.value);
+      }
+    });
     toolbar.querySelectorAll('[data-align]').forEach(function(b){
       b.addEventListener('click',function(){ if(activeEl) syncStyleProp(activeEl,'text-align',b.dataset.align); });
     });
@@ -481,6 +508,12 @@
     reader.readAsDataURL(file);
   }
 
+  var IMGS4 = ['p1.jpg','p2.jpg','p3.jpg','p4.jpg'];
+  function ph(n){ return 'assets/parcours/'+(IMGS4[n%4]); }
+  function galleryImgs(n,h){
+    var out=''; for(var i=0;i<n;i++){ out+='<img src="'+ph(i)+'" style="width:100%;height:'+h+'px;object-fit:cover;border-radius:12px" alt="">'; }
+    return out;
+  }
   var TEMPLATES = {
     text: function(){
       var s=doc.createElement('section'); s.className='infos';
@@ -496,18 +529,52 @@
         '<h2 data-fr="Nouveau titre" data-en="New title">Nouveau titre</h2>'+
         '<p data-fr="Votre texte ici." data-en="Your text here.">Votre texte ici.</p>'+
         '</div><figure style="margin:24px 0 0;border-radius:16px;overflow:hidden">'+
-        '<img src="assets/parcours/p1.jpg" style="width:100%;display:block" alt=""></figure></div>';
+        '<img src="'+ph(0)+'" style="width:100%;display:block" alt=""></figure></div>';
       return s;
     },
-    photos: function(){
+    'split-right': function(){ // texte à gauche, photos à droite
+      var s=doc.createElement('section'); s.className='infos';
+      s.innerHTML='<div class="wrap" style="display:grid;grid-template-columns:1fr 1fr;gap:32px;align-items:center">'+
+        '<div class="sec-head reveal" style="margin:0"><h2 data-fr="Nouveau titre" data-en="New title">Nouveau titre</h2>'+
+        '<p data-fr="Votre texte ici." data-en="Your text here.">Votre texte ici.</p></div>'+
+        '<div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">'+galleryImgs(4,130)+'</div></div>';
+      return s;
+    },
+    'split-left': function(){ // photos à gauche, texte à droite
+      var s=doc.createElement('section'); s.className='infos';
+      s.innerHTML='<div class="wrap" style="display:grid;grid-template-columns:1fr 1fr;gap:32px;align-items:center">'+
+        '<div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">'+galleryImgs(4,130)+'</div>'+
+        '<div class="sec-head reveal" style="margin:0"><h2 data-fr="Nouveau titre" data-en="New title">Nouveau titre</h2>'+
+        '<p data-fr="Votre texte ici." data-en="Your text here.">Votre texte ici.</p></div></div>';
+      return s;
+    },
+    'text-narrow-center': function(){ // texte centré, largeur réduite
+      var s=doc.createElement('section'); s.className='infos';
+      s.innerHTML='<div class="wrap"><div class="sec-head reveal" style="max-width:640px;margin:0 auto;text-align:center">'+
+        '<h2 data-fr="Nouveau titre" data-en="New title">Nouveau titre</h2>'+
+        '<p data-fr="Votre texte ici." data-en="Your text here.">Votre texte ici.</p>'+
+        '</div></div>';
+      return s;
+    },
+    'photos2': function(){
       var s=doc.createElement('section'); s.className='infos';
       s.innerHTML='<div class="wrap"><div class="sec-head reveal">'+
         '<h2 data-fr="Galerie" data-en="Gallery">Galerie</h2></div>'+
-        '<div style="display:grid;grid-template-columns:repeat(3,1fr);gap:14px">'+
-        '<img src="assets/parcours/p1.jpg" style="width:100%;height:160px;object-fit:cover;border-radius:12px" alt="">'+
-        '<img src="assets/parcours/p2.jpg" style="width:100%;height:160px;object-fit:cover;border-radius:12px" alt="">'+
-        '<img src="assets/parcours/p3.jpg" style="width:100%;height:160px;object-fit:cover;border-radius:12px" alt="">'+
-        '</div></div>';
+        '<div style="display:grid;grid-template-columns:1fr 1fr;gap:16px">'+galleryImgs(2,220)+'</div></div>';
+      return s;
+    },
+    'photos3': function(){
+      var s=doc.createElement('section'); s.className='infos';
+      s.innerHTML='<div class="wrap"><div class="sec-head reveal">'+
+        '<h2 data-fr="Galerie" data-en="Gallery">Galerie</h2></div>'+
+        '<div style="display:grid;grid-template-columns:repeat(3,1fr);gap:14px">'+galleryImgs(3,160)+'</div></div>';
+      return s;
+    },
+    'photos4': function(){
+      var s=doc.createElement('section'); s.className='infos';
+      s.innerHTML='<div class="wrap"><div class="sec-head reveal">'+
+        '<h2 data-fr="Galerie" data-en="Gallery">Galerie</h2></div>'+
+        '<div style="display:grid;grid-template-columns:repeat(4,1fr);gap:12px">'+galleryImgs(4,130)+'</div></div>';
       return s;
     }
   };
