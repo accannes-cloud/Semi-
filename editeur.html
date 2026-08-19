@@ -39,10 +39,9 @@
   .ed-add{border:2px dashed var(--ed-line);border-radius:14px;padding:16px;text-align:center;margin-bottom:22px}
   .ed-add-choices{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-top:10px}
 
-  .ed-frame-box{border:1.5px solid var(--ed-line);border-radius:16px;overflow:hidden;background:#fff;
-    box-shadow:0 20px 50px -30px rgba(16,46,63,.5)}
-  .ed-frame-bar{display:flex;align-items:center;gap:10px;padding:10px 16px;background:var(--navy);color:#fff;
-    font-family:var(--d-display);font-weight:700;font-stretch:104%;font-size:.78rem}
+  .ed-frame-box{border-top:1.5px solid var(--ed-line);background:#fff}
+  .ed-frame-bar{display:flex;align-items:center;gap:10px;padding:10px 20px;background:var(--navy);color:#fff;
+    font-family:var(--d-display);font-weight:700;font-stretch:104%;font-size:.78rem;position:sticky;top:0;z-index:50}
   .ed-frame-bar .dot{width:9px;height:9px;border-radius:50%;background:rgba(255,255,255,.25)}
   #edFrame{width:100%;border:none;display:block;background:#fff}
 
@@ -82,11 +81,11 @@
       <button class="ed-btn small" data-add="photos">Bloc galerie de photos</button>
     </div>
   </div>
+</div>
 
-  <div class="ed-frame-box">
-    <div class="ed-frame-bar"><span class="dot"></span><span class="dot"></span><span class="dot"></span>&nbsp; Aperçu — clique pour modifier</div>
-    <iframe id="edFrame" title="Aperçu modifiable"></iframe>
-  </div>
+<div class="ed-frame-box">
+  <div class="ed-frame-bar"><span class="dot"></span><span class="dot"></span><span class="dot"></span>&nbsp; Aperçu — clique pour modifier (taille réelle du site)</div>
+  <iframe id="edFrame" title="Aperçu modifiable"></iframe>
 </div>
 
 <div class="ed-toast" id="toast"></div>
@@ -170,7 +169,7 @@
   frame.addEventListener('load', wireFrame);
 
   function wireFrame(){
-    var fdoc = frame.contentDocument;
+    var fdoc = frame.contentDocument, fwin = frame.contentWindow;
     if(!fdoc || !fdoc.body) return;
 
     var style=fdoc.createElement('style');
@@ -178,33 +177,115 @@
       '.ed-editable{outline:2px dashed transparent;outline-offset:3px;cursor:text;border-radius:4px;transition:outline-color .12s}'+
       '.ed-editable:hover{outline-color:rgba(243,114,82,.55)}'+
       '.ed-editable:focus{outline-color:#F37252;background:rgba(243,114,82,.06)}'+
-      '.ed-imgwrap{position:relative;display:block}'+
-      '.ed-imgbtn{position:absolute;top:8px;right:8px;z-index:5;background:rgba(16,46,63,.85);color:#fff;'+
-      'font-family:inherit;font-size:12px;font-weight:700;border:none;border-radius:100px;padding:6px 12px;'+
-      'cursor:pointer;opacity:0;transition:opacity .15s}'+
-      '.ed-imgwrap:hover .ed-imgbtn{opacity:1}';
+      '.ed-img-target{outline:2px dashed transparent;outline-offset:2px;transition:outline-color .12s}'+
+      '.ed-img-target.ed-img-hover{outline-color:#F37252}'+
+      '#ed-imgbtn{position:absolute;z-index:99999;background:rgba(16,46,63,.92);color:#fff;font-family:'+
+      '-apple-system,sans-serif;font-size:12px;font-weight:700;border:none;border-radius:100px;padding:7px 14px;'+
+      'cursor:pointer;box-shadow:0 6px 16px -4px rgba(0,0,0,.5);display:none}'+
+      '#ed-toolbar{position:absolute;z-index:99999;background:#102E3F;border-radius:10px;padding:6px 8px;'+
+      'display:none;gap:5px;align-items:center;box-shadow:0 10px 26px -8px rgba(0,0,0,.55);font-family:-apple-system,sans-serif}'+
+      '#ed-toolbar select{font-size:11px;border-radius:6px;border:none;padding:4px 6px;background:#1c4358;color:#fff;cursor:pointer}'+
+      '#ed-toolbar button{width:26px;height:26px;border-radius:6px;border:none;background:#1c4358;color:#fff;cursor:pointer;font-size:12px}'+
+      '#ed-toolbar button.active{background:#F37252}'+
+      '#ed-toolbar button:hover{background:#2a5b74}';
     fdoc.head.appendChild(style);
+
+    /* ---------- Texte : rendre éditable + barre de mise en forme ---------- */
+    var toolbar=fdoc.createElement('div'); toolbar.id='ed-toolbar';
+    toolbar.innerHTML =
+      '<select id="ed-tb-font">'+
+        '<option value="var(--d-display)">Titre (Archivo)</option>'+
+        '<option value="var(--font)">Texte (Hanken)</option>'+
+        '<option value="Georgia, serif">Serif classique</option>'+
+        '<option value="Arial, sans-serif">Sans classique</option>'+
+      '</select>'+
+      '<select id="ed-tb-size">'+
+        '<option value="">Taille…</option>'+
+        '<option value=".8rem">Très petit</option><option value="1rem">Normal</option>'+
+        '<option value="1.25rem">Grand</option><option value="1.75rem">Très grand</option>'+
+        '<option value="2.5rem">Titre</option><option value="3.5rem">Très grand titre</option>'+
+      '</select>'+
+      '<button type="button" data-align="left" title="Aligner à gauche">⇤</button>'+
+      '<button type="button" data-align="center" title="Centrer">↔</button>'+
+      '<button type="button" data-align="right" title="Aligner à droite">⇥</button>'+
+      '<button type="button" id="ed-tb-bold" title="Gras"><b>G</b></button>';
+    fdoc.body.appendChild(toolbar);
+    // empêcher la perte de focus du texte en cours d'édition quand on clique la barre
+    toolbar.addEventListener('mousedown',function(ev){ ev.preventDefault(); });
+
+    var activeEl=null;
+    function pageRect(el){
+      var r=el.getBoundingClientRect();
+      return {top:r.top+fwin.scrollY, left:r.left+fwin.scrollX, bottom:r.bottom+fwin.scrollY, width:r.width};
+    }
+    function positionToolbar(el){
+      var r=pageRect(el);
+      toolbar.style.display='flex';
+      toolbar.style.top=Math.max(6,r.top-40)+'px';
+      toolbar.style.left=Math.max(6,r.left)+'px';
+    }
+    function syncStyleProp(el,prop,val){
+      el.style.setProperty(prop,val);
+      var id=el.getAttribute('data-ed-id');
+      var docEl=doc.querySelector('[data-ed-id="'+id+'"]');
+      if(docEl) docEl.style.setProperty(prop,val);
+      persist();
+    }
+    toolbar.querySelector('#ed-tb-font').addEventListener('change',function(e){ if(activeEl && e.target.value) syncStyleProp(activeEl,'font-family',e.target.value); });
+    toolbar.querySelector('#ed-tb-size').addEventListener('change',function(e){ if(activeEl && e.target.value) syncStyleProp(activeEl,'font-size',e.target.value); });
+    toolbar.querySelectorAll('[data-align]').forEach(function(b){
+      b.addEventListener('click',function(){ if(activeEl) syncStyleProp(activeEl,'text-align',b.dataset.align); });
+    });
+    toolbar.querySelector('#ed-tb-bold').addEventListener('click',function(btn){
+      if(!activeEl) return;
+      var cur=fwin.getComputedStyle(activeEl).fontWeight;
+      var isBold = cur==='700'||cur==='800'||cur==='900'||cur==='bold';
+      syncStyleProp(activeEl,'font-weight', isBold?'normal':'700');
+      this.classList.toggle('active',!isBold);
+    });
 
     fdoc.querySelectorAll('[data-ed-id]').forEach(function(fel){
       if(fel.tagName==='IMG') return;
       fel.classList.add('ed-editable');
       fel.setAttribute('contenteditable','true');
       fel.addEventListener('input',function(){ syncText(fel); scheduleResize(); });
-      fel.addEventListener('blur',function(){ syncText(fel); persist(); });
+      fel.addEventListener('blur',function(){ syncText(fel); persist(); setTimeout(function(){ if(fdoc.activeElement!==fel && !toolbar.contains(fdoc.activeElement)) toolbar.style.display='none'; },120); });
+      fel.addEventListener('focus',function(){ activeEl=fel; positionToolbar(fel); });
+      fel.addEventListener('click',function(){ activeEl=fel; positionToolbar(fel); });
     });
 
+    /* ---------- Photos : bouton flottant unique, ancré au body (jamais coupé) ---------- */
     var fileInput=fdoc.createElement('input');
     fileInput.type='file'; fileInput.accept='image/*'; fileInput.style.display='none';
     fdoc.body.appendChild(fileInput);
-    var currentImg=null;
+
+    var imgBtn=fdoc.createElement('button');
+    imgBtn.id='ed-imgbtn'; imgBtn.type='button'; imgBtn.textContent='📷 Changer la photo';
+    fdoc.body.appendChild(imgBtn);
+
+    var currentImg=null, hideTimer=null;
+    function showImgBtn(img){
+      currentImg=img;
+      var r=pageRect(img);
+      imgBtn.style.display='block';
+      imgBtn.style.top=(r.top + r.width*0 + 10)+'px';
+      imgBtn.style.left=(r.left+10)+'px';
+      img.classList.add('ed-img-hover');
+    }
+    function scheduleHideImgBtn(img){
+      clearTimeout(hideTimer);
+      hideTimer=setTimeout(function(){ imgBtn.style.display='none'; if(img) img.classList.remove('ed-img-hover'); },250);
+    }
+    imgBtn.addEventListener('mouseenter',function(){ clearTimeout(hideTimer); });
+    imgBtn.addEventListener('mouseleave',function(){ scheduleHideImgBtn(currentImg); });
+    imgBtn.addEventListener('click',function(ev){ ev.preventDefault(); if(currentImg) fileInput.click(); });
+
     fdoc.querySelectorAll('img[data-ed-id]').forEach(function(img){
-      var parent=img.parentElement;
-      parent.classList.add('ed-imgwrap');
-      var btn=fdoc.createElement('button');
-      btn.className='ed-imgbtn'; btn.type='button'; btn.textContent='Changer la photo';
-      btn.addEventListener('click',function(ev){ ev.preventDefault(); currentImg=img; fileInput.click(); });
-      parent.appendChild(btn);
+      img.classList.add('ed-img-target');
+      img.addEventListener('mouseenter',function(){ showImgBtn(img); });
+      img.addEventListener('mouseleave',function(){ scheduleHideImgBtn(img); });
     });
+
     fileInput.addEventListener('change',function(){
       var f=fileInput.files[0]; if(!f||!currentImg) return;
       compressImage(f,1400,.82,function(dataUrl){
