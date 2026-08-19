@@ -654,3 +654,7 @@ section{padding:96px 0}
 .leaflet-tooltip.vlabel{background:rgba(255,255,255,.9);border:none;border-radius:5px;box-shadow:0 1px 4px rgba(16,46,63,.25);
   font-family:var(--d-display);font-weight:700;font-stretch:104%;font-size:.64rem;color:var(--navy);padding:1px 6px;white-space:nowrap;line-height:1.25}
 .leaflet-tooltip.vlabel::before{display:none!important;border:none!important}
+
+/* Lien discret vers l'éditeur, dans le footer */
+.admin-link{opacity:.55;font-size:.82em}
+.admin-link:hover{opacity:1}
