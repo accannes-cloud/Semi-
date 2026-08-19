@@ -199,7 +199,11 @@ ul{list-style:none}
 
 /* ============ RESULTS BAND (édition passée) ============ */
 .band{background:var(--coral);color:#fff}
-.band .wrap{display:flex;align-items:center;justify-content:space-between;gap:24px;padding:22px 24px;flex-wrap:wrap}
+.band .wrap{display:flex;align-items:center;justify-content:space-between;gap:24px;padding:9px 24px;flex-wrap:wrap}
+.band-navy{background:var(--navy);color:#fff}
+.band-navy strong{font-family:var(--d-display);font-weight:800;font-stretch:106%;text-transform:uppercase;
+  letter-spacing:.04em;font-size:.92rem;flex-shrink:0}
+.band-navy p{margin:0;font-size:.9rem;color:rgba(255,255,255,.82);text-align:right}
 .band .b-txt{display:flex;align-items:center;gap:16px}
 .band .pill{font-family:var(--d-display);font-weight:800;font-stretch:108%;background:#fff;color:var(--coral);
   padding:5px 12px;border-radius:8px;font-size:.8rem;letter-spacing:.04em;text-transform:uppercase;white-space:nowrap}
@@ -339,6 +343,7 @@ section{padding:96px 0}
   .meta-row{gap:24px}
   .hero{padding-top:48px}
   .band .wrap{flex-direction:column;align-items:flex-start}
+  .band-navy p{text-align:left}
 }
 @media (max-width:480px){
   .info-grid,.foot-grid{grid-template-columns:1fr}
