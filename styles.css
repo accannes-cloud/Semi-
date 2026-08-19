@@ -199,10 +199,12 @@ ul{list-style:none}
 
 /* ============ RESULTS BAND (édition passée) ============ */
 .band{background:var(--coral);color:#fff}
-.band .wrap{display:flex;align-items:center;justify-content:space-between;gap:24px;padding:9px 24px;flex-wrap:wrap}
+.band .wrap{display:flex;align-items:center;justify-content:space-between;gap:24px;padding:5px 24px;flex-wrap:wrap}
 .band-navy{background:var(--navy);color:#fff}
-.band-navy strong{font-family:var(--d-display);font-weight:800;font-stretch:106%;text-transform:uppercase;
-  letter-spacing:.04em;font-size:.92rem;flex-shrink:0}
+.band-btn{font-family:var(--d-display);font-weight:800;font-stretch:106%;text-transform:uppercase;
+  letter-spacing:.03em;font-size:.8rem;flex-shrink:0;background:var(--coral);color:#fff;border-radius:100px;
+  padding:.5em 1.1em;text-decoration:none;transition:.15s;white-space:nowrap}
+.band-btn:hover{background:#fff;color:var(--coral)}
 .band-navy p{margin:0;font-size:.9rem;color:rgba(255,255,255,.82);text-align:right}
 .band .b-txt{display:flex;align-items:center;gap:16px}
 .band .pill{font-family:var(--d-display);font-weight:800;font-stretch:108%;background:#fff;color:var(--coral);
