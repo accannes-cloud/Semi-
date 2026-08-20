@@ -60,92 +60,90 @@
     <div class="head"><span class="ic">🏃</span><h2 data-fr="Les épreuves" data-en="The races">Les épreuves</h2></div>
     <p class="intro" data-fr="Trois distances sur un même bord de mer : choisissez la vôtre, du premier dossard au record personnel." data-en="Three distances on the same seafront: pick yours, from a first bib to a personal best.">Trois distances sur un même bord de mer : choisissez la vôtre, du premier dossard au record personnel.</p>
 
-    <div class="ecar" id="ecar">
-      <div class="ecar-img">
-        <img id="ecarImg" src="assets/traces/trace-5km.png" alt="Tracé du parcours">
-      </div>
-      <div class="ecar-txt">
-        <span class="tag" id="ecarTag">5 km</span>
-        <h3 id="ecarTitle" data-fr="La découverte" data-en="The discovery">La découverte</h3>
-        <p id="ecarDesc" data-fr="Accessible à tous, en famille ou pour une première course, le long de l'eau." data-en="Open to all, for families or a first race, along the water.">Accessible à tous, en famille ou pour une première course, le long de l'eau.</p>
-        <div class="meta-line"><span class="k" data-fr="Dénivelé" data-en="Elevation">Dénivelé</span><span id="ecarDeniv" data-fr="Plat · D+ 27 m" data-en="Flat · +27 m">Plat · D+ 27 m</span></div>
-        <div class="ecar-dots" id="ecarDots">
-          <button class="ecar-dot active" data-i="0" aria-label="5 km"></button>
-          <button class="ecar-dot" data-i="1" aria-label="10 km"></button>
-          <button class="ecar-dot" data-i="2" aria-label="21,1 km"></button>
+    <div class="ecar-wrap">
+      <div class="ecar-track" id="ecarTrack">
+        <div class="ecar-slide active" data-i="0">
+          <img src="assets/traces/trace-5km.png" alt="Tracé 5 km">
+          <div class="ecar-body">
+            <span class="tag">5 km</span>
+            <h3 data-fr="La découverte" data-en="The discovery">La découverte</h3>
+            <p data-fr="Accessible à tous, en famille ou pour une première course, le long de l'eau." data-en="Open to all, for families or a first race, along the water.">Accessible à tous, en famille ou pour une première course, le long de l'eau.</p>
+            <div class="meta-line"><span class="k" data-fr="Dénivelé" data-en="Elevation">Dénivelé</span><span data-fr="Plat · D+ 27 m" data-en="Flat · +27 m">Plat · D+ 27 m</span></div>
+            <div class="card-links"><a class="link" href="inscriptions.html" data-fr="S'inscrire →" data-en="Register →">S'inscrire →</a><a class="link" href="carte.html" data-fr="Voir le tracé →" data-en="See the route →">Voir le tracé →</a></div>
+          </div>
         </div>
+        <div class="ecar-slide" data-i="1">
+          <img src="assets/traces/trace-10km.png" alt="Tracé 10 km">
+          <div class="ecar-body">
+            <span class="tag">10 km</span>
+            <h3 data-fr="Le challenge" data-en="The challenge">Le challenge</h3>
+            <p data-fr="La distance idéale pour se dépasser sur un parcours roulant face à la Méditerranée." data-en="The ideal distance to push yourself on a fast course facing the sea.">La distance idéale pour se dépasser sur un parcours roulant face à la Méditerranée.</p>
+            <div class="meta-line"><span class="k" data-fr="Dénivelé" data-en="Elevation">Dénivelé</span><span data-fr="Plat · D+ 47 m" data-en="Flat · +47 m">Plat · D+ 47 m</span></div>
+            <div class="card-links"><a class="link" href="inscriptions.html" data-fr="S'inscrire →" data-en="Register →">S'inscrire →</a><a class="link" href="carte.html" data-fr="Voir le tracé →" data-en="See the route →">Voir le tracé →</a></div>
+          </div>
+        </div>
+        <div class="ecar-slide" data-i="2">
+          <img src="assets/traces/trace-21km.png" alt="Tracé semi-marathon">
+          <div class="ecar-body">
+            <span class="tag">21,1 km</span>
+            <h3 data-fr="Le semi-marathon" data-en="The half-marathon">Le semi-marathon</h3>
+            <p data-fr="L'épreuve reine, entre la Croisette, le port et la baie, au cœur de la Côte d'Azur." data-en="The flagship race, between the Croisette, the harbour and the bay.">L'épreuve reine, entre la Croisette, le port et la baie, au cœur de la Côte d'Azur.</p>
+            <div class="meta-line"><span class="k" data-fr="Dénivelé" data-en="Elevation">Dénivelé</span><span data-fr="Plat · D+ 97 m" data-en="Flat · +97 m">Plat · D+ 97 m</span></div>
+            <div class="card-links"><a class="link" href="inscriptions.html" data-fr="S'inscrire →" data-en="Register →">S'inscrire →</a><a class="link" href="carte.html" data-fr="Voir le tracé →" data-en="See the route →">Voir le tracé →</a></div>
+          </div>
+        </div>
+      </div>
+      <div class="ecar-dots" id="ecarDots">
+        <button class="ecar-dot active" data-i="0" aria-label="5 km"></button>
+        <button class="ecar-dot" data-i="1" aria-label="10 km"></button>
+        <button class="ecar-dot" data-i="2" aria-label="21,1 km"></button>
       </div>
     </div>
 
-    <div class="cards">
-      <div class="card">
-        <span class="tag">5 km</span>
-        <h3 data-fr="La découverte" data-en="The discovery">La découverte</h3>
-        <p data-fr="Accessible à tous, en famille ou pour une première course, le long de l'eau." data-en="Open to all, for families or a first race, along the water.">Accessible à tous, en famille ou pour une première course, le long de l'eau.</p>
-        <div class="meta-line"><span class="k">Dénivelé</span><span data-fr="Plat · D+ 27 m" data-en="Flat · +27 m">Plat · D+ 27 m</span></div>
-        <div class="card-links"><a class="link" href="inscriptions.html" data-fr="S'inscrire →" data-en="Register →">S'inscrire →</a><a class="link" href="carte.html" data-fr="Voir le tracé →" data-en="See the route →">Voir le tracé →</a></div>
-      </div>
-      <div class="card">
-        <span class="tag">10 km</span>
-        <h3 data-fr="Le challenge" data-en="The challenge">Le challenge</h3>
-        <p data-fr="La distance idéale pour se dépasser sur un parcours roulant face à la Méditerranée." data-en="The ideal distance to push yourself on a fast course facing the sea.">La distance idéale pour se dépasser sur un parcours roulant face à la Méditerranée.</p>
-        <div class="meta-line"><span class="k">Dénivelé</span><span data-fr="Plat · D+ 47 m" data-en="Flat · +47 m">Plat · D+ 47 m</span></div>
-        <div class="card-links"><a class="link" href="inscriptions.html" data-fr="S'inscrire →" data-en="Register →">S'inscrire →</a><a class="link" href="carte.html" data-fr="Voir le tracé →" data-en="See the route →">Voir le tracé →</a></div>
-      </div>
-      <div class="card">
-        <span class="tag">21,1 km</span>
-        <h3 data-fr="Le semi-marathon" data-en="The half-marathon">Le semi-marathon</h3>
-        <p data-fr="L'épreuve reine, entre la Croisette, le port et la baie, au cœur de la Côte d'Azur." data-en="The flagship race, between the Croisette, the harbour and the bay.">L'épreuve reine, entre la Croisette, le port et la baie, au cœur de la Côte d'Azur.</p>
-        <div class="meta-line"><span class="k">Dénivelé</span><span data-fr="Plat · D+ 97 m" data-en="Flat · +97 m">Plat · D+ 97 m</span></div>
-        <div class="card-links"><a class="link" href="inscriptions.html" data-fr="S'inscrire →" data-en="Register →">S'inscrire →</a><a class="link" href="carte.html" data-fr="Voir le tracé →" data-en="See the route →">Voir le tracé →</a></div>
-      </div>
-    </div>
     <p class="intro" style="margin-top:26px"><a class="link" href="carte.html" data-fr="Voir la carte complète des parcours →" data-en="See the full route map →">Voir la carte complète des parcours →</a></p>
   </div>
 </section>
 
 <script>
 (function(){
-  var EP = [
-    {img:'assets/traces/trace-5km.png', tag:'5 km', titleFr:'La découverte', titleEn:'The discovery',
-     descFr:"Accessible à tous, en famille ou pour une première course, le long de l'eau.",
-     descEn:'Open to all, for families or a first race, along the water.',
-     denivFr:'Plat · D+ 27 m', denivEn:'Flat · +27 m'},
-    {img:'assets/traces/trace-10km.png', tag:'10 km', titleFr:'Le challenge', titleEn:'The challenge',
-     descFr:'La distance idéale pour se dépasser sur un parcours roulant face à la Méditerranée.',
-     descEn:'The ideal distance to push yourself on a fast course facing the sea.',
-     denivFr:'Plat · D+ 47 m', denivEn:'Flat · +47 m'},
-    {img:'assets/traces/trace-21km.png', tag:'21,1 km', titleFr:'Le semi-marathon', titleEn:'The half-marathon',
-     descFr:"L'épreuve reine, entre la Croisette, le port et la baie, au cœur de la Côte d'Azur.",
-     descEn:'The flagship race, between the Croisette, the harbour and the bay.',
-     denivFr:'Plat · D+ 97 m', denivEn:'Flat · +97 m'}
-  ];
-  var i = 0, timer = null;
-  var lang = (localStorage.getItem('sdc_lang') || 'fr');
-  var img=document.getElementById('ecarImg'), tag=document.getElementById('ecarTag'),
-      title=document.getElementById('ecarTitle'), desc=document.getElementById('ecarDesc'),
-      deniv=document.getElementById('ecarDeniv'), dots=document.querySelectorAll('.ecar-dot');
-  function show(idx){
-    i = idx;
-    var e = EP[i];
-    var isEn = (localStorage.getItem('sdc_lang')||'fr') === 'en';
-    var box=document.getElementById('ecar');
-    box.classList.add('fade');
-    setTimeout(function(){
-      img.src = e.img;
-      tag.textContent = e.tag;
-      title.textContent = isEn ? e.titleEn : e.titleFr;
-      desc.textContent = isEn ? e.descEn : e.descFr;
-      deniv.textContent = isEn ? e.denivEn : e.denivFr;
-      box.classList.remove('fade');
-    }, 180);
-    dots.forEach(function(d,di){ d.classList.toggle('active', di===i); });
+  var track = document.getElementById('ecarTrack');
+  var slides = Array.from(track.querySelectorAll('.ecar-slide'));
+  var dots = Array.from(document.querySelectorAll('.ecar-dot'));
+  var i = 0, timer = null, userTimer = null;
+
+  function goTo(idx){
+    i = (idx + slides.length) % slides.length;
+    slides[i].scrollIntoView({behavior:'smooth', inline:'center', block:'nearest'});
+    setActive(i);
   }
-  function next(){ show((i+1) % EP.length); }
+  function setActive(idx){
+    slides.forEach(function(s,si){ s.classList.toggle('active', si===idx); });
+    dots.forEach(function(d,di){ d.classList.toggle('active', di===idx); });
+  }
+  function next(){ goTo(i+1); }
   function startAuto(){ clearInterval(timer); timer = setInterval(next, 4000); }
+  function pauseThenResume(){ clearInterval(timer); clearTimeout(userTimer); userTimer = setTimeout(startAuto, 6000); }
+
   dots.forEach(function(d){
-    d.addEventListener('click', function(){ show(parseInt(d.dataset.i,10)); startAuto(); });
+    d.addEventListener('click', function(){ goTo(parseInt(d.dataset.i,10)); pauseThenResume(); });
   });
+
+  // Détecte le slide le plus centré quand l'utilisateur fait défiler à la main
+  var scrollTimer;
+  track.addEventListener('scroll', function(){
+    clearTimeout(scrollTimer);
+    scrollTimer = setTimeout(function(){
+      var mid = track.scrollLeft + track.clientWidth/2, best=0, bestD=Infinity;
+      slides.forEach(function(s,si){
+        var c = s.offsetLeft + s.offsetWidth/2, d = Math.abs(c-mid);
+        if(d<bestD){bestD=d; best=si;}
+      });
+      i = best; setActive(i);
+    }, 120);
+  }, {passive:true});
+  track.addEventListener('touchstart', pauseThenResume, {passive:true});
+  track.addEventListener('wheel', pauseThenResume, {passive:true});
+
   startAuto();
 })();
 </script>
