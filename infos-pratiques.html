@@ -10,6 +10,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Archivo:ital,wdth,wght@0,75..125,400..900;1,75..125,400..900&family=Hanken+Grotesk:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="styles.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css">
 </head>
 <body>
 
@@ -122,7 +123,15 @@
       </div>
     </div>
 
-    <div class="fill" data-fr="À confirmer : liste définitive et tarifs des parkings, éventuel parking gratuit fléché et capacités le jour de l'épreuve." data-en="To confirm: final list and prices of car parks, any signposted free parking and capacities on race day.">À confirmer : liste définitive et tarifs des parkings, éventuel parking gratuit fléché et capacités le jour de l'épreuve.</div>
+    <div class="mini-map-block">
+      <div class="mini-map" id="miniMapParking"></div>
+      <div class="mini-map-side">
+        <p data-fr="Les 5 parkings publics les plus proches du départ, avec un tarif préférentiel coureurs sur présentation du dossard." data-en="The 5 public car parks closest to the start, with a preferential rate for runners on presentation of their bib.">Les 5 parkings publics les plus proches du départ, avec un tarif préférentiel coureurs sur présentation du dossard.</p>
+        <a class="btn btn-primary" href="carte.html" data-fr="Voir tous les parkings sur la carte →" data-en="See all car parks on the map →">Voir tous les parkings sur la carte →</a>
+      </div>
+    </div>
+
+    <div class="fill" data-fr="À confirmer : liste définitive et tarifs préférentiels des parkings, éventuel parking gratuit fléché et capacités le jour de l'épreuve." data-en="To confirm: final list and preferential rates of car parks, any signposted free parking and capacities on race day.">À confirmer : liste définitive et tarifs préférentiels des parkings, éventuel parking gratuit fléché et capacités le jour de l'épreuve.</div>
   </div>
 </section>
 
@@ -132,17 +141,24 @@
     <div class="head"><span class="ic">🏨</span><h2 data-fr="Hôtels & logement" data-en="Hotels & lodging">Hôtels & logement</h2></div>
     <p class="intro" data-fr="Faites du Semi de Cannes un week-end sur la Côte d'Azur. Réservez tôt : la demande est forte au moment de l'épreuve." data-en="Make the Semi de Cannes a Riviera weekend. Book early: demand is high around the event.">Faites du Semi de Cannes un week-end sur la Côte d'Azur. Réservez tôt : la demande est forte au moment de l'épreuve.</p>
 
-    <div class="cards">
+    <div class="cards cards-4">
       <div class="card">
-        <span class="tag" data-fr="Partenaire" data-en="Partner">Partenaire</span>
-        <h3>Hôtel Belle Plage</h3>
-        <p data-fr="Hôtel & spa face à la mer, partenaire de l'événement." data-en="Seafront hotel & spa, an event partner.">Hôtel & spa face à la mer, partenaire de l'événement.</p>
-        <a class="link" href="https://www.hotelbelleplage.fr/hotel-spa-cannes" target="_blank" rel="noopener" data-fr="Voir l'hôtel →" data-en="View hotel →">Voir l'hôtel →</a>
+        <span class="tag" data-fr="Partenaire · ★★★★" data-en="Partner · ★★★★">Partenaire · ★★★★</span>
+        <h3>Hôtel Splendid</h3>
+        <p data-fr="Sur le port des yachts, à ~150 m du départ." data-en="On the yacht harbour, ~150 m from the start.">Sur le port des yachts, à ~150 m du départ.</p>
+        <a class="link" href="http://www.splendid-hotel-cannes.com/" target="_blank" rel="noopener" data-fr="Voir l'hôtel →" data-en="View hotel →">Voir l'hôtel →</a>
       </div>
       <div class="card">
-        <span class="tag" data-fr="Réserver" data-en="Book">Réserver</span>
-        <h3 data-fr="Centre-ville & bord de mer" data-en="Town centre & seafront">Centre-ville & bord de mer</h3>
-        <p data-fr="Privilégiez un hébergement proche de la Croisette pour rejoindre le départ à pied le matin." data-en="Choose lodging near the Croisette to walk to the start in the morning.">Privilégiez un hébergement proche de la Croisette pour rejoindre le départ à pied le matin.</p>
+        <span class="tag" data-fr="Partenaire · ★★" data-en="Partner · ★★">Partenaire · ★★</span>
+        <h3>Hôtel L'Estérel</h3>
+        <p data-fr="Centre-ville, face à la gare." data-en="Town centre, facing the station.">Centre-ville, face à la gare.</p>
+        <a class="link" href="https://www.hotellesterel.com/" target="_blank" rel="noopener" data-fr="Voir l'hôtel →" data-en="View hotel →">Voir l'hôtel →</a>
+      </div>
+      <div class="card">
+        <span class="tag" data-fr="Partenaire" data-en="Partner">Partenaire</span>
+        <h3>Belle Plage</h3>
+        <p data-fr="Hôtel & spa face à la mer, côté Plage du Midi." data-en="Seafront hotel & spa, on the Plage du Midi side.">Hôtel & spa face à la mer, côté Plage du Midi.</p>
+        <a class="link" href="https://www.hotelbelleplage.fr/hotel-spa-cannes" target="_blank" rel="noopener" data-fr="Voir l'hôtel →" data-en="View hotel →">Voir l'hôtel →</a>
       </div>
       <div class="card">
         <span class="tag" data-fr="Office de tourisme" data-en="Tourist office">Office de tourisme</span>
@@ -152,7 +168,15 @@
       </div>
     </div>
 
-    <div class="fill" data-fr="À compléter : liste complète des hôtels partenaires et code promo éventuel pour les coureurs." data-en="To complete: full list of partner hotels and any promo code for runners.">À compléter : liste complète des hôtels partenaires et code promo éventuel pour les coureurs.</div>
+    <div class="mini-map-block">
+      <div class="mini-map" id="miniMapHotels"></div>
+      <div class="mini-map-side">
+        <p data-fr="Les 3 hôtels partenaires, tous à quelques minutes à pied du départ et du village." data-en="The 3 partner hotels, all a few minutes' walk from the start and the village.">Les 3 hôtels partenaires, tous à quelques minutes à pied du départ et du village.</p>
+        <a class="btn btn-primary" href="carte.html" data-fr="Voir tous les hôtels sur la carte →" data-en="See all hotels on the map →">Voir tous les hôtels sur la carte →</a>
+      </div>
+    </div>
+
+    <div class="fill" data-fr="Code promo éventuel pour les coureurs à ajouter auprès des hôtels partenaires." data-en="Any promo code for runners to add with partner hotels.">Code promo éventuel pour les coureurs à ajouter auprès des hôtels partenaires.</div>
   </div>
 </section>
 
@@ -162,22 +186,19 @@
     <div class="head"><span class="ic">🎽</span><h2 data-fr="Dossards, consignes & pack" data-en="Bibs, lockers & pack">Dossards, consignes & pack</h2></div>
     <p class="intro" data-fr="Le retrait des dossards se fait au village de la course. Prévoyez votre pièce d'identité et votre confirmation d'inscription." data-en="Bib pick-up takes place at the race village. Bring your ID and your registration confirmation.">Le retrait des dossards se fait au village de la course. Prévoyez votre pièce d'identité et votre confirmation d'inscription.</p>
 
-    <div class="cards">
-      <div class="card">
-        <span class="tag" data-fr="Retrait" data-en="Pick-up">Retrait</span>
-        <h3 data-fr="Au village course" data-en="At the race village">Au village course</h3>
+    <div class="accordion">
+      <details open>
+        <summary><span class="tag" data-fr="Retrait" data-en="Pick-up">Retrait</span><span data-fr="Au village course" data-en="At the race village">Au village course</span></summary>
         <p data-fr="Présentez une pièce d'identité et votre confirmation. Le retrait par un tiers est possible avec une autorisation." data-en="Show ID and your confirmation. A third party may collect it with written authorisation.">Présentez une pièce d'identité et votre confirmation. Le retrait par un tiers est possible avec une autorisation.</p>
-      </div>
-      <div class="card">
-        <span class="tag" data-fr="Consignes" data-en="Lockers">Consignes</span>
-        <h3 data-fr="Sac sécurisé" data-en="Secure bag drop">Sac sécurisé</h3>
+      </details>
+      <details>
+        <summary><span class="tag" data-fr="Consignes" data-en="Lockers">Consignes</span><span data-fr="Sac sécurisé" data-en="Secure bag drop">Sac sécurisé</span></summary>
         <p data-fr="Une consigne surveillée est à votre disposition près du départ pour déposer vos affaires pendant la course." data-en="A supervised bag drop is available near the start to leave your belongings during the race.">Une consigne surveillée est à votre disposition près du départ pour déposer vos affaires pendant la course.</p>
-      </div>
-      <div class="card">
-        <span class="tag" data-fr="Pack coureur" data-en="Runner pack">Pack coureur</span>
-        <h3 data-fr="Ce que vous recevez" data-en="What's included">Ce que vous recevez</h3>
+      </details>
+      <details>
+        <summary><span class="tag" data-fr="Pack coureur" data-en="Runner pack">Pack coureur</span><span data-fr="Ce que vous recevez" data-en="What's included">Ce que vous recevez</span></summary>
         <p data-fr="Dossard avec puce de chronométrage, ravitaillements sur le parcours et médaille finisher à l'arrivée." data-en="Bib with timing chip, refreshment stations along the course and a finisher medal.">Dossard avec puce de chronométrage, ravitaillements sur le parcours et médaille finisher à l'arrivée.</p>
-      </div>
+      </details>
     </div>
 
     <div class="fill" data-fr="À confirmer : lieu exact, dates et horaires d'ouverture du retrait des dossards, et contenu détaillé du pack (t-shirt, cadeaux partenaires…)." data-en="To confirm: exact venue, dates and opening hours for bib pick-up, and detailed pack contents (t-shirt, partner gifts…).">À confirmer : lieu exact, dates et horaires d'ouverture du retrait des dossards, et contenu détaillé du pack (t-shirt, cadeaux partenaires…).</div>
@@ -195,9 +216,18 @@
 
 <section class="info-block" id="jourj">
   <div class="wrap">
-    <div class="head"><span class="ic">🗓️</span><h2 data-fr="Programme du jour J" data-en="Race-day schedule">Programme du jour J</h2></div>
-    <p class="intro" data-fr="Le déroulé type d'une matinée de course. Horaires indicatifs à confirmer avec le programme officiel de l'édition." data-en="A typical race morning. Indicative times, to be confirmed with the official programme.">Le déroulé type d'une matinée de course. Horaires indicatifs à confirmer avec le programme officiel de l'édition.</p>
+    <div class="head"><span class="ic">🗓️</span><h2 data-fr="Programme du week-end" data-en="Weekend schedule">Programme du week-end</h2></div>
+    <p class="intro" data-fr="Le déroulé type du samedi (retrait anticipé) et du dimanche (jour de course). Horaires indicatifs à confirmer avec le programme officiel de l'édition." data-en="A typical Saturday (early bib pick-up) and Sunday (race day). Indicative times, to be confirmed with the official programme.">Le déroulé type du samedi (retrait anticipé) et du dimanche (jour de course). Horaires indicatifs à confirmer avec le programme officiel de l'édition.</p>
 
+    <h3 class="day-title" data-fr="Samedi — veille de course" data-en="Saturday — the day before">Samedi — veille de course</h3>
+    <div class="timeline">
+      <div class="tl-item"><span class="time">10h00</span><div><h4 data-fr="Ouverture du village" data-en="Village opens">Ouverture du village</h4><p data-fr="Ouverture anticipée pour le retrait des dossards et la découverte des stands partenaires." data-en="Early opening for bib pick-up and to discover the partner stands.">Ouverture anticipée pour le retrait des dossards et la découverte des stands partenaires.</p></div></div>
+      <div class="tl-item"><span class="time">10h00 – 18h00</span><div><h4 data-fr="Retrait des dossards" data-en="Bib pick-up">Retrait des dossards</h4><p data-fr="Sur présentation d'une pièce d'identité et de la confirmation d'inscription." data-en="On presentation of ID and your registration confirmation.">Sur présentation d'une pièce d'identité et de la confirmation d'inscription.</p></div></div>
+      <div class="tl-item"><span class="time">14h00</span><div><h4 data-fr="Village partenaires & animations" data-en="Partner village & entertainment">Village partenaires & animations</h4><p data-fr="Stands, exposants et animations tout au long de l'après-midi." data-en="Stands, exhibitors and entertainment throughout the afternoon.">Stands, exposants et animations tout au long de l'après-midi.</p></div></div>
+      <div class="tl-item"><span class="time">18h00</span><div><h4 data-fr="Fermeture du village" data-en="Village closes">Fermeture du village</h4><p data-fr="Dernier délai pour retirer son dossard avant le jour J." data-en="Last chance to collect your bib before race day.">Dernier délai pour retirer son dossard avant le jour J.</p></div></div>
+    </div>
+
+    <h3 class="day-title" data-fr="Dimanche — jour de course" data-en="Sunday — race day">Dimanche — jour de course</h3>
     <div class="timeline">
       <div class="tl-item"><span class="time">7h30</span><div><h4 data-fr="Ouverture du village" data-en="Village opens">Ouverture du village</h4><p data-fr="Retrait des dossards, consigne et échauffement." data-en="Bib pick-up, bag drop and warm-up.">Retrait des dossards, consigne et échauffement.</p></div></div>
       <div class="tl-item"><span class="time">8h45</span><div><h4 data-fr="Mise en place sur la ligne" data-en="Line up at the start">Mise en place sur la ligne</h4><p data-fr="Rejoignez votre sas de départ." data-en="Head to your start pen.">Rejoignez votre sas de départ.</p></div></div>
@@ -207,7 +237,7 @@
       <div class="tl-item"><span class="time">12h00</span><div><h4 data-fr="Remise des prix" data-en="Awards ceremony">Remise des prix</h4><p data-fr="Podiums et célébration sur le village." data-en="Podiums and celebration at the village.">Podiums et célébration sur le village.</p></div></div>
     </div>
 
-    <div class="fill" data-fr="À remplacer par les horaires officiels de l'édition 2027." data-en="Replace with the official 2027 schedule.">À remplacer par les horaires officiels de l'édition 2027.</div>
+    <div class="fill" data-fr="Samedi et dimanche : horaires provisoires, à remplacer par le programme officiel de l'édition 2027." data-en="Saturday and Sunday: provisional times, to be replaced with the official 2027 programme.">Samedi et dimanche : horaires provisoires, à remplacer par le programme officiel de l'édition 2027.</div>
   </div>
 </section>
 
@@ -241,6 +271,44 @@
     <div class="fill" data-fr="À adapter au règlement officiel de l'épreuve (modalités PPS, transfert / remboursement, catégories, etc.)." data-en="Adapt to the official event rules (PPS terms, transfer / refund, categories, etc.).">À adapter au règlement officiel de l'épreuve (modalités PPS, transfert / remboursement, catégories, etc.).</div>
   </div>
 </section>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
+<script>
+(function(){
+  function miniMap(id, points, color){
+    var el = document.getElementById(id);
+    if(!el) return;
+    var map = L.map(el, {
+      zoomControl:false, dragging:false, scrollWheelZoom:false, doubleClickZoom:false,
+      touchZoom:false, boxZoom:false, keyboard:false, attributionControl:false, tap:false
+    });
+    L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png', {maxZoom:19}).addTo(map);
+    var bounds = [];
+    points.forEach(function(p){
+      L.circleMarker([p.lat,p.lng], {radius:8, color:'#fff', weight:2.5, fillColor:color, fillOpacity:1})
+        .bindTooltip(p.name, {direction:'top', offset:[0,-8]})
+        .addTo(map);
+      bounds.push([p.lat,p.lng]);
+    });
+    map.fitBounds(bounds, {padding:[26,26]});
+    setTimeout(function(){ map.invalidateSize(); map.fitBounds(bounds, {padding:[26,26]}); }, 150);
+  }
+
+  miniMap('miniMapParking', [
+    {name:"Parking Pantiero", lat:43.5510067, lng:7.0133434},
+    {name:"Parking du Palais des Festivals", lat:43.5511534, lng:7.0166652},
+    {name:"Parking Laubeuf", lat:43.5476822, lng:7.0120136},
+    {name:"Parking Suquet Forville", lat:43.5529303, lng:7.0105661},
+    {name:"Parking Gare de Cannes", lat:43.553688, lng:7.020999}
+  ], '#2E6FA8');
+
+  miniMap('miniMapHotels', [
+    {name:"Hôtel Splendid", lat:43.552062, lng:7.0159559},
+    {name:"Hôtel L'Estérel", lat:43.5534513, lng:7.0192404},
+    {name:"Belle Plage", lat:43.5495883, lng:7.0075474}
+  ], '#F37252');
+})();
+</script>
 
 <!-- ===== FOOTER ===== -->
 <footer class="footer" id="contact">
@@ -309,69 +377,6 @@ function setLang(lang){
   langBtns.forEach(b=> b.classList.toggle('active', b.dataset.lang===lang));
 }
 langBtns.forEach(b=> b.addEventListener('click', ()=> setLang(b.dataset.lang)));
-/* ---- Plan du village départ (positions faciles à éditer) ---- */
-const VILLAGE=[
- {id:'depart',name:'Départ / Arrivée',icon:'🏁',fill:'#F37252',text:'#fff',x:300,y:524,w:400,h:48,band:true,desc:"Ligne de départ et d'arrivée des trois courses, sur le bord de mer."},
- {id:'sas',name:'Sas de départ',icon:'🧍',fill:'#F58E73',text:'#fff',x:300,y:478,w:400,h:34,band:true,desc:"Zone de regroupement des coureurs avant le départ, organisée par sas."},
- {id:'dossards',name:'Retrait des dossards',icon:'🎽',fill:'#8BC9E1',text:'#102E3F',x:60,y:70,w:250,h:120,desc:"Retrait des dossards sur présentation d'une pièce d'identité et de la confirmation d'inscription."},
- {id:'partenaires',name:'Village partenaires',icon:'🤝',fill:'#4E9CBC',text:'#fff',x:340,y:70,w:320,h:120,desc:"Stands des partenaires et exposants de l'événement."},
- {id:'scene',name:'Animations / Scène',icon:'🎤',fill:'#1A4256',text:'#fff',x:690,y:70,w:250,h:120,desc:"Scène, speaker, échauffement collectif et animations."},
- {id:'consigne',name:'Consigne sacs',icon:'🎒',fill:'#4E9CBC',text:'#fff',x:60,y:210,w:220,h:120,desc:"Dépôt sécurisé des affaires pendant la course."},
- {id:'podium',name:'Podium / Remise des prix',icon:'🏆',fill:'#F37252',text:'#fff',x:310,y:210,w:230,h:120,desc:"Cérémonie protocolaire et remise des récompenses."},
- {id:'ravito',name:'Ravitaillement arrivée',icon:'🥤',fill:'#8BC9E1',text:'#102E3F',x:570,y:210,w:180,h:120,desc:"Eau, fruits et collations pour les finishers."},
- {id:'secours',name:'Poste de secours',icon:'➕',fill:'#D6584A',text:'#fff',x:780,y:210,w:160,h:120,desc:"Assistance médicale et premiers secours."},
- {id:'accueil',name:'Accueil / Infos',icon:'ℹ️',fill:'#E8B04B',text:'#102E3F',x:60,y:350,w:200,h:100,desc:"Point d'information, PC course et objets trouvés."},
- {id:'wc',name:'Toilettes',icon:'🚻',fill:'#28556B',text:'#fff',x:290,y:350,w:170,h:100,desc:"Sanitaires et WC du village."},
- {id:'echauffement',name:'Échauffement',icon:'🤸',fill:'#8BC9E1',text:'#102E3F',x:490,y:350,w:200,h:100,desc:"Espace dédié pour s'échauffer avant le départ."},
- {id:'buvette',name:'Buvette / Restauration',icon:'🍴',fill:'#4E9CBC',text:'#fff',x:720,y:350,w:220,h:100,desc:"Boissons et restauration sur place."}
-];
-function vWrap(s,max){var w=s.split(' '),lines=[],cur='';w.forEach(function(word){if((cur+' '+word).trim().length>max){if(cur)lines.push(cur);cur=word;}else{cur=(cur+' '+word).trim();}});if(cur)lines.push(cur);return lines;}
-function vZone(z){
-  var cx=z.x+z.w/2, cy=z.y+z.h/2, t=z.text, F='font-family="Hanken Grotesk,sans-serif"';
-  var rect='<rect x="'+z.x+'" y="'+z.y+'" width="'+z.w+'" height="'+z.h+'" rx="12" fill="'+z.fill+'" stroke="rgba(0,0,0,0)" stroke-width="0"/>';
-  var inner;
-  if(z.band){
-    inner='<text x="'+cx+'" y="'+(cy+5)+'" text-anchor="middle" font-size="15" font-weight="800" fill="'+t+'" '+F+'>'+z.icon+'  '+z.name.toUpperCase()+'</text>';
-  } else {
-    var lines=vWrap(z.name,16), lh=16, sy=cy+6, lbl='';
-    for(var i=0;i<lines.length;i++){ lbl+='<text x="'+cx+'" y="'+(sy+i*lh)+'" text-anchor="middle" font-size="14" font-weight="700" fill="'+t+'" '+F+'>'+lines[i]+'</text>'; }
-    inner='<text x="'+cx+'" y="'+(cy-12)+'" text-anchor="middle" font-size="22">'+z.icon+'</text>'+lbl;
-  }
-  return '<g id="vz-'+z.id+'" class="vzone" style="cursor:pointer">'+rect+inner+'</g>';
-}
-function villageRender(){
-  var map=document.getElementById('villageMap'); if(!map) return;
-  var bg='<svg viewBox="0 0 1000 640" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Plan du village départ">'
-   +'<defs><linearGradient id="vsea" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#8BC9E1"/><stop offset="1" stop-color="#4E9CBC"/></linearGradient></defs>'
-   +'<rect x="0" y="0" width="1000" height="640" fill="#F7FBFD"/>'
-   +'<rect x="0" y="520" width="1000" height="60" fill="#F0E6D6"/>'
-   +'<rect x="0" y="580" width="1000" height="60" fill="url(#vsea)"/>'
-   +'<text x="984" y="612" text-anchor="end" font-size="13" font-weight="700" fill="#ffffff" font-family="Hanken Grotesk,sans-serif">Mer Méditerranée</text>'
-   +'<text x="16" y="556" font-size="12" font-weight="700" fill="#9a8a6a" font-family="Hanken Grotesk,sans-serif">Boulevard de la Croisette</text>';
-  var zones=''; VILLAGE.forEach(function(z){ zones+=vZone(z); });
-  map.innerHTML=bg+zones+'</svg>';
-  var legend=document.getElementById('villageLegend');
-  legend.innerHTML=VILLAGE.map(function(z){return '<button class="vlg" data-id="'+z.id+'"><i style="background:'+z.fill+'"></i>'+z.icon+' '+z.name+'</button>';}).join('');
-  VILLAGE.forEach(function(z){
-    var g=document.getElementById('vz-'+z.id);
-    if(g){ g.addEventListener('mouseenter',function(){villageHi(z.id);}); g.addEventListener('click',function(){villageHi(z.id);}); }
-  });
-  legend.querySelectorAll('.vlg').forEach(function(b){ b.addEventListener('mouseenter',function(){villageHi(b.dataset.id);}); b.addEventListener('click',function(){villageHi(b.dataset.id);}); });
-}
-function villageHi(id){
-  VILLAGE.forEach(function(z){
-    var g=document.getElementById('vz-'+z.id); if(!g)return;
-    var r=g.querySelector('rect');
-    if(z.id===id){ r.setAttribute('stroke','#102E3F'); r.setAttribute('stroke-width','3'); g.style.opacity='1'; }
-    else { r.setAttribute('stroke','rgba(0,0,0,0)'); r.setAttribute('stroke-width','0'); g.style.opacity='.9'; }
-  });
-  var legend=document.getElementById('villageLegend');
-  if(legend) legend.querySelectorAll('.vlg').forEach(function(b){ b.classList.toggle('on', b.dataset.id===id); });
-  var z=VILLAGE.find(function(z){return z.id===id;});
-  var info=document.getElementById('villageInfo');
-  if(z&&info) info.innerHTML='<span class="vi-ic">'+z.icon+'</span><div><h4>'+z.name+'</h4><p>'+z.desc+'</p></div>';
-}
-villageRender();
 </script>
 <script>
 /* Mémorise la langue choisie et la réapplique sur chaque page */
