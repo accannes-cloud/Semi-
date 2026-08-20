@@ -139,9 +139,12 @@
     return coords[coords.length-1];
   }
 
-  var DURATION = 10000; // 10 secondes par boucle
+  var DURATION = 10000; // 10 secondes pour parcourir le tracé en entier
 
-  Object.keys(ROUTES).forEach(function(key){
+  var routeStates = {}; // key -> {map, runner, coords, cum}
+  var order = ['5km','10km','21km'];
+
+  order.forEach(function(key){
     var el = document.getElementById('map-'+key);
     if(!el) return;
     var coords = ROUTES[key];
@@ -164,16 +167,50 @@
     map.fitBounds(latlngs, {padding:[18,18]});
     setTimeout(function(){ map.invalidateSize(); map.fitBounds(latlngs, {padding:[18,18]}); }, 150);
 
+    routeStates[key] = {map:map, runner:runner, coords:coords, cum:cum, rafId:null};
+  });
+
+  // ---- Une seule animation active à la fois : celle de la carte au premier plan.
+  // Les autres restent au départ tant qu'elles ne sont pas actives. ----
+  var activeKey = null;
+
+  function resetRunner(key){
+    var st = routeStates[key];
+    if(!st) return;
+    if(st.rafId) cancelAnimationFrame(st.rafId);
+    st.rafId = null;
+    st.runner.setLatLng(st.coords[0]);
+  }
+
+  function playRoute(key, onComplete){
+    var st = routeStates[key];
+    if(!st) { onComplete(); return; }
+    if(st.rafId) cancelAnimationFrame(st.rafId);
     var start = null;
     function animate(ts){
       if(!start) start = ts;
-      var elapsed = (ts - start) % DURATION;
-      var frac = elapsed / DURATION;
-      runner.setLatLng(pointAtFraction(coords, cum, frac));
-      requestAnimationFrame(animate);
+      var elapsed = ts - start;
+      var frac = Math.min(1, elapsed / DURATION);
+      st.runner.setLatLng(pointAtFraction(st.coords, st.cum, frac));
+      if(frac < 1){
+        st.rafId = requestAnimationFrame(animate);
+      } else {
+        st.rafId = null;
+        onComplete();
+      }
     }
-    requestAnimationFrame(animate);
-  });
+    st.rafId = requestAnimationFrame(animate);
+  }
+
+  function setActiveRoute(key){
+    if(key === activeKey) return;
+    Object.keys(routeStates).forEach(function(k){ if(k !== key) resetRunner(k); });
+    activeKey = key;
+    playRoute(key, function(){
+      if(activeKey === key) window.SDC_carouselNext && window.SDC_carouselNext();
+    });
+  }
+  window.SDC_setActiveRoute = setActiveRoute;
 })();
 </script>
 
@@ -182,7 +219,8 @@
   var track = document.getElementById('ecarTrack');
   var slides = Array.from(track.querySelectorAll('.ecar-slide'));
   var dots = Array.from(document.querySelectorAll('.ecar-dot'));
-  var i = 0, timer = null, userTimer = null;
+  var routeKeys = ['5km','10km','21km'];
+  var i = 0;
   var isProgrammatic = false, progTimer = null;
 
   function goTo(idx){
@@ -196,18 +234,15 @@
   function setActive(idx){
     slides.forEach(function(s,si){ s.classList.toggle('active', si===idx); });
     dots.forEach(function(d,di){ d.classList.toggle('active', di===idx); });
+    if(window.SDC_setActiveRoute) window.SDC_setActiveRoute(routeKeys[idx]);
   }
-  function next(){ goTo(i+1); }
-  function startAuto(){ clearInterval(timer); timer = setInterval(next, 11000); }
-  function pauseThenResume(){ clearInterval(timer); clearTimeout(userTimer); userTimer = setTimeout(startAuto, 6000); }
+  window.SDC_carouselNext = function(){ goTo(i+1); };
 
   dots.forEach(function(d){
-    d.addEventListener('click', function(){ goTo(parseInt(d.dataset.i,10)); pauseThenResume(); });
+    d.addEventListener('click', function(){ goTo(parseInt(d.dataset.i,10)); });
   });
 
   // Détecte le slide le plus centré quand l'utilisateur fait défiler à la main
-  // (coordonnées prises via getBoundingClientRect pour rester cohérentes entre elles,
-  //  et ignorées pendant un défilement déclenché par le carrousel lui-même)
   var scrollTimer;
   track.addEventListener('scroll', function(){
     if(isProgrammatic) return;
@@ -223,10 +258,8 @@
       i = best; setActive(i);
     }, 120);
   }, {passive:true});
-  track.addEventListener('touchstart', pauseThenResume, {passive:true});
-  track.addEventListener('wheel', pauseThenResume, {passive:true});
 
-  startAuto();
+  setActive(0);
 })();
 </script>
 
