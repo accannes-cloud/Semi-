@@ -198,7 +198,7 @@ ul{list-style:none}
 }
 
 /* ============ RESULTS BAND (édition passée) ============ */
-.band{background:var(--coral);color:#fff}
+.band{background:var(--coral);color:#fff;padding:0}
 .band .wrap{display:flex;align-items:center;justify-content:space-between;gap:24px;padding:3px 24px;flex-wrap:wrap}
 .band strong,.band p,.band-navy p{line-height:1}
 .band-navy{background:var(--navy);color:#fff}
