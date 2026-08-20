@@ -199,19 +199,20 @@ ul{list-style:none}
 
 /* ============ RESULTS BAND (édition passée) ============ */
 .band{background:var(--coral);color:#fff}
-.band .wrap{display:flex;align-items:center;justify-content:space-between;gap:24px;padding:5px 24px;flex-wrap:wrap}
+.band .wrap{display:flex;align-items:center;justify-content:space-between;gap:24px;padding:3px 24px;flex-wrap:wrap}
+.band strong,.band p,.band-navy p{line-height:1}
 .band-navy{background:var(--navy);color:#fff}
 .band-btn{font-family:var(--d-display);font-weight:800;font-stretch:106%;text-transform:uppercase;
-  letter-spacing:.03em;font-size:.8rem;flex-shrink:0;background:var(--coral);color:#fff;border-radius:100px;
-  padding:.5em 1.1em;text-decoration:none;transition:.15s;white-space:nowrap}
+  letter-spacing:.03em;font-size:.74rem;flex-shrink:0;background:var(--coral);color:#fff;border-radius:100px;
+  padding:.3em .9em;text-decoration:none;transition:.15s;white-space:nowrap;line-height:1.6}
 .band-btn:hover{background:#fff;color:var(--coral)}
-.band-navy p{margin:0;font-size:.9rem;color:rgba(255,255,255,.82);text-align:right}
+.band-navy p{margin:0;font-size:.82rem;color:rgba(255,255,255,.82);text-align:right}
 .band .b-txt{display:flex;align-items:center;gap:16px}
 .band .pill{font-family:var(--d-display);font-weight:800;font-stretch:108%;background:#fff;color:var(--coral);
-  padding:5px 12px;border-radius:8px;font-size:.8rem;letter-spacing:.04em;text-transform:uppercase;white-space:nowrap}
+  padding:2px 10px;border-radius:7px;font-size:.72rem;letter-spacing:.04em;text-transform:uppercase;white-space:nowrap;line-height:1.6}
 .band .b-actions{display:flex;gap:12px;flex-wrap:wrap}
 .band a.linkbtn{font-family:var(--d-display);font-weight:700;text-transform:uppercase;letter-spacing:.05em;
-  font-size:.82rem;border:1.5px solid rgba(255,255,255,.6);padding:.6em 1.1em;border-radius:100px;transition:.18s}
+  font-size:.74rem;border:1.5px solid rgba(255,255,255,.6);padding:.32em .9em;border-radius:100px;transition:.18s;line-height:1.6}
 .band a.linkbtn:hover{background:#fff;color:var(--coral);border-color:#fff}
 
 /* ============ SECTIONS ============ */
