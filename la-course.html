@@ -10,38 +10,8 @@
 <link href="https://fonts.googleapis.com/css2?family=Archivo:ital,wdth,wght@0,75..125,400..900;1,75..125,400..900&family=Hanken+Grotesk:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="styles.css">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css">
-<style>
-  /* ===== TEST v2 : tracé motif + chiffres géants + dossards + bloc franc + reveal (propre à cette page) ===== */
-
-  /* 1. Tracé comme motif graphique, en filigrane dans le hero */
-  .test-v2 .page-hero{position:relative;overflow:hidden}
-  .test-v2 .page-hero-route{position:absolute;right:-4%;top:8%;width:60%;max-width:640px;opacity:.35;pointer-events:none;z-index:0}
-  .test-v2 .page-hero .wrap{position:relative;z-index:1}
-
-  /* 2. Bloc de couleur franche : chiffre géant */
-  .bignum-band{background:var(--navy);color:#fff;padding:80px 0;text-align:center;overflow:hidden}
-  .bignum-band .wrap{position:relative}
-  .bignum-band .bn-num{font-family:var(--d-display);font-weight:900;font-style:italic;font-stretch:125%;
-    text-transform:uppercase;line-height:.82;letter-spacing:-.02em;
-    font-size:clamp(3.2rem,13vw,9rem);color:var(--coral)}
-  .bignum-band .bn-sub{font-family:var(--d-display);font-weight:700;font-stretch:106%;text-transform:uppercase;
-    letter-spacing:.06em;font-size:clamp(1rem,2.5vw,1.5rem);color:#fff;margin-top:6px}
-
-  /* 3. Badges "dossard" numérotés à la place des icônes */
-  .test-v2 .info-block .head{align-items:center}
-  .test-v2 .info-block .head .bib{
-    font-family:var(--d-display);font-weight:800;font-stretch:104%;font-size:.95rem;color:var(--navy);
-    background:#fff;border:2px dashed var(--coral);border-radius:8px;padding:8px 12px;flex-shrink:0;
-    display:flex;flex-direction:column;align-items:center;line-height:1.05;min-width:52px}
-  .test-v2 .info-block .head .bib small{font-size:.55rem;font-weight:700;color:var(--muted);letter-spacing:.06em;text-transform:uppercase}
-  .test-v2 .info-block .head .ic{display:none}
-
-  /* 4. Révélation progressive au scroll */
-  .test-v2 .reveal-up{opacity:0;transform:translateY(28px);transition:opacity .7s ease, transform .7s ease}
-  .test-v2 .reveal-up.in{opacity:1;transform:none}
-</style>
 </head>
-<body class="test-v2">
+<body>
 <div class="topbar">
   <div class="wrap">
     <div class="lang-toggle" aria-label="Choix de la langue">
@@ -71,17 +41,11 @@
   </div>
 </header>
 <section class="page-hero">
-  <svg class="page-hero-route" viewBox="0 0 500 300" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-    <path d="M10 260C60 260 70 180 130 170C190 160 200 90 260 80C310 72 320 140 380 130C430 122 440 40 490 30" stroke="#102E3F" stroke-width="5" stroke-linecap="round"/>
-    <circle cx="10" cy="260" r="8" fill="#102E3F"/>
-    <circle cx="490" cy="30" r="8" fill="#F37252"/>
-  </svg>
   <div class="wrap">
     <div class="crumbs"><a href="index.html">Accueil</a> · <span>Les épreuves</span></div>
     <h1 data-fr="Les épreuves" data-en="The races">Les épreuves</h1>
     <p data-fr="Les trois épreuves, le règlement, le palmarès et les résultats du Semi de Cannes." data-en="The three races, the rules, the hall of fame and the results of the Semi de Cannes.">Les trois épreuves, le règlement, le palmarès et les résultats du Semi de Cannes.</p>
   </div>
-  <div class="page-hero-wave"><svg viewBox="0 0 1440 40" preserveAspectRatio="none"><path fill="currentColor" d="M0,40 L0,20 C180,36 360,4 600,17 C840,29 1080,3 1320,17 C1380,21 1410,22 1440,20 L1440,40 Z"/></svg></div>
 </section>
 <nav class="toc" aria-label="Sommaire">
   <div class="wrap">
@@ -93,8 +57,8 @@
   </div>
 </nav>
 <section class="info-block" id="epreuves">
-  <div class="wrap reveal-up">
-    <div class="head"><span class="bib">01<small>Épreuves</small></span><h2 data-fr="Les épreuves" data-en="The races">Les épreuves</h2></div>
+  <div class="wrap">
+    <div class="head"><span class="ic">🏃</span><h2 data-fr="Les épreuves" data-en="The races">Les épreuves</h2></div>
     <p class="intro" data-fr="Trois distances sur un même bord de mer : choisissez la vôtre, du premier dossard au record personnel." data-en="Three distances on the same seafront: pick yours, from a first bib to a personal best.">Trois distances sur un même bord de mer : choisissez la vôtre, du premier dossard au record personnel.</p>
 
     <div class="ecar-wrap">
@@ -299,16 +263,9 @@
 })();
 </script>
 
-<section class="bignum-band">
-  <div class="wrap">
-    <div class="bn-num">21,1 KM</div>
-    <div class="bn-sub" data-fr="d'une seule et même baie, de la Croisette au Suquet" data-en="of one single bay, from the Croisette to Le Suquet">d'une seule et même baie, de la Croisette au Suquet</div>
-  </div>
-</section>
-
 <section class="info-block" id="reglement">
-  <div class="wrap reveal-up">
-    <div class="head"><span class="bib">02<small>Règles</small></span><h2 data-fr="Règlement" data-en="Rules">Règlement</h2></div>
+  <div class="wrap">
+    <div class="head"><span class="ic">📋</span><h2 data-fr="Règlement" data-en="Rules">Règlement</h2></div>
     <p class="intro" data-fr="L'essentiel à connaître avant de prendre le départ. Le règlement complet fait foi." data-en="The essentials before the start. The full rules prevail.">L'essentiel à connaître avant de prendre le départ. Le règlement complet fait foi.</p>
     <div class="cards">
       <div class="card"><span class="tag">Santé</span><h3 data-fr="Certificat / PPS" data-en="Medical / PPS">Certificat / PPS</h3><p data-fr="Un Parcours Prévention Santé (PPS) ou une licence valide est demandé pour les épreuves chronométrées." data-en="A Health Prevention Pathway (PPS) or valid licence is required for timed races.">Un Parcours Prévention Santé (PPS) ou une licence valide est demandé pour les épreuves chronométrées.</p></div>
@@ -320,8 +277,8 @@
 </section>
 
 <section class="info-block" id="palmares">
-  <div class="wrap reveal-up">
-    <div class="head"><span class="bib">03<small>Palmarès</small></span><h2 data-fr="Palmarès" data-en="Hall of fame">Palmarès</h2></div>
+  <div class="wrap">
+    <div class="head"><span class="ic">🏆</span><h2 data-fr="Palmarès" data-en="Hall of fame">Palmarès</h2></div>
     <p class="intro" data-fr="Les vainqueurs des dernières éditions, par distance." data-en="Recent winners, by distance.">Les vainqueurs des dernières éditions, par distance.</p>
     <div class="cards">
       <div class="card">
@@ -348,8 +305,8 @@
 </section>
 
 <section class="info-block" id="primes">
-  <div class="wrap reveal-up">
-    <div class="head"><span class="bib">04<small>Primes</small></span><h2 data-fr="Primes" data-en="Prize money">Primes</h2></div>
+  <div class="wrap">
+    <div class="head"><span class="ic">💶</span><h2 data-fr="Primes" data-en="Prize money">Primes</h2></div>
     <p class="intro" data-fr="Récompenses au scratch, par distance (montants indicatifs)." data-en="Scratch prizes, by distance (indicative amounts).">Récompenses au scratch, par distance (montants indicatifs).</p>
     <div class="cards">
       <div class="card">
@@ -379,8 +336,8 @@
 </section>
 
 <section class="info-block" id="resultats">
-  <div class="wrap reveal-up">
-    <div class="head"><span class="bib">05<small>Résultats</small></span><h2 data-fr="Résultats" data-en="Results">Résultats</h2></div>
+  <div class="wrap">
+    <div class="head"><span class="ic">🏁</span><h2 data-fr="Résultats" data-en="Results">Résultats</h2></div>
     <p class="intro" data-fr="Les classements complets sont publiés en ligne après chaque édition, chronométrage par puce électronique." data-en="Full rankings are published online after each edition, with electronic chip timing.">Les classements complets sont publiés en ligne après chaque édition, chronométrage par puce électronique.</p>
     <a class="btn btn-primary" href="https://www.athle.fr/" target="_blank" rel="noopener" data-fr="Voir les résultats →" data-en="View results →">Voir les résultats →</a>
   </div>
@@ -445,18 +402,6 @@ langBtns.forEach(b=>b.addEventListener('click',()=>setLang(b.dataset.lang)));
     b.addEventListener('click',function(){try{localStorage.setItem('sdc_lang',b.dataset.lang);}catch(e){}});
   });
   try{var l=localStorage.getItem('sdc_lang'); if(l&&l!=='fr') apply(l);}catch(e){}
-})();
-</script>
-<script>
-(function(){
-  var els = document.querySelectorAll('.reveal-up');
-  if(!els.length || !window.IntersectionObserver) return;
-  var io = new IntersectionObserver(function(entries){
-    entries.forEach(function(e){
-      if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); }
-    });
-  }, {threshold:.15});
-  els.forEach(function(el){ io.observe(el); });
 })();
 </script>
 </body>
