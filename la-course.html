@@ -110,9 +110,13 @@
   var slides = Array.from(track.querySelectorAll('.ecar-slide'));
   var dots = Array.from(document.querySelectorAll('.ecar-dot'));
   var i = 0, timer = null, userTimer = null;
+  var isProgrammatic = false, progTimer = null;
 
   function goTo(idx){
     i = (idx + slides.length) % slides.length;
+    isProgrammatic = true;
+    clearTimeout(progTimer);
+    progTimer = setTimeout(function(){ isProgrammatic = false; }, 550);
     slides[i].scrollIntoView({behavior:'smooth', inline:'center', block:'nearest'});
     setActive(i);
   }
@@ -129,13 +133,18 @@
   });
 
   // Détecte le slide le plus centré quand l'utilisateur fait défiler à la main
+  // (coordonnées prises via getBoundingClientRect pour rester cohérentes entre elles,
+  //  et ignorées pendant un défilement déclenché par le carrousel lui-même)
   var scrollTimer;
   track.addEventListener('scroll', function(){
+    if(isProgrammatic) return;
     clearTimeout(scrollTimer);
     scrollTimer = setTimeout(function(){
-      var mid = track.scrollLeft + track.clientWidth/2, best=0, bestD=Infinity;
+      var trackRect = track.getBoundingClientRect();
+      var mid = trackRect.left + trackRect.width/2, best=0, bestD=Infinity;
       slides.forEach(function(s,si){
-        var c = s.offsetLeft + s.offsetWidth/2, d = Math.abs(c-mid);
+        var r = s.getBoundingClientRect();
+        var c = r.left + r.width/2, d = Math.abs(c-mid);
         if(d<bestD){bestD=d; best=si;}
       });
       i = best; setActive(i);
