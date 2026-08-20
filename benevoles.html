@@ -10,19 +10,16 @@
 <link href="https://fonts.googleapis.com/css2?family=Archivo:ital,wdth,wght@0,75..125,400..900;1,75..125,400..900&family=Hanken+Grotesk:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="styles.css">
 <style>
-  /* ===== TEST : duoton photos + icônes sur mesure (propre à cette page, à valider) ===== */
-  .test-personality .bslide{filter:grayscale(1) contrast(1.12) brightness(1.05)}
-  .test-personality .bslider::after{
-    content:"";position:absolute;inset:0;z-index:1;pointer-events:none;
-    background:linear-gradient(135deg, var(--navy) 12%, var(--coral) 100%);
-    mix-blend-mode:color;
-  }
-  .test-personality .bslider-dots{z-index:2}
-
+  /* ===== TEST : icônes sur mesure (propre à cette page, à valider) ===== */
   .test-personality .info-block .head .ic{
-    background:none;box-shadow:none;width:auto;height:auto;border-radius:0;
+    width:60px;height:60px;flex-shrink:0;border-radius:50%;
+    background:radial-gradient(circle at 35% 30%, rgba(243,114,82,.16), rgba(243,114,82,.06));
+    display:flex;align-items:center;justify-content:center;
   }
-  .test-personality .info-block .head .ic svg{width:44px;height:44px;display:block}
+  .test-personality .info-block:nth-child(even) .head .ic{
+    background:radial-gradient(circle at 35% 30%, rgba(16,46,63,.13), rgba(16,46,63,.05));
+  }
+  .test-personality .info-block .head .ic svg{width:30px;height:30px;display:block}
 </style>
 </head>
 <body class="test-personality">
@@ -99,7 +96,7 @@
 </script>
 <section class="info-block" id="pourquoi">
   <div class="wrap">
-    <div class="head"><span class="ic"><svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M24 40C24 40 6 29.5 6 17.5C6 11.7 10.5 7 16 7C19.5 7 22.5 8.8 24 11.5C25.5 8.8 28.5 7 32 7C37.5 7 42 11.7 42 17.5C42 29.5 24 40 24 40Z" stroke="#F37252" stroke-width="2.5" stroke-linejoin="round"/></svg></span><h2 data-fr="Présentation" data-en="Presentation">Présentation</h2></div>
+    <div class="head"><span class="ic"><svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M24 40C24 40 6 29.5 6 17.5C6 11.7 10.5 7 16 7C19.5 7 22.5 8.8 24 11.5C25.5 8.8 28.5 7 32 7C37.5 7 42 11.7 42 17.5C42 29.5 24 40 24 40Z" stroke="#F37252" stroke-width="2.75" stroke-linecap="round" stroke-linejoin="round"/></svg></span><h2 data-fr="Présentation" data-en="Presentation">Présentation</h2></div>
     <p class="intro" data-fr="Sans bénévoles, pas de course ! Rejoignez l'équipe et vivez l'événement de l'intérieur, au plus près des coureurs." data-en="No volunteers, no race! Join the team and live the event from the inside, close to the runners.">Sans bénévoles, pas de course ! Rejoignez l'équipe et vivez l'événement de l'intérieur, au plus près des coureurs.</p>
     <div class="cards">
       <div class="card"><span class="tag">+</span><h3 data-fr="Ambiance unique" data-en="Unique atmosphere">Ambiance unique</h3><p data-fr="Au plus près des coureurs, dans la bonne humeur du jour J." data-en="Close to the runners, in the race-day buzz.">Au plus près des coureurs, dans la bonne humeur du jour J.</p></div>
@@ -112,7 +109,7 @@
 
 <section class="info-block" id="missions">
   <div class="wrap">
-    <div class="head"><span class="ic"><svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="24" cy="24" r="17" stroke="#F37252" stroke-width="2.5"/><path d="M30 18L21.5 21.5L18 30L26.5 26.5L30 18Z" stroke="#F37252" stroke-width="2.2" stroke-linejoin="round"/><circle cx="24" cy="24" r="1.8" fill="#F37252"/></svg></span><h2 data-fr="Les missions" data-en="The missions">Les missions</h2></div>
+    <div class="head"><span class="ic"><svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="24" cy="24" r="17" stroke="#F37252" stroke-width="2.75"/><path d="M30 18L21.5 21.5L18 30L26.5 26.5L30 18Z" stroke="#F37252" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/><circle cx="24" cy="24" r="2" fill="#F37252"/></svg></span><h2 data-fr="Les missions" data-en="The missions">Les missions</h2></div>
     <p class="intro" data-fr="Il y a une place pour chacun, selon vos envies et vos disponibilités." data-en="There's a spot for everyone, depending on your wishes and availability.">Il y a une place pour chacun, selon vos envies et vos disponibilités.</p>
     <div class="cards cards-4">
       <div class="card"><span class="tag">🎽</span><h3 data-fr="Retrait dossard" data-en="Bib pick-up">Retrait dossard</h3><p data-fr="Accueil et remise des dossards au village course." data-en="Welcome runners and hand out bibs at the village.">Accueil et remise des dossards au village course.</p></div>
