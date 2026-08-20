@@ -46,15 +46,51 @@
     <p data-fr="Rejoignez l'équipe et vivez la course de l'intérieur." data-en="Join the team and live the race from the inside.">Rejoignez l'équipe et vivez la course de l'intérieur.</p>
   </div>
 </section>
+
+<section class="bslider-wrap">
+  <div class="bslider" id="bslider">
+    <img class="bslide active" src="assets/parcours/p1.jpg" alt="">
+    <img class="bslide" src="assets/parcours/p2.jpg" alt="">
+    <img class="bslide" src="assets/parcours/p3.jpg" alt="">
+    <img class="bslide" src="assets/parcours/p4.jpg" alt="">
+    <img class="bslide" src="assets/parcours/p5.jpg" alt="">
+    <div class="bslider-dots" id="bsliderDots">
+      <button class="bs-dot active" data-i="0"></button>
+      <button class="bs-dot" data-i="1"></button>
+      <button class="bs-dot" data-i="2"></button>
+      <button class="bs-dot" data-i="3"></button>
+      <button class="bs-dot" data-i="4"></button>
+    </div>
+  </div>
+  <p class="bslider-note" data-fr="Photos d'illustration — à remplacer par de vraies photos de bénévoles." data-en="Placeholder photos — to be replaced with real volunteer photos.">Photos d'illustration — à remplacer par de vraies photos de bénévoles.</p>
+</section>
+
+<script>
+(function(){
+  var slides = Array.from(document.querySelectorAll('#bslider .bslide'));
+  var dots = Array.from(document.querySelectorAll('.bs-dot'));
+  var i = 0, timer;
+  function show(idx){
+    i = (idx + slides.length) % slides.length;
+    slides.forEach(function(s,si){ s.classList.toggle('active', si===i); });
+    dots.forEach(function(d,di){ d.classList.toggle('active', di===i); });
+  }
+  function next(){ show(i+1); }
+  dots.forEach(function(d){ d.addEventListener('click', function(){ show(parseInt(d.dataset.i,10)); resetTimer(); }); });
+  function resetTimer(){ clearInterval(timer); timer = setInterval(next, 4000); }
+  resetTimer();
+})();
+</script>
 <section class="info-block" id="pourquoi">
   <div class="wrap">
-    <div class="head"><span class="ic">🙌</span><h2 data-fr="Pourquoi devenir bénévole" data-en="Why volunteer">Pourquoi devenir bénévole</h2></div>
-    <p class="intro" data-fr="Sans bénévoles, pas de course ! Rejoignez l'équipe et vivez l'événement de l'intérieur." data-en="No volunteers, no race! Join the team and live the event from the inside.">Sans bénévoles, pas de course ! Rejoignez l'équipe et vivez l'événement de l'intérieur.</p>
+    <div class="head"><span class="ic">🙌</span><h2 data-fr="Présentation" data-en="Presentation">Présentation</h2></div>
+    <p class="intro" data-fr="Sans bénévoles, pas de course ! Rejoignez l'équipe et vivez l'événement de l'intérieur, au plus près des coureurs." data-en="No volunteers, no race! Join the team and live the event from the inside, close to the runners.">Sans bénévoles, pas de course ! Rejoignez l'équipe et vivez l'événement de l'intérieur, au plus près des coureurs.</p>
     <div class="cards">
       <div class="card"><span class="tag">+</span><h3 data-fr="Ambiance unique" data-en="Unique atmosphere">Ambiance unique</h3><p data-fr="Au plus près des coureurs, dans la bonne humeur du jour J." data-en="Close to the runners, in the race-day buzz.">Au plus près des coureurs, dans la bonne humeur du jour J.</p></div>
       <div class="card"><span class="tag">+</span><h3 data-fr="Dotation bénévole" data-en="Volunteer kit">Dotation bénévole</h3><p data-fr="Tee-shirt, repas et boissons offerts pendant votre mission." data-en="T-shirt, meal and drinks provided during your mission.">Tee-shirt, repas et boissons offerts pendant votre mission.</p></div>
       <div class="card"><span class="tag">+</span><h3 data-fr="Esprit d'équipe" data-en="Team spirit">Esprit d'équipe</h3><p data-fr="Une expérience collective et conviviale, ouverte à toutes et tous." data-en="A friendly, collective experience open to everyone.">Une expérience collective et conviviale, ouverte à toutes et tous.</p></div>
     </div>
+    <a class="btn btn-outline" href="#participer" style="margin-top:26px" data-fr="Je suis intéressé →" data-en="I'm interested →">Je suis intéressé →</a>
   </div>
 </section>
 
@@ -62,11 +98,14 @@
   <div class="wrap">
     <div class="head"><span class="ic">🧭</span><h2 data-fr="Les missions" data-en="The missions">Les missions</h2></div>
     <p class="intro" data-fr="Il y a une place pour chacun, selon vos envies et vos disponibilités." data-en="There's a spot for everyone, depending on your wishes and availability.">Il y a une place pour chacun, selon vos envies et vos disponibilités.</p>
-    <div class="cards">
-      <div class="card"><span class="tag">🥤</span><h3 data-fr="Ravitaillements" data-en="Aid stations">Ravitaillements</h3><p data-fr="Préparer et distribuer eau et collations aux coureurs." data-en="Prepare and hand out water and snacks.">Préparer et distribuer eau et collations aux coureurs.</p></div>
-      <div class="card"><span class="tag">🚩</span><h3 data-fr="Signaleurs" data-en="Marshals">Signaleurs</h3><p data-fr="Sécuriser le parcours et guider les coureurs aux points clés." data-en="Secure the course and guide runners at key points.">Sécuriser le parcours et guider les coureurs aux points clés.</p></div>
-      <div class="card"><span class="tag">🎽</span><h3 data-fr="Dossards" data-en="Bibs">Dossards</h3><p data-fr="Accueil et remise des dossards au village course." data-en="Welcome runners and hand out bibs at the village.">Accueil et remise des dossards au village course.</p></div>
-      <div class="card"><span class="tag">🏅</span><h3 data-fr="Arrivée & médailles" data-en="Finish & medals">Arrivée & médailles</h3><p data-fr="Accueillir les finishers et remettre les médailles." data-en="Welcome finishers and hand out medals.">Accueillir les finishers et remettre les médailles.</p></div>
+    <div class="cards cards-4">
+      <div class="card"><span class="tag">🎽</span><h3 data-fr="Retrait dossard" data-en="Bib pick-up">Retrait dossard</h3><p data-fr="Accueil et remise des dossards au village course." data-en="Welcome runners and hand out bibs at the village.">Accueil et remise des dossards au village course.</p></div>
+      <div class="card"><span class="tag">ℹ️</span><h3 data-fr="Point info" data-en="Info point">Point info</h3><p data-fr="Renseigner les coureurs et le public sur place." data-en="Answer runners' and visitors' questions on site.">Renseigner les coureurs et le public sur place.</p></div>
+      <div class="card"><span class="tag">🚩</span><h3 data-fr="Signaleur" data-en="Marshal">Signaleur</h3><p data-fr="Sécuriser le parcours et guider les coureurs aux points clés." data-en="Secure the course and guide runners at key points.">Sécuriser le parcours et guider les coureurs aux points clés.</p></div>
+      <div class="card"><span class="tag">🥤</span><h3 data-fr="Ravitaillements" data-en="Aid stations">Ravitaillements</h3><p data-fr="Village et parcours : préparer et distribuer eau et collations." data-en="Village and course: prepare and hand out water and snacks.">Village et parcours : préparer et distribuer eau et collations.</p></div>
+      <div class="card"><span class="tag">🎒</span><h3 data-fr="Consignes" data-en="Bag drop">Consignes</h3><p data-fr="Gérer le dépôt et la restitution des affaires des coureurs." data-en="Manage runners' bag drop-off and pick-up.">Gérer le dépôt et la restitution des affaires des coureurs.</p></div>
+      <div class="card"><span class="tag">🧍</span><h3 data-fr="SAS départ" data-en="Start pen">SAS départ</h3><p data-fr="Organiser les coureurs par sas avant le top départ." data-en="Organise runners into pens before the start.">Organiser les coureurs par sas avant le top départ.</p></div>
+      <div class="card"><span class="tag">🏁</span><h3 data-fr="Flux arrivée" data-en="Finish flow">Flux arrivée</h3><p data-fr="Fluidifier l'arrivée des coureurs et guider les finishers." data-en="Manage runner flow at the finish and guide finishers.">Fluidifier l'arrivée des coureurs et guider les finishers.</p></div>
     </div>
   </div>
 </section>
@@ -75,7 +114,7 @@
   <div class="wrap">
     <h2 data-fr="On compte sur vous !" data-en="We're counting on you!">On compte sur vous !</h2>
     <p data-fr="Envie de rejoindre l'aventure ? Écrivez-nous, on vous recontacte avec toutes les infos." data-en="Want to join the adventure? Write to us and we'll get back with all the details.">Envie de rejoindre l'aventure ? Écrivez-nous, on vous recontacte avec toutes les infos.</p>
-    <a class="btn btn-dark" href="mailto:contact@semi-cannes.com?subject=Bénévolat%20Semi%20de%20Cannes" data-fr="Devenir bénévole →" data-en="Volunteer →">Devenir bénévole →</a>
+    <a class="btn btn-dark" href="mailto:contact@semi-cannes.com?subject=Bénévolat%20Semi%20de%20Cannes" data-fr="S'inscrire →" data-en="Sign up →">S'inscrire →</a>
   </div>
 </section>
 <footer class="footer">

@@ -476,6 +476,17 @@ section{padding:96px 0}
 @media (max-width:900px){.cards-4{grid-template-columns:1fr 1fr}}
 @media (max-width:560px){.cards-4{grid-template-columns:1fr}}
 
+/* Slider photos (page bénévoles) */
+.bslider-wrap{padding:0 24px;max-width:var(--maxw);margin:0 auto 36px}
+.bslider{position:relative;width:100%;height:420px;border-radius:18px;overflow:hidden;background:var(--navy)}
+.bslide{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0;transition:opacity .8s ease}
+.bslide.active{opacity:1}
+.bslider-dots{position:absolute;left:0;right:0;bottom:16px;display:flex;justify-content:center;gap:8px;z-index:2}
+.bs-dot{width:9px;height:9px;border-radius:50%;background:rgba(255,255,255,.5);border:none;cursor:pointer;padding:0;transition:.2s}
+.bs-dot.active{background:#fff;width:22px;border-radius:5px}
+.bslider-note{text-align:center;font-size:.78rem;color:var(--muted);margin-top:10px}
+@media (max-width:760px){.bslider{height:280px}}
+
 /* Bloc mini-carte + texte à côté */
 .mini-map-block{display:grid;grid-template-columns:1.3fr 1fr;gap:24px;align-items:center;margin-top:22px;
   background:#fff;border:1px solid var(--line);border-radius:16px;overflow:hidden}
