@@ -401,6 +401,7 @@ section{padding:96px 0}
 .info-block .intro{color:var(--muted);max-width:60ch;margin-bottom:30px;font-size:1.02rem}
 
 .cards{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+.card-links{display:flex;flex-wrap:wrap;gap:16px;margin-top:8px}
 .cards.two{grid-template-columns:repeat(2,1fr)}
 .card{background:#fff;border:1px solid var(--line);border-radius:14px;padding:24px;transition:.2s}
 .info-block:nth-child(even) .card{background:#fff}
