@@ -198,7 +198,7 @@
     dots.forEach(function(d,di){ d.classList.toggle('active', di===idx); });
   }
   function next(){ goTo(i+1); }
-  function startAuto(){ clearInterval(timer); timer = setInterval(next, 4000); }
+  function startAuto(){ clearInterval(timer); timer = setInterval(next, 11000); }
   function pauseThenResume(){ clearInterval(timer); clearTimeout(userTimer); userTimer = setTimeout(startAuto, 6000); }
 
   dots.forEach(function(d){
