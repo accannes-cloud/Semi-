@@ -10,31 +10,8 @@
 <link href="https://fonts.googleapis.com/css2?family=Archivo:ital,wdth,wght@0,75..125,400..900;1,75..125,400..900&family=Hanken+Grotesk:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="styles.css">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css">
-<style>
-  /* ===== TEST : direction plus audacieuse (propre à cette page, à valider) ===== */
-  body.pg-bold{position:relative}
-  body.pg-bold::before{
-    content:"";position:fixed;inset:0;z-index:-2;
-    background:linear-gradient(180deg, rgba(16,46,63,.72), rgba(16,46,63,.88)), url('assets/parcours/p4.jpg');
-    background-size:cover;background-position:center;background-attachment:fixed;
-  }
-  .pg-bold .info-block{background:transparent!important;border:none!important;padding:26px 0}
-  .pg-bold .info-block .wrap{background:#fff;border-radius:26px;padding:52px 44px;
-    box-shadow:0 40px 70px -30px rgba(0,0,0,.5)}
-  .pg-bold .info-block:nth-child(even) .wrap{background:var(--cream)}
-  .pg-bold .info-block .head .ic{background:none;box-shadow:none;font-size:2rem;width:auto;height:auto}
-  .pg-bold .info-block h2{font-family:var(--d-display);font-weight:900;font-style:italic;font-stretch:122%;
-    text-transform:uppercase;letter-spacing:-.02em;line-height:.86;
-    font-size:clamp(2.1rem,6vw,3.4rem);color:var(--navy)}
-  .pg-bold .info-block h2::before{display:none}
-  .pg-bold .toc{background:var(--navy);border-bottom:none;top:64px}
-  .pg-bold .toc a{color:rgba(255,255,255,.75);border-color:rgba(255,255,255,.2)}
-  .pg-bold .toc a:hover{background:var(--coral);color:#fff;border-color:var(--coral)}
-  .pg-bold .ecar-wrap{background:transparent}
-  .pg-bold .footer{position:relative;z-index:1}
-</style>
 </head>
-<body class="pg-bold">
+<body>
 <div class="topbar">
   <div class="wrap">
     <div class="lang-toggle" aria-label="Choix de la langue">
@@ -63,7 +40,7 @@
     </div>
   </div>
 </header>
-<section class="page-hero photo" style="--hero-photo:url('assets/parcours/p3.jpg')">
+<section class="page-hero">
   <div class="wrap">
     <div class="crumbs"><a href="index.html">Accueil</a> · <span>Les épreuves</span></div>
     <h1 data-fr="Les épreuves" data-en="The races">Les épreuves</h1>
