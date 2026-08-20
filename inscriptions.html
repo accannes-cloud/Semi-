@@ -44,12 +44,15 @@
     <div class="crumbs"><a href="index.html">Accueil</a> · <span>Inscriptions</span></div>
     <h1 data-fr="Inscriptions" data-en="Registration">Inscriptions</h1>
     <p data-fr="Tarifs, démarches et conditions pour rejoindre le départ." data-en="Prices, steps and conditions to join the start line.">Tarifs, démarches et conditions pour rejoindre le départ.</p>
+    <p class="date-badge" data-fr="📅 Ouverture des inscriptions : date à venir" data-en="📅 Registration opens: date to be announced">📅 Ouverture des inscriptions : date à venir</p>
   </div>
 </section>
 <nav class="toc" aria-label="Sommaire">
   <div class="wrap">
     <a href="#tarifs" data-fr="Tarifs" data-en="Prices">Tarifs</a>
+    <a href="#modalites" data-fr="Selon votre profil" data-en="By profile">Selon votre profil</a>
     <a href="#comment" data-fr="Comment s'inscrire" data-en="How to">Comment s'inscrire</a>
+    <a href="#sas" data-fr="Sas de départ" data-en="Start pens">Sas de départ</a>
     <a href="#conditions" data-fr="Conditions" data-en="Conditions">Conditions</a>
   </div>
 </nav>
@@ -82,6 +85,86 @@
   </div>
 </section>
 
+<section class="info-block" id="modalites">
+  <div class="wrap">
+    <div class="head"><span class="ic">🧾</span><h2 data-fr="Les modalités selon votre profil" data-en="Requirements based on your profile">Les modalités selon votre profil</h2></div>
+    <p class="intro" data-fr="Les pièces à fournir varient selon votre âge et votre situation. Sélectionnez votre cas pour voir ce qu'il vous faut." data-en="Required documents vary by age and status. Select your case to see what you need.">Les pièces à fournir varient selon votre âge et votre situation. Sélectionnez votre cas pour voir ce qu'il vous faut.</p>
+
+    <div class="profile-guide">
+      <div class="pg-toggles">
+        <div class="pg-group">
+          <button class="pg-btn active" data-age="majeur" data-fr="Majeur" data-en="Adult">Majeur</button>
+          <button class="pg-btn" data-age="mineur" data-fr="Mineur" data-en="Minor">Mineur</button>
+        </div>
+        <div class="pg-group">
+          <button class="pg-btn active" data-lic="ffa" data-fr="Licencié FFA" data-en="FFA licence holder">Licencié FFA</button>
+          <button class="pg-btn" data-lic="nonffa" data-fr="Non licencié FFA" data-en="No FFA licence">Non licencié FFA</button>
+        </div>
+      </div>
+
+      <div class="pg-result" id="pgResult">
+        <!-- rempli par JS -->
+      </div>
+    </div>
+
+    <div class="fill" data-fr="Pièces exigées à confirmer avec le règlement officiel de l'édition." data-en="Required documents to confirm with the official event rules.">Pièces exigées à confirmer avec le règlement officiel de l'édition.</div>
+  </div>
+</section>
+
+<script>
+(function(){
+  var DATA = {
+    'majeur-ffa': {
+      icon:'🎽',
+      fr:"Une copie de votre licence Athlé Compétition, Athlé Entreprise, Athlé Running ou d'un Pass' Running en cours de validité pour l'année de la course.",
+      en:"A copy of your Athlé Compétition, Athlé Entreprise, Athlé Running licence or a valid Pass' Running for the year of the race."
+    },
+    'majeur-nonffa': {
+      icon:'🩺',
+      fr:"Un Parcours Prévention Santé (PPS) renseigné, ou un certificat médical de non contre-indication à la pratique de la course à pied en compétition, datant de moins d'un an.",
+      en:"A completed Health Prevention Pathway (PPS), or a medical certificate of no contraindication to competitive running, dated less than a year ago."
+    },
+    'mineur-ffa': {
+      icon:'🎽',
+      fr:"Une copie de la licence FFA (catégorie jeune) en cours de validité, ainsi qu'une autorisation parentale signée.",
+      en:"A copy of a valid FFA youth-category licence, plus a signed parental authorisation."
+    },
+    'mineur-nonffa': {
+      icon:'🩺',
+      fr:"Un certificat médical de non contre-indication à la pratique de la course à pied en compétition, datant de moins d'un an, ainsi qu'une autorisation parentale signée.",
+      en:"A medical certificate of no contraindication to competitive running, dated less than a year ago, plus a signed parental authorisation."
+    }
+  };
+  var age = 'majeur', lic = 'ffa';
+  var result = document.getElementById('pgResult');
+  var lang = document.documentElement.lang || 'fr';
+
+  function render(){
+    lang = document.documentElement.lang || 'fr';
+    var d = DATA[age+'-'+lic];
+    var text = lang==='en' ? d.en : d.fr;
+    result.innerHTML = '<span class="pg-ic">'+d.icon+'</span><p>'+text+'</p>';
+  }
+  document.querySelectorAll('.pg-btn[data-age]').forEach(function(b){
+    b.addEventListener('click', function(){
+      age = b.dataset.age;
+      document.querySelectorAll('.pg-btn[data-age]').forEach(function(x){ x.classList.toggle('active', x===b); });
+      render();
+    });
+  });
+  document.querySelectorAll('.pg-btn[data-lic]').forEach(function(b){
+    b.addEventListener('click', function(){
+      lic = b.dataset.lic;
+      document.querySelectorAll('.pg-btn[data-lic]').forEach(function(x){ x.classList.toggle('active', x===b); });
+      render();
+    });
+  });
+  render();
+  // re-rendu si la langue du site change
+  document.querySelectorAll('.lang-toggle button').forEach(function(b){ b.addEventListener('click', function(){ setTimeout(render, 0); }); });
+})();
+</script>
+
 <section class="info-block" id="comment">
   <div class="wrap">
     <div class="head"><span class="ic">📝</span><h2 data-fr="Comment s'inscrire" data-en="How to register">Comment s'inscrire</h2></div>
@@ -92,6 +175,33 @@
       <div class="step"><div><h4 data-fr="Réglez votre inscription" data-en="Pay">Réglez votre inscription</h4><p data-fr="Paiement en ligne, confirmation par e-mail." data-en="Online payment, email confirmation.">Paiement en ligne, confirmation par e-mail.</p></div></div>
       <div class="step"><div><h4 data-fr="Retirez votre dossard" data-en="Collect your bib">Retirez votre dossard</h4><p data-fr="Au village course, avant l'épreuve." data-en="At the race village, before the race.">Au village course, avant l'épreuve.</p></div></div>
     </div>
+  </div>
+</section>
+
+<section class="info-block" id="sas">
+  <div class="wrap">
+    <div class="head"><span class="ic">🧍</span><h2 data-fr="Rappel des sas de départ" data-en="Start pens reminder">Rappel des sas de départ</h2></div>
+    <p class="intro" data-fr="Le sas de départ est attribué selon votre temps de référence estimé, indiqué à l'inscription. Placez-vous dans le bon sas pour un départ fluide et sécurisé." data-en="Your start pen is assigned by your estimated finish time, given at registration. Line up in the right pen for a smooth, safe start.">Le sas de départ est attribué selon votre temps de référence estimé, indiqué à l'inscription. Placez-vous dans le bon sas pour un départ fluide et sécurisé.</p>
+
+    <div class="cards">
+      <div class="card">
+        <span class="tag">5 km</span>
+        <h3 data-fr="Départ groupé" data-en="Mass start">Départ groupé</h3>
+        <p data-fr="Un sas unique, sans classement par temps de référence." data-en="A single pen, no seeding by estimated time.">Un sas unique, sans classement par temps de référence.</p>
+      </div>
+      <div class="card">
+        <span class="tag">10 km</span>
+        <h3 data-fr="2 sas" data-en="2 pens">2 sas</h3>
+        <p data-fr="Sas A : moins de 50 min. Sas B : plus de 50 min." data-en="Pen A: under 50 min. Pen B: over 50 min.">Sas A : moins de 50 min. Sas B : plus de 50 min.</p>
+      </div>
+      <div class="card">
+        <span class="tag">21,1 km</span>
+        <h3 data-fr="3 sas" data-en="3 pens">3 sas</h3>
+        <p data-fr="Sas A : moins de 1h30. Sas B : de 1h30 à 2h00. Sas C : plus de 2h00." data-en="Pen A: under 1h30. Pen B: 1h30–2h00. Pen C: over 2h00.">Sas A : moins de 1h30. Sas B : de 1h30 à 2h00. Sas C : plus de 2h00.</p>
+      </div>
+    </div>
+
+    <div class="fill" data-fr="Seuils de temps indicatifs — à confirmer avec le règlement officiel de l'édition 2027." data-en="Indicative time thresholds — to confirm with the official 2027 rules.">Seuils de temps indicatifs — à confirmer avec le règlement officiel de l'édition 2027.</div>
   </div>
 </section>
 
@@ -110,8 +220,8 @@
 <section class="cta-band" id="sinscrire">
   <div class="wrap">
     <h2 data-fr="Prêt à courir ?" data-en="Ready to run?">Prêt à courir ?</h2>
-    <p data-fr="Les inscriptions se font en ligne. Branchez ici votre plateforme (Klikego, Chronostart, etc.)." data-en="Registration is online. Connect your platform here (Klikego, Chronostart, etc.).">Les inscriptions se font en ligne. Branchez ici votre plateforme (Klikego, Chronostart, etc.).</p>
-    <a class="btn btn-dark" href="#" data-fr="S'inscrire en ligne →" data-en="Register online →">S'inscrire en ligne →</a>
+    <p data-fr="Les inscriptions se font en ligne, via notre partenaire Njuko. Le lien sera activé dès l'ouverture des inscriptions." data-en="Registration is online, via our partner Njuko. The link will go live once registration opens.">Les inscriptions se font en ligne, via notre partenaire Njuko. Le lien sera activé dès l'ouverture des inscriptions.</p>
+    <a class="btn btn-dark" href="#" data-fr="S'inscrire sur Njuko →" data-en="Register on Njuko →">S'inscrire sur Njuko →</a>
   </div>
 </section>
 <footer class="footer">

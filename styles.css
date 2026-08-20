@@ -378,6 +378,20 @@ section{padding:96px 0}
   text-transform:uppercase;letter-spacing:-.015em;line-height:.9;
   font-size:clamp(2.6rem,8vw,5.2rem);margin:10px 0 14px}
 .page-hero p{max-width:54ch;font-size:1.1rem;color:#234055}
+.date-badge{display:inline-block;margin-top:16px;background:#fff;border:1px solid var(--line);border-radius:100px;
+  padding:.5em 1.1em;font-size:.85rem;font-weight:600;color:var(--navy);max-width:none}
+
+/* Guide de modalités par profil (page inscriptions) */
+.profile-guide{background:#fff;border:1px solid var(--line);border-radius:16px;padding:26px;margin-top:20px}
+.pg-toggles{display:flex;flex-wrap:wrap;gap:24px;margin-bottom:22px}
+.pg-group{display:inline-flex;background:var(--cream);border-radius:100px;padding:4px;gap:4px}
+.pg-btn{border:none;background:transparent;border-radius:100px;padding:.55em 1.3em;font-family:var(--d-display);
+  font-weight:700;font-stretch:104%;font-size:.86rem;color:var(--muted);cursor:pointer;transition:.18s}
+.pg-btn.active{background:var(--coral);color:#fff}
+.pg-result{display:flex;align-items:flex-start;gap:16px;background:var(--sky-pale);border-radius:12px;padding:20px 22px}
+.pg-ic{font-size:1.6rem;flex-shrink:0}
+.pg-result p{margin:0;color:var(--navy);font-size:.95rem;line-height:1.55}
+@media (max-width:600px){.pg-toggles{flex-direction:column;gap:10px}}
 .crumbs{font-family:var(--d-display);font-weight:600;font-stretch:104%;text-transform:uppercase;
   letter-spacing:.08em;font-size:.74rem;color:#3c5a6e}
 .crumbs a{color:var(--coral)}
