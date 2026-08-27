@@ -461,7 +461,7 @@ section{padding:96px 0}
 
 .ecar-wrap{margin-bottom:26px}
 .ecar-track{display:flex;gap:20px;overflow-x:auto;scroll-snap-type:x mandatory;
-  scrollbar-width:none;-ms-overflow-style:none;padding:6px 14% 10px;scroll-padding:0 14%}
+  scrollbar-width:none;-ms-overflow-style:none;padding:6px 14% 10px}
 .ecar-track::-webkit-scrollbar{display:none}
 .ecar-slide{flex:0 0 72%;scroll-snap-align:center;background:#fff;border:1px solid var(--line);border-radius:18px;
   overflow:hidden;opacity:.4;transform:scale(.9);transition:opacity .45s ease,transform .45s ease;cursor:grab}
