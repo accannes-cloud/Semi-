@@ -183,7 +183,6 @@
       if(!sec.hasAttribute('data-ed-sec')) sec.setAttribute('data-ed-sec','s'+(idCounter++));
     });
   }
-  assignIds();
 
   function getSections(){ return Array.from(doc.body.children).filter(function(el){ return el.tagName==='SECTION'; }); }
   function sectionLabel(sec){
