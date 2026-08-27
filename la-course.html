@@ -228,7 +228,9 @@
     isProgrammatic = true;
     clearTimeout(progTimer);
     progTimer = setTimeout(function(){ isProgrammatic = false; }, 550);
-    slides[i].scrollIntoView({behavior:'smooth', inline:'center', block:'nearest'});
+    var slide = slides[i];
+    var target = slide.offsetLeft - (track.clientWidth - slide.offsetWidth) / 2;
+    track.scrollTo({left: target, behavior: 'smooth'});
     setActive(i);
   }
   function setActive(idx){
