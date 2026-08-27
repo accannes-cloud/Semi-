@@ -406,6 +406,13 @@ section{padding:96px 0}
 .toc a:hover{background:var(--coral);color:#fff;border-color:var(--coral)}
 
 /* blocs d'info */
+/* ============ Révélation progressive au scroll (site entier) ============ */
+.reveal-el{opacity:0;transform:translateY(22px);transition:opacity .6s cubic-bezier(.16,.8,.3,1), transform .6s cubic-bezier(.16,.8,.3,1)}
+.reveal-el.in{opacity:1;transform:none}
+@media (prefers-reduced-motion:reduce){
+  .reveal-el{opacity:1;transform:none;transition:none}
+}
+
 .info-block{padding:72px 0;border-bottom:1px solid var(--line)}
 .info-block:nth-child(even){background:var(--sky-pale)}
 .info-block .head{display:flex;align-items:center;gap:16px;margin-bottom:10px}

@@ -392,5 +392,30 @@ langBtns.forEach(b=> b.addEventListener('click', ()=> setLang(b.dataset.lang)));
   try{var l=localStorage.getItem('sdc_lang'); if(l&&l!=='fr') apply(l);}catch(e){}
 })();
 </script>
+<script>
+/* ---- Révélation progressive au scroll (titres, cartes, grilles...) ---- */
+(function(){
+  var SEL = '.info-block .head, .info-block > .wrap > .intro, .cards > .card, .race-grid > .race-card, '+
+    '.info-grid > .info-tile, .logo-row > figure, .timeline > .tl-item, .accordion > details, '+
+    '.ecar-track > .ecar-slide, .stat-grid > .stat, .badges > .badge, .facts > .fact, '+
+    '.foot-grid > div, .mini-map-block, .profile-guide';
+  var els = Array.from(document.querySelectorAll(SEL)).filter(function(el){ return !el.classList.contains('reveal'); });
+  if(!els.length) return;
+  var seen = [];
+  els.forEach(function(el){
+    el.classList.add('reveal-el');
+    var p = el.parentElement, rec = null;
+    for(var i=0;i<seen.length;i++){ if(seen[i].p===p){ rec=seen[i]; break; } }
+    if(!rec){ rec={p:p, n:0}; seen.push(rec); }
+    el.style.transitionDelay = Math.min(rec.n*70, 420)+'ms';
+    rec.n++;
+  });
+  if(!window.IntersectionObserver){ els.forEach(function(el){ el.classList.add('in'); }); return; }
+  var io = new IntersectionObserver(function(entries){
+    entries.forEach(function(e){ if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); } });
+  }, {threshold:.12});
+  els.forEach(function(el){ io.observe(el); });
+})();
+</script>
 </body>
 </html>
