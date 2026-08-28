@@ -281,7 +281,7 @@
       'background:#fff;color:rgba(16,46,63,.45);font-size:14px;display:flex;align-items:center;justify-content:center;'+
       'opacity:0;transition:.15s;position:relative;z-index:1}'+
       '.ed-insertbar:hover .ed-ib-plus{opacity:1;border-color:#F37252;border-style:solid;background:#F37252;color:#fff;transform:scale(1.1)}'+
-      '#ed-datebtn{position:absolute;z-index:99999;display:none;background:rgba(243,114,82,.95);color:#fff;font-family:'+
+      '#ed-datebtn{display:inline-flex;margin-top:10px;background:var(--coral,#F37252);color:#fff;font-family:'+
       '-apple-system,sans-serif;font-size:12px;font-weight:700;border:none;border-radius:100px;padding:8px 14px;'+
       'cursor:pointer;box-shadow:0 6px 16px -4px rgba(0,0,0,.5)}'+
       '#ed-gpxbtn{position:absolute;z-index:99999;display:none;background:rgba(16,46,63,.92);color:#fff;font-family:'+
@@ -595,33 +595,14 @@
       });
     }
 
-    /* ---------- Compte à rebours : choisir une nouvelle date ---------- */
+    /* ---------- Compte à rebours : choisir une nouvelle date (bouton toujours visible) ---------- */
     var dateEls = Array.from(fdoc.querySelectorAll('[data-ed-date]'));
-    if(dateEls.length){
+    dateEls.forEach(function(el){
       var dateBtn=fdoc.createElement('button');
       dateBtn.id='ed-datebtn'; dateBtn.type='button'; dateBtn.textContent='📅 Changer la date';
-      fdoc.body.appendChild(dateBtn);
-      var currentDateEl=null, dateHideTimer=null;
-      function showDateBtn(el){
-        currentDateEl=el;
-        var r=pageRect(el);
-        dateBtn.style.display='block';
-        dateBtn.style.top=(r.top+10)+'px';
-        dateBtn.style.left=(r.left+10)+'px';
-      }
-      function scheduleHideDateBtn(){
-        clearTimeout(dateHideTimer);
-        dateHideTimer=setTimeout(function(){ dateBtn.style.display='none'; },250);
-      }
-      dateBtn.addEventListener('mouseenter',function(){ clearTimeout(dateHideTimer); });
-      dateBtn.addEventListener('mouseleave',scheduleHideDateBtn);
-      dateEls.forEach(function(el){
-        el.addEventListener('mouseenter',function(){ showDateBtn(el); });
-        el.addEventListener('mouseleave',scheduleHideDateBtn);
-      });
       dateBtn.addEventListener('click',function(ev){
-        ev.preventDefault(); if(!currentDateEl) return;
-        var varName = currentDateEl.getAttribute('data-ed-date');
+        ev.preventDefault();
+        var varName = el.getAttribute('data-ed-date');
         var current = findDateInDoc(varName);
         var curDate = current ? current.iso.slice(0,10) : '';
         var curTime = current ? current.iso.slice(11,16) : '09:00';
@@ -646,7 +627,8 @@
         }
         persist(); renderPreview(); toast('Date mise à jour');
       });
-    }
+      el.insertAdjacentElement('afterend', dateBtn);
+    });
 
     scheduleResize();
     if(!fdoc._edObserver){
