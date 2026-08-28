@@ -532,16 +532,22 @@ section{padding:96px 0}
 @media (max-width:900px){.cards-4{grid-template-columns:1fr 1fr}}
 @media (max-width:560px){.cards-4{grid-template-columns:1fr}}
 
-/* Slider photos (page bénévoles) */
-.bslider-wrap{padding:0 24px;max-width:var(--maxw);margin:0 auto 36px}
-.bslider{position:relative;width:100%;height:420px;border-radius:18px;overflow:hidden;background:var(--navy)}
-.bslide{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0;transition:opacity .8s ease}
-.bslide.active{opacity:1}
-.bslider-dots{position:absolute;left:0;right:0;bottom:16px;display:flex;justify-content:center;gap:8px;z-index:2}
-.bs-dot{width:9px;height:9px;border-radius:50%;background:rgba(255,255,255,.5);border:none;cursor:pointer;padding:0;transition:.2s}
-.bs-dot.active{background:#fff;width:22px;border-radius:5px}
-.bslider-note{text-align:center;font-size:.78rem;color:var(--muted);margin-top:10px}
-@media (max-width:760px){.bslider{height:280px}}
+/* Vidéo + texte (page bénévoles) */
+.bvideo-wrap{padding:0 24px;max-width:var(--maxw);margin:0 auto 36px}
+.bvideo-block{display:grid;grid-template-columns:1fr 1fr;gap:0;background:#fff;border:1px solid var(--line);
+  border-radius:18px;overflow:hidden;align-items:stretch;box-shadow:0 24px 50px -30px rgba(16,46,63,.35)}
+.bvideo-media{position:relative;min-height:420px;background:var(--navy)}
+.bvideo-media video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.bvideo-text{padding:40px 44px;display:flex;flex-direction:column;justify-content:center;gap:12px}
+.bvideo-text .tag{font-family:var(--d-display);font-weight:800;font-stretch:106%;text-transform:uppercase;
+  letter-spacing:.05em;font-size:.72rem;color:var(--coral)}
+.bvideo-text h3{font-family:var(--d-display);font-weight:800;font-stretch:110%;font-size:1.5rem;color:var(--navy);margin:2px 0}
+.bvideo-text p{color:var(--muted);font-size:1rem;line-height:1.6}
+@media (max-width:760px){
+  .bvideo-block{grid-template-columns:1fr}
+  .bvideo-media{min-height:260px}
+  .bvideo-text{padding:28px 26px}
+}
 
 /* Bloc mini-carte + texte à côté */
 .mini-map-block{display:grid;grid-template-columns:1.3fr 1fr;gap:24px;align-items:center;margin-top:22px;

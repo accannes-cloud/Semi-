@@ -62,40 +62,19 @@
   </div>
 </section>
 
-<section class="bslider-wrap">
-  <div class="bslider" id="bslider">
-    <img class="bslide active" src="assets/parcours/p1.jpg" alt="">
-    <img class="bslide" src="assets/parcours/p2.jpg" alt="">
-    <img class="bslide" src="assets/parcours/p3.jpg" alt="">
-    <img class="bslide" src="assets/parcours/p4.jpg" alt="">
-    <img class="bslide" src="assets/parcours/p5.jpg" alt="">
-    <div class="bslider-dots" id="bsliderDots">
-      <button class="bs-dot active" data-i="0"></button>
-      <button class="bs-dot" data-i="1"></button>
-      <button class="bs-dot" data-i="2"></button>
-      <button class="bs-dot" data-i="3"></button>
-      <button class="bs-dot" data-i="4"></button>
+<section class="bvideo-wrap">
+  <div class="bvideo-block">
+    <div class="bvideo-media">
+      <video src="assets/parcours/benevoles-video.mp4" autoplay muted loop playsinline></video>
+    </div>
+    <div class="bvideo-text">
+      <span class="tag">Bénévoles</span>
+      <h3 data-fr="Rejoignez une équipe passionnée" data-en="Join a passionate team">Rejoignez une équipe passionnée</h3>
+      <p data-fr="Chaque année, ce sont nos bénévoles qui font vivre la course : accueil, ravitaillement, sécurité, ambiance… Sans eux, pas de Semi de Cannes. Rejoignez l'aventure et vivez la course comme jamais, au cœur de l'organisation." data-en="Every year, our volunteers bring the race to life: welcome, aid stations, safety, atmosphere… Without them, no Semi de Cannes. Join the adventure and experience the race like never before, at the heart of the organisation.">Chaque année, ce sont nos bénévoles qui font vivre la course : accueil, ravitaillement, sécurité, ambiance… Sans eux, pas de Semi de Cannes. Rejoignez l'aventure et vivez la course comme jamais, au cœur de l'organisation.</p>
     </div>
   </div>
-  <p class="bslider-note" data-fr="Photos d'illustration — à remplacer par de vraies photos de bénévoles." data-en="Placeholder photos — to be replaced with real volunteer photos.">Photos d'illustration — à remplacer par de vraies photos de bénévoles.</p>
 </section>
 
-<script>
-(function(){
-  var slides = Array.from(document.querySelectorAll('#bslider .bslide'));
-  var dots = Array.from(document.querySelectorAll('.bs-dot'));
-  var i = 0, timer;
-  function show(idx){
-    i = (idx + slides.length) % slides.length;
-    slides.forEach(function(s,si){ s.classList.toggle('active', si===i); });
-    dots.forEach(function(d,di){ d.classList.toggle('active', di===i); });
-  }
-  function next(){ show(i+1); }
-  dots.forEach(function(d){ d.addEventListener('click', function(){ show(parseInt(d.dataset.i,10)); resetTimer(); }); });
-  function resetTimer(){ clearInterval(timer); timer = setInterval(next, 4000); }
-  resetTimer();
-})();
-</script>
 <section class="info-block" id="pourquoi">
   <div class="wrap">
     <div class="head"><span class="ic"><svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M24 40C24 40 6 29.5 6 17.5C6 11.7 10.5 7 16 7C19.5 7 22.5 8.8 24 11.5C25.5 8.8 28.5 7 32 7C37.5 7 42 11.7 42 17.5C42 29.5 24 40 24 40Z" stroke="#F37252" stroke-width="2.75" stroke-linecap="round" stroke-linejoin="round"/></svg></span><h2 data-fr="Présentation" data-en="Presentation">Présentation</h2></div>
