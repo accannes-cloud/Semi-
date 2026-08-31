@@ -103,6 +103,19 @@
     <p id="ghStatus" style="margin:10px 0 0;font-size:.82rem"></p>
   </div>
 
+  <div class="ed-note" id="edSettings">
+    <div style="display:flex;align-items:center;gap:18px;flex-wrap:wrap">
+      <b>⚙️ Réglages rapides</b>
+      <div style="display:flex;align-items:center;gap:8px">
+        <label for="edDateInput" style="font-size:.84rem;color:var(--navy);font-weight:600">📅 Date de l'édition :</label>
+        <input type="date" id="edDateInput" style="border:1.5px solid var(--ed-line);border-radius:8px;padding:.4em .7em;font-size:.84rem;font-family:inherit">
+        <input type="time" id="edTimeInput" value="09:00" style="border:1.5px solid var(--ed-line);border-radius:8px;padding:.4em .7em;font-size:.84rem;font-family:inherit">
+        <button class="ed-btn small" id="btnApplyDate">Appliquer</button>
+        <span id="edDateStatus" style="font-size:.8rem;color:var(--muted)"></span>
+      </div>
+    </div>
+  </div>
+
   <div class="ed-note">
     <b>Comment ça marche :</b> clique sur un <b>texte</b> pour le modifier (une petite croix ✕ apparaît au-dessus
     pour le supprimer), ou passe la souris sur une <b>photo</b> pour la changer ou la retirer. Utilise le <b>+</b>
@@ -885,6 +898,52 @@
     publish(g);
   });
   refreshGhStatus();
+
+  /* ---------- Réglages rapides : date de l'édition ---------- */
+  var edDateInput = document.getElementById('edDateInput');
+  var edTimeInput = document.getElementById('edTimeInput');
+  var edDateStatus = document.getElementById('edDateStatus');
+
+  function syncDateFieldFromDoc(){
+    var current = findDateInDoc('EDITION_DATE');
+    if(current){
+      edDateInput.value = current.iso.slice(0,10);
+      edTimeInput.value = current.iso.slice(11,16);
+      edDateStatus.textContent = 'Date actuelle : '+current.iso.slice(0,10);
+    }
+  }
+  // mettre à jour le champ quand on change de page (seulement visible sur l'accueil)
+  var origSwitch = switchPage;
+  switchPage = function(page){
+    origSwitch(page);
+    var settingsPanel = document.getElementById('edSettings');
+    if(settingsPanel) settingsPanel.style.display = (page==='index.html') ? '' : 'none';
+    if(page==='index.html') syncDateFieldFromDoc();
+  };
+
+  document.getElementById('btnApplyDate').addEventListener('click', function(){
+    var dateVal = edDateInput.value;
+    var timeVal = edTimeInput.value || '09:00';
+    if(!dateVal){ edDateStatus.textContent = '⚠️ Choisis une date'; return; }
+    var iso = dateVal+'T'+timeVal+':00+01:00';
+    var ok = replaceDateInDoc('EDITION_DATE', iso);
+    if(!ok){ edDateStatus.textContent = '⚠️ Date introuvable dans le code'; return; }
+    // Mettre à jour le texte affiché (ex. "Automne 2027") dans le doc
+    var lbl = doc.getElementById('dateLabel');
+    if(lbl){
+      var d = new Date(iso);
+      var moisFr=['janvier','février','mars','avril','mai','juin','juillet','août','septembre','octobre','novembre','décembre'];
+      var moisEn=['January','February','March','April','May','June','July','August','September','October','November','December'];
+      var fr = d.getDate()+' '+moisFr[d.getMonth()]+' '+d.getFullYear();
+      var en = moisEn[d.getMonth()]+' '+d.getDate()+', '+d.getFullYear();
+      lbl.textContent = fr; lbl.setAttribute('data-fr', fr); lbl.setAttribute('data-en', en);
+    }
+    persist();
+    renderPreview();
+    edDateStatus.textContent = '✅ Date mise à jour';
+    toast('📅 Date de l\'édition mise à jour !');
+    setTimeout(function(){ edDateStatus.textContent = ''; }, 3000);
+  });
 
   switchPage('index.html');
 })();
